@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
-import { getBook, getChapter, sampleChapters } from "@/lib/bible-data";
+import { getBook, loadChapter } from "@/lib/bible-data";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { useLocalStorage } from "@/lib/storage";
 
@@ -10,17 +11,26 @@ function ReaderPage() {
   const { book, chapter } = Route.useParams();
   const chNum = parseInt(chapter, 10);
   const bookInfo = getBook(book);
-  const ch = getChapter(book, chNum);
   const [favs, setFavs] = useLocalStorage<string[]>("fav-verses", []);
+  const [highlights, setHighlights] = useLocalStorage<string[]>("highlight-verses", []);
   const [fontSize, setFontSize] = useLocalStorage<number>("font-size", 18);
+  const { data: ch, isLoading } = useQuery({
+    queryKey: ["chapter", book, chNum],
+    queryFn: () => loadChapter(book, chNum),
+    staleTime: Infinity,
+    gcTime: 30 * 60 * 1000,
+  });
   const toggleFav = (v: number) => {
     const key = `${book}-${chNum}-${v}`;
     setFavs(favs.includes(key) ? favs.filter((f) => f !== key) : [...favs, key]);
   };
-  const avail = sampleChapters[book]?.map((c) => c.chapter) ?? [];
-  const idx = avail.indexOf(chNum);
-  const prev = idx > 0 ? avail[idx - 1] : null;
-  const next = idx >= 0 && idx < avail.length - 1 ? avail[idx + 1] : null;
+  const toggleHl = (v: number) => {
+    const key = `${book}-${chNum}-${v}`;
+    setHighlights(highlights.includes(key) ? highlights.filter((f) => f !== key) : [...highlights, key]);
+  };
+  const totalCh = bookInfo?.chapters ?? 1;
+  const prev = chNum > 1 ? chNum - 1 : null;
+  const next = chNum < totalCh ? chNum + 1 : null;
   return (
     <div className="min-h-screen bg-background pb-32">
       <header className="sticky top-0 z-30 bg-card/90 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between">
@@ -32,16 +42,27 @@ function ReaderPage() {
         </div>
       </header>
       <article className="mx-auto max-w-2xl px-6 py-8">
-        {ch ? (
+        {isLoading ? (
+          <div className="space-y-3 animate-pulse">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="h-5 bg-secondary rounded" />
+            ))}
+          </div>
+        ) : ch ? (
           <div className="space-y-4">
             {ch.verses.map((v) => {
               const key = `${book}-${chNum}-${v.verse}`;
               const isFav = favs.includes(key);
+              const isHl = highlights.includes(key);
               return (
-                <p key={v.verse} className="font-serif leading-relaxed text-card-foreground group" style={{ fontSize: `${fontSize}px` }}>
+                <p
+                  key={v.verse}
+                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition ${isHl ? "bg-gold/10 px-2 -mx-2" : ""}`}
+                  style={{ fontSize: `${fontSize}px` }}
+                >
                   <sup className="mr-1.5 text-xs font-sans font-bold text-gold">{v.verse}</sup>
-                  {v.text}
-                  <button onClick={() => toggleFav(v.verse)} className="ml-2 opacity-60 hover:opacity-100 transition">
+                  <span onDoubleClick={() => toggleHl(v.verse)}>{v.text}</span>
+                  <button onClick={() => toggleFav(v.verse)} className="ml-2 opacity-60 hover:opacity-100 transition" aria-label="Favoritar">
                     <Heart className={`inline size-3.5 ${isFav ? "fill-gold text-gold" : "text-muted-foreground"}`} />
                   </button>
                 </p>
@@ -49,10 +70,7 @@ function ReaderPage() {
             })}
           </div>
         ) : (
-          <div className="text-center text-muted-foreground py-12">
-            <p className="font-serif text-xl">Este capítulo ainda não está disponível offline.</p>
-            <p className="text-sm mt-2">Capítulos disponíveis: Gênesis 1, Salmos 23 e 91, João 3, Mateus 5, Provérbios 3, Filipenses 4.</p>
-          </div>
+          <p className="text-center text-muted-foreground py-12 font-serif">Capítulo não encontrado.</p>
         )}
         <nav className="mt-12 flex justify-between">
           {prev ? (

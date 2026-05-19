@@ -83,7 +83,7 @@ function Index() {
               <div className="font-serif text-xl text-foreground">João 3</div>
               <div className="text-xs text-muted-foreground">Novo Testamento</div>
             </div>
-            <Link to="/biblia" className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:opacity-90">
+            <Link to="/biblia/$book/$chapter" params={{ book: "jo", chapter: "3" }} className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:opacity-90">
               Abrir <ArrowRight className="size-3.5" />
             </Link>
           </div>
