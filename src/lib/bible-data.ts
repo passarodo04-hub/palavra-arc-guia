@@ -1,3 +1,5 @@
+import booksJson from "../../public/data/bible/books.json";
+
 export interface BibleBook {
   id: string;
   name: string;
@@ -6,7 +8,9 @@ export interface BibleBook {
   chapters: number;
 }
 
-export const bibleBooks: BibleBook[] = [
+export const bibleBooks: BibleBook[] = booksJson as BibleBook[];
+
+const _legacyBooks: BibleBook[] = [
   // Antigo Testamento
   { id: "genesis", name: "Gênesis", abbr: "Gn", testament: "old", chapters: 50 },
   { id: "exodo", name: "Êxodo", abbr: "Êx", testament: "old", chapters: 40 },
