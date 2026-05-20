@@ -39,8 +39,8 @@ function BibliaPage() {
           {books.map((b) => (
             <Link
               key={b.id}
-              to="/biblia/$book/$chapter"
-              params={{ book: b.id, chapter: "1" }}
+              to="/biblia/$book"
+              params={{ book: b.id }}
               className="group rounded-xl border border-border bg-card p-4 hover:border-gold/40 transition"
             >
               <div className="flex items-baseline justify-between">
