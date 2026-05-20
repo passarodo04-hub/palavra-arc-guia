@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
@@ -21,6 +22,11 @@ import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 
+const HarpaRoute = HarpaRouteImport.update({
+  id: '/harpa',
+  path: '/harpa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavoritosRoute = FavoritosRouteImport.update({
   id: '/favoritos',
   path: '/favoritos',
@@ -57,9 +63,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const HarpaIndexRoute = HarpaIndexRouteImport.update({
-  id: '/harpa/',
-  path: '/harpa/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => HarpaRoute,
 } as any)
 const BibliaIndexRoute = BibliaIndexRouteImport.update({
   id: '/',
@@ -67,9 +73,9 @@ const BibliaIndexRoute = BibliaIndexRouteImport.update({
   getParentRoute: () => BibliaRoute,
 } as any)
 const HarpaIdRoute = HarpaIdRouteImport.update({
-  id: '/harpa/$id',
-  path: '/harpa/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => HarpaRoute,
 } as any)
 const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
   id: '/$book/$chapter',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
   '/favoritos': typeof FavoritosRoute
+  '/harpa': typeof HarpaRouteWithChildren
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia/': typeof BibliaIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -111,6 +118,7 @@ export interface FileRoutesById {
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
   '/favoritos': typeof FavoritosRoute
+  '/harpa': typeof HarpaRouteWithChildren
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia/': typeof BibliaIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -126,6 +134,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/devocional'
     | '/favoritos'
+    | '/harpa'
     | '/harpa/$id'
     | '/biblia/'
     | '/harpa/'
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/devocional'
     | '/favoritos'
+    | '/harpa'
     | '/harpa/$id'
     | '/biblia/'
     | '/harpa/'
@@ -165,12 +175,18 @@ export interface RootRouteChildren {
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   DevocionalRoute: typeof DevocionalRoute
   FavoritosRoute: typeof FavoritosRoute
-  HarpaIdRoute: typeof HarpaIdRoute
-  HarpaIndexRoute: typeof HarpaIndexRoute
+  HarpaRoute: typeof HarpaRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/harpa': {
+      id: '/harpa'
+      path: '/harpa'
+      fullPath: '/harpa'
+      preLoaderRoute: typeof HarpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favoritos': {
       id: '/favoritos'
       path: '/favoritos'
@@ -222,10 +238,10 @@ declare module '@tanstack/react-router' {
     }
     '/harpa/': {
       id: '/harpa/'
-      path: '/harpa'
+      path: '/'
       fullPath: '/harpa/'
       preLoaderRoute: typeof HarpaIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof HarpaRoute
     }
     '/biblia/': {
       id: '/biblia/'
@@ -236,10 +252,10 @@ declare module '@tanstack/react-router' {
     }
     '/harpa/$id': {
       id: '/harpa/$id'
-      path: '/harpa/$id'
+      path: '/$id'
       fullPath: '/harpa/$id'
       preLoaderRoute: typeof HarpaIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof HarpaRoute
     }
     '/biblia/$book/$chapter': {
       id: '/biblia/$book/$chapter'
@@ -264,6 +280,18 @@ const BibliaRouteChildren: BibliaRouteChildren = {
 const BibliaRouteWithChildren =
   BibliaRoute._addFileChildren(BibliaRouteChildren)
 
+interface HarpaRouteChildren {
+  HarpaIdRoute: typeof HarpaIdRoute
+  HarpaIndexRoute: typeof HarpaIndexRoute
+}
+
+const HarpaRouteChildren: HarpaRouteChildren = {
+  HarpaIdRoute: HarpaIdRoute,
+  HarpaIndexRoute: HarpaIndexRoute,
+}
+
+const HarpaRouteWithChildren = HarpaRoute._addFileChildren(HarpaRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnotacoesRoute: AnotacoesRoute,
@@ -272,8 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfiguracoesRoute: ConfiguracoesRoute,
   DevocionalRoute: DevocionalRoute,
   FavoritosRoute: FavoritosRoute,
-  HarpaIdRoute: HarpaIdRoute,
-  HarpaIndexRoute: HarpaIndexRoute,
+  HarpaRoute: HarpaRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
