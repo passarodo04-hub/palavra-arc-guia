@@ -4,7 +4,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { loadHymnIndex } from "@/lib/harpa-data";
 import { useMemo, useState } from "react";
 
-export const Route = createFileRoute("/harpa")({ component: HarpaPage });
+export const Route = createFileRoute("/harpa/")({ component: HarpaPage });
 
 function HarpaPage() {
   const [q, setQ] = useState("");

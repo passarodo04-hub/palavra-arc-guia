@@ -3,7 +3,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { bibleBooks } from "@/lib/bible-data";
 import { useState } from "react";
 
-export const Route = createFileRoute("/biblia")({ component: BibliaPage });
+export const Route = createFileRoute("/biblia/")({ component: BibliaPage });
 
 function BibliaPage() {
   const [tab, setTab] = useState<"old" | "new">("old");
