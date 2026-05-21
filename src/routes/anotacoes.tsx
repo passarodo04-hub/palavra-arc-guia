@@ -6,13 +6,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/anotacoes")({ component: NotesPage });
 
-// Web Speech API typings
-type SR = typeof window extends { SpeechRecognition: infer T }
-  ? T
-  : any;
-function getSpeechRecognition(): any {
+function generateId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+function getSpeechRecognition() {
   if (typeof window === "undefined") return null;
-  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || null;
+  const w = window as any;
+  return w.SpeechRecognition || w.webkitSpeechRecognition || null;
 }
 
 function NotesPage() {
@@ -95,7 +96,7 @@ function NotesPage() {
       <button
         onClick={() =>
           setEditing({
-            id: crypto.randomUUID(),
+            id: generateId(),
             title: "",
             content: "",
             category: "",
@@ -131,7 +132,6 @@ function NoteEditor({
   const interimRef = useRef<string>("");
   const shouldRestartRef = useRef(false);
 
-  // keep finalized in sync if user types
   useEffect(() => {
     finalizedRef.current = draft.content;
   }, [draft.content]);
@@ -205,7 +205,6 @@ function NoteEditor({
       rec.start();
       setIsListening(true);
     } catch {
-      // already started
       setIsListening(true);
     }
   }, []);
@@ -216,7 +215,6 @@ function NoteEditor({
       recognitionRef.current?.stop();
     } catch {}
     setIsListening(false);
-    // commit interim
     if (interimRef.current) {
       finalizedRef.current = finalizedRef.current + interimRef.current;
       interimRef.current = "";
