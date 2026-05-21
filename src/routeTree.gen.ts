@@ -21,6 +21,7 @@ import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
+import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 
 const HarpaRoute = HarpaRouteImport.update({
@@ -83,6 +84,11 @@ const BibliaBookRoute = BibliaBookRouteImport.update({
   path: '/$book',
   getParentRoute: () => BibliaRoute,
 } as any)
+const BibliaBookIndexRoute = BibliaBookIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BibliaBookRoute,
+} as any)
 const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
   id: '/$chapter',
   path: '/$chapter',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/biblia/': typeof BibliaIndexRoute
   '/harpa/': typeof HarpaIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/biblia/$book/': typeof BibliaBookIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,11 +118,11 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
   '/favoritos': typeof FavoritosRoute
-  '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia': typeof BibliaIndexRoute
   '/harpa': typeof HarpaIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/biblia/$book': typeof BibliaBookIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -132,6 +139,7 @@ export interface FileRoutesById {
   '/biblia/': typeof BibliaIndexRoute
   '/harpa/': typeof HarpaIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/biblia/$book/': typeof BibliaBookIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -149,6 +157,7 @@ export interface FileRouteTypes {
     | '/biblia/'
     | '/harpa/'
     | '/biblia/$book/$chapter'
+    | '/biblia/$book/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -157,11 +166,11 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/devocional'
     | '/favoritos'
-    | '/biblia/$book'
     | '/harpa/$id'
     | '/biblia'
     | '/harpa'
     | '/biblia/$book/$chapter'
+    | '/biblia/$book'
   id:
     | '__root__'
     | '/'
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/biblia/'
     | '/harpa/'
     | '/biblia/$book/$chapter'
+    | '/biblia/$book/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -276,6 +286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaBookRouteImport
       parentRoute: typeof BibliaRoute
     }
+    '/biblia/$book/': {
+      id: '/biblia/$book/'
+      path: '/'
+      fullPath: '/biblia/$book/'
+      preLoaderRoute: typeof BibliaBookIndexRouteImport
+      parentRoute: typeof BibliaBookRoute
+    }
     '/biblia/$book/$chapter': {
       id: '/biblia/$book/$chapter'
       path: '/$chapter'
@@ -288,10 +305,12 @@ declare module '@tanstack/react-router' {
 
 interface BibliaBookRouteChildren {
   BibliaBookChapterRoute: typeof BibliaBookChapterRoute
+  BibliaBookIndexRoute: typeof BibliaBookIndexRoute
 }
 
 const BibliaBookRouteChildren: BibliaBookRouteChildren = {
   BibliaBookChapterRoute: BibliaBookChapterRoute,
+  BibliaBookIndexRoute: BibliaBookIndexRoute,
 }
 
 const BibliaBookRouteWithChildren = BibliaBookRoute._addFileChildren(
