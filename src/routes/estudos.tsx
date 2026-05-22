@@ -13,7 +13,6 @@ import {
   Trash2,
   Star,
   Search,
-  ChevronRight,
   BookOpen,
   Clock,
   Quote,
@@ -268,5 +267,3 @@ function EstudosPage() {
     </div>
   );
 }
-
-export { ChevronRight };
