@@ -13,6 +13,7 @@ import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as EstudosRouteImport } from './routes/estudos'
 import { Route as DevocionalRouteImport } from './routes/devocional'
+import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
@@ -44,6 +45,11 @@ const EstudosRoute = EstudosRouteImport.update({
 const DevocionalRoute = DevocionalRouteImport.update({
   id: '/devocional',
   path: '/devocional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DenominacoesRoute = DenominacoesRouteImport.update({
+  id: '/denominacoes',
+  path: '/denominacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/denominacoes': typeof DenominacoesRoute
   '/devocional': typeof DevocionalRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/denominacoes': typeof DenominacoesRoute
   '/devocional': typeof DevocionalRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/denominacoes': typeof DenominacoesRoute
   '/devocional': typeof DevocionalRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/biblia'
     | '/busca'
     | '/configuracoes'
+    | '/denominacoes'
     | '/devocional'
     | '/estudos'
     | '/favoritos'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/busca'
     | '/configuracoes'
+    | '/denominacoes'
     | '/devocional'
     | '/estudos'
     | '/favoritos'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/biblia'
     | '/busca'
     | '/configuracoes'
+    | '/denominacoes'
     | '/devocional'
     | '/estudos'
     | '/favoritos'
@@ -219,6 +231,7 @@ export interface RootRouteChildren {
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
+  DenominacoesRoute: typeof DenominacoesRoute
   DevocionalRoute: typeof DevocionalRoute
   EstudosRoute: typeof EstudosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/devocional'
       fullPath: '/devocional'
       preLoaderRoute: typeof DevocionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/denominacoes': {
+      id: '/denominacoes'
+      path: '/denominacoes'
+      fullPath: '/denominacoes'
+      preLoaderRoute: typeof DenominacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configuracoes': {
@@ -398,6 +418,7 @@ const rootRouteChildren: RootRouteChildren = {
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
+  DenominacoesRoute: DenominacoesRoute,
   DevocionalRoute: DevocionalRoute,
   EstudosRoute: EstudosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
@@ -406,3 +427,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
