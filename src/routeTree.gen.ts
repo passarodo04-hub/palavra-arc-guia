@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EstudosRouteImport } from './routes/estudos'
 import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as BuscaRouteImport } from './routes/busca'
@@ -32,6 +33,11 @@ const HarpaRoute = HarpaRouteImport.update({
 const FavoritosRoute = FavoritosRouteImport.update({
   id: '/favoritos',
   path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstudosRoute = EstudosRouteImport.update({
+  id: '/estudos',
+  path: '/estudos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevocionalRoute = DevocionalRouteImport.update({
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
+  '/estudos': typeof EstudosRoute
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/biblia/$book': typeof BibliaBookRouteWithChildren
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
+  '/estudos': typeof EstudosRoute
   '/favoritos': typeof FavoritosRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia': typeof BibliaIndexRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
+  '/estudos': typeof EstudosRoute
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/biblia/$book': typeof BibliaBookRouteWithChildren
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/busca'
     | '/configuracoes'
     | '/devocional'
+    | '/estudos'
     | '/favoritos'
     | '/harpa'
     | '/biblia/$book'
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/busca'
     | '/configuracoes'
     | '/devocional'
+    | '/estudos'
     | '/favoritos'
     | '/harpa/$id'
     | '/biblia'
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/busca'
     | '/configuracoes'
     | '/devocional'
+    | '/estudos'
     | '/favoritos'
     | '/harpa'
     | '/biblia/$book'
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   BuscaRoute: typeof BuscaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   DevocionalRoute: typeof DevocionalRoute
+  EstudosRoute: typeof EstudosRoute
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
 }
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/favoritos'
       fullPath: '/favoritos'
       preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estudos': {
+      id: '/estudos'
+      path: '/estudos'
+      fullPath: '/estudos'
+      preLoaderRoute: typeof EstudosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/devocional': {
@@ -349,9 +369,20 @@ const rootRouteChildren: RootRouteChildren = {
   BuscaRoute: BuscaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   DevocionalRoute: DevocionalRoute,
+  EstudosRoute: EstudosRoute,
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
