@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EstudosRouteImport } from './routes/estudos'
 import { Route as DevocionalRouteImport } from './routes/devocional'
+import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
@@ -20,6 +22,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
+import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
+import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
@@ -34,9 +38,19 @@ const FavoritosRoute = FavoritosRouteImport.update({
   path: '/favoritos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EstudosRoute = EstudosRouteImport.update({
+  id: '/estudos',
+  path: '/estudos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevocionalRoute = DevocionalRouteImport.update({
   id: '/devocional',
   path: '/devocional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DenominacoesRoute = DenominacoesRouteImport.update({
+  id: '/denominacoes',
+  path: '/denominacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
@@ -79,6 +93,16 @@ const HarpaIdRoute = HarpaIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => HarpaRoute,
 } as any)
+const EstudosIdRoute = EstudosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => EstudosRoute,
+} as any)
+const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DenominacoesRoute,
+} as any)
 const BibliaBookRoute = BibliaBookRouteImport.update({
   id: '/$book',
   path: '/$book',
@@ -101,10 +125,14 @@ export interface FileRoutesByFullPath {
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
+  '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/denominacoes/$id': typeof DenominacoesIdRoute
+  '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia/': typeof BibliaIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -116,8 +144,12 @@ export interface FileRoutesByTo {
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
+  '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
+  '/denominacoes/$id': typeof DenominacoesIdRoute
+  '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia': typeof BibliaIndexRoute
   '/harpa': typeof HarpaIndexRoute
@@ -131,10 +163,14 @@ export interface FileRoutesById {
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
+  '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/denominacoes/$id': typeof DenominacoesIdRoute
+  '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/biblia/': typeof BibliaIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -149,10 +185,14 @@ export interface FileRouteTypes {
     | '/biblia'
     | '/busca'
     | '/configuracoes'
+    | '/denominacoes'
     | '/devocional'
+    | '/estudos'
     | '/favoritos'
     | '/harpa'
     | '/biblia/$book'
+    | '/denominacoes/$id'
+    | '/estudos/$id'
     | '/harpa/$id'
     | '/biblia/'
     | '/harpa/'
@@ -164,8 +204,12 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/busca'
     | '/configuracoes'
+    | '/denominacoes'
     | '/devocional'
+    | '/estudos'
     | '/favoritos'
+    | '/denominacoes/$id'
+    | '/estudos/$id'
     | '/harpa/$id'
     | '/biblia'
     | '/harpa'
@@ -178,10 +222,14 @@ export interface FileRouteTypes {
     | '/biblia'
     | '/busca'
     | '/configuracoes'
+    | '/denominacoes'
     | '/devocional'
+    | '/estudos'
     | '/favoritos'
     | '/harpa'
     | '/biblia/$book'
+    | '/denominacoes/$id'
+    | '/estudos/$id'
     | '/harpa/$id'
     | '/biblia/'
     | '/harpa/'
@@ -195,7 +243,9 @@ export interface RootRouteChildren {
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
+  DenominacoesRoute: typeof DenominacoesRouteWithChildren
   DevocionalRoute: typeof DevocionalRoute
+  EstudosRoute: typeof EstudosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
 }
@@ -216,11 +266,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavoritosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/estudos': {
+      id: '/estudos'
+      path: '/estudos'
+      fullPath: '/estudos'
+      preLoaderRoute: typeof EstudosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/devocional': {
       id: '/devocional'
       path: '/devocional'
       fullPath: '/devocional'
       preLoaderRoute: typeof DevocionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/denominacoes': {
+      id: '/denominacoes'
+      path: '/denominacoes'
+      fullPath: '/denominacoes'
+      preLoaderRoute: typeof DenominacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configuracoes': {
@@ -279,6 +343,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HarpaIdRouteImport
       parentRoute: typeof HarpaRoute
     }
+    '/estudos/$id': {
+      id: '/estudos/$id'
+      path: '/$id'
+      fullPath: '/estudos/$id'
+      preLoaderRoute: typeof EstudosIdRouteImport
+      parentRoute: typeof EstudosRoute
+    }
+    '/denominacoes/$id': {
+      id: '/denominacoes/$id'
+      path: '/$id'
+      fullPath: '/denominacoes/$id'
+      preLoaderRoute: typeof DenominacoesIdRouteImport
+      parentRoute: typeof DenominacoesRoute
+    }
     '/biblia/$book': {
       id: '/biblia/$book'
       path: '/$book'
@@ -330,6 +408,29 @@ const BibliaRouteChildren: BibliaRouteChildren = {
 const BibliaRouteWithChildren =
   BibliaRoute._addFileChildren(BibliaRouteChildren)
 
+interface DenominacoesRouteChildren {
+  DenominacoesIdRoute: typeof DenominacoesIdRoute
+}
+
+const DenominacoesRouteChildren: DenominacoesRouteChildren = {
+  DenominacoesIdRoute: DenominacoesIdRoute,
+}
+
+const DenominacoesRouteWithChildren = DenominacoesRoute._addFileChildren(
+  DenominacoesRouteChildren,
+)
+
+interface EstudosRouteChildren {
+  EstudosIdRoute: typeof EstudosIdRoute
+}
+
+const EstudosRouteChildren: EstudosRouteChildren = {
+  EstudosIdRoute: EstudosIdRoute,
+}
+
+const EstudosRouteWithChildren =
+  EstudosRoute._addFileChildren(EstudosRouteChildren)
+
 interface HarpaRouteChildren {
   HarpaIdRoute: typeof HarpaIdRoute
   HarpaIndexRoute: typeof HarpaIndexRoute
@@ -348,20 +449,12 @@ const rootRouteChildren: RootRouteChildren = {
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
+  DenominacoesRoute: DenominacoesRouteWithChildren,
   DevocionalRoute: DevocionalRoute,
+  EstudosRoute: EstudosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
