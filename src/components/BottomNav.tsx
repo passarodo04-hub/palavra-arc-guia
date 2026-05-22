@@ -1,14 +1,13 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { BookOpen, Music, Sun, NotebookPen, Heart, Home } from "lucide-react";
+import { BookOpen, Music, Sparkles, Landmark, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/", label: "Início", icon: Home },
   { to: "/biblia", label: "Bíblia", icon: BookOpen },
   { to: "/harpa", label: "Harpa", icon: Music },
-  { to: "/devocional", label: "Devocional", icon: Sun },
-  { to: "/anotacoes", label: "Notas", icon: NotebookPen },
-  { to: "/favoritos", label: "Favoritos", icon: Heart },
+  { to: "/estudos", label: "Estudos", icon: Sparkles },
+  { to: "/denominacoes", label: "Igrejas", icon: Landmark },
 ] as const;
 
 export function BottomNav() {
