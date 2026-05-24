@@ -4,7 +4,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { denominacoes } from "@/lib/denominacoes-data";
 import { Search, Landmark, ChevronRight } from "lucide-react";
 
-export const Route = createFileRoute("/denominacoes")({ component: DenominacoesPage });
+export const Route = createFileRoute("/denominacoes/")({ component: DenominacoesPage });
 
 function DenominacoesPage() {
   const [q, setQ] = useState("");
