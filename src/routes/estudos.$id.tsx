@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { useLocalStorage } from "@/lib/storage";
-import type { SavedStudy } from "./estudos";
+import type { SavedStudy } from "./estudos.index";
 import { ChevronLeft, Clock, BookOpen, Quote, Sparkles, Star, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/estudos/$id")({ component: EstudoDetail });
