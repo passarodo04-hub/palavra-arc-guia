@@ -18,7 +18,7 @@ import {
   Quote,
 } from "lucide-react";
 
-export const Route = createFileRoute("/estudos")({ component: EstudosPage });
+export const Route = createFileRoute("/estudos/")({ component: EstudosPage });
 
 export type SavedStudy = StudyResult & {
   id: string;
