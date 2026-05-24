@@ -38,27 +38,6 @@ export const denominacoes: Denominacao[] = [
     tags: ["pentecostal", "ad", "brasil"],
   },
   {
-    id: "ministerio-belem",
-    name: "Assembleia de Deus Ministério Belém",
-    shortName: "AD Belém",
-    founded: "1911 / Ministério organizado a partir de 1980",
-    founders: ["Daniel Berg", "Gunnar Vingren"],
-    notablePeople: ["José Wellington Bezerra da Costa", "José Wellington Costa Júnior"],
-    origin: "Belém do Pará — núcleo em São Paulo",
-    headquarters: "Rua Dr. Fomm, 140 — Belenzinho, São Paulo/SP",
-    history:
-      "O Ministério Belém nasceu como expansão da obra iniciada por Daniel Berg e Gunnar Vingren. Em São Paulo, consolidou-se como um dos maiores e mais influentes ministérios da Assembleia de Deus, com forte vocação missionária.",
-    expansion:
-      "Possui congregações em todo o Brasil e em mais de 40 países, com milhares de templos vinculados.",
-    brazil:
-      "É considerado o maior ministério da Assembleia de Deus no mundo em número de membros e templos.",
-    curiosities: [
-      "A sede no Belenzinho/SP é uma das maiores igrejas evangélicas da América Latina.",
-      "O pastor José Wellington presidiu a CGADB por décadas.",
-    ],
-    tags: ["pentecostal", "ad", "belem"],
-  },
-  {
     id: "congregacao-crista",
     name: "Congregação Cristã no Brasil",
     shortName: "CCB",

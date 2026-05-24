@@ -102,6 +102,44 @@ export const analyzeSermon = createServerFn({ method: "POST" })
 
     const trimmed = transcript.slice(0, 30000);
 
+    // === Step 1: polish raw transcript (punctuation, pauses, sentence detection) ===
+    let polished = trimmed;
+    try {
+      const polishRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            {
+              role: "system",
+              content:
+                "Você refina transcrições automáticas de sermões em português brasileiro. Preserve EXATAMENTE as palavras faladas (palavra por palavra), sem reescrever, resumir, parafrasear ou adicionar conteúdo. Apenas: (1) adicione pontuação correta (vírgulas, pontos, interrogação, exclamação), (2) capitalize início de frase e nomes próprios, (3) separe em parágrafos curtos onde houver pausa natural ou mudança de assunto, (4) corrija erros óbvios de reconhecimento de voz quando o contexto cristão deixar claro (ex: 'jesus' -> 'Jesus', referências bíblicas mal grafadas). NÃO invente frases, NÃO traduza, NÃO remova trechos. Retorne apenas o texto refinado.",
+            },
+            { role: "user", content: trimmed },
+          ],
+        }),
+      });
+      if (polishRes.ok) {
+        const pj = await polishRes.json();
+        const pc: string = pj?.choices?.[0]?.message?.content?.trim() ?? "";
+        if (pc && pc.length > trimmed.length * 0.6) polished = pc;
+      }
+    } catch (e) {
+      console.warn("polish step failed", e);
+    }
+
+    if (containsInappropriate(polished)) {
+      return {
+        ok: false,
+        blocked: true,
+        reason: "Conteúdo bloqueado: linguagem inadequada detectada após refinamento.",
+      };
+    }
+
     const system = `Você é um assistente cristão especializado em organizar estudos a partir de sermões e pregações em português.
 REGRAS DE SEGURANÇA (obrigatórias):
 - Recuse e responda com {"blocked":true,"reason":"..."} se o conteúdo for promíscuo, vulgar, obsceno, anti-cristão ou contiver palavrões explícitos.
@@ -114,9 +152,9 @@ Retorne SOMENTE JSON válido, sem markdown.`;
 TÍTULO (se houver): ${data.title || "(não informado)"}
 LINK (se houver): ${url || "(não informado)"}
 
-TRANSCRIÇÃO:
+TRANSCRIÇÃO REFINADA (palavra por palavra do pregador):
 """
-${trimmed}
+${polished}
 """
 
 Gere um JSON com os campos:

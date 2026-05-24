@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
 import { getBook, loadChapter } from "@/lib/bible-data";
+import { useTranslation } from "@/lib/translation-context";
 import { ChevronLeft, ChevronRight, Heart, List } from "lucide-react";
 import { useLocalStorage } from "@/lib/storage";
 import { useEffect, useRef, useState } from "react";
@@ -24,11 +25,13 @@ function ReaderPage() {
   const [highlights, setHighlights] = useLocalStorage<string[]>("highlight-verses", []);
   const [fontSize, setFontSize] = useLocalStorage<number>("font-size", 18);
   const [verseInput, setVerseInput] = useState("");
-  const { data: ch, isLoading } = useQuery({
-    queryKey: ["chapter", book, chNum],
-    queryFn: () => loadChapter(book, chNum),
+  const { translation } = useTranslation();
+  const { data: ch, isLoading, error } = useQuery({
+    queryKey: ["chapter", translation, book, chNum],
+    queryFn: () => loadChapter(book, chNum, translation),
     staleTime: Infinity,
     gcTime: 30 * 60 * 1000,
+    retry: false,
   });
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
   useEffect(() => {
@@ -58,7 +61,10 @@ function ReaderPage() {
         <Link to="/biblia/$book" params={{ book }} className="text-sm text-muted-foreground inline-flex items-center gap-1">
           <List className="size-4" /> Capítulos
         </Link>
-        <div className="font-serif text-base">{bookInfo?.name} {chNum} <span className="text-xs text-muted-foreground">/ {totalCh}</span></div>
+        <div className="font-serif text-base">
+          {bookInfo?.name} {chNum} <span className="text-xs text-muted-foreground">/ {totalCh}</span>
+          <span className="ml-2 text-[10px] uppercase tracking-widest text-gold">{translation}</span>
+        </div>
         <div className="flex gap-1">
           <button onClick={() => setFontSize(Math.max(14, fontSize - 2))} className="size-8 rounded-full bg-secondary text-xs">A-</button>
           <button onClick={() => setFontSize(Math.min(28, fontSize + 2))} className="size-8 rounded-full bg-secondary text-sm">A+</button>
@@ -94,6 +100,11 @@ function ReaderPage() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="h-5 bg-secondary rounded" />
             ))}
+          </div>
+        ) : error ? (
+          <div className="rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+            Esta tradução ({translation.toUpperCase()}) ainda não está disponível para este livro.
+            <div className="mt-2 text-xs">Volte para Bíblia e selecione outra tradução.</div>
           </div>
         ) : ch ? (
           <div className="space-y-4">
