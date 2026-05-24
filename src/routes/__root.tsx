@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { TranslationProvider } from "@/lib/translation-context";
 
 function NotFoundComponent() {
   return (
@@ -113,7 +114,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <TranslationProvider>
+        <Outlet />
+      </TranslationProvider>
     </QueryClientProvider>
   );
 }
