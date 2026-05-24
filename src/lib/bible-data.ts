@@ -92,22 +92,38 @@ export function getBook(id: string): BibleBook | undefined {
   return _bookMap.get(id);
 }
 
-// === Lazy loading with in-memory cache ===
+// === Translations ===
+export type Translation = "arc" | "nvi";
+export const TRANSLATIONS: { id: Translation; name: string; full: string }[] = [
+  { id: "arc", name: "ARC", full: "Almeida Revista e Corrigida" },
+  { id: "nvi", name: "NVI", full: "Nova Versão Internacional" },
+];
+
+function urlFor(tr: Translation, id: string) {
+  return tr === "arc" ? `/data/bible/${id}.json` : `/data/bible/nvi/${id}.json`;
+}
+
+// === Lazy loading with in-memory cache (per translation) ===
 const _bookCache = new Map<string, Promise<string[][]>>();
-export function loadBook(id: string): Promise<string[][]> {
-  let p = _bookCache.get(id);
+export function loadBook(id: string, tr: Translation = "arc"): Promise<string[][]> {
+  const k = `${tr}:${id}`;
+  let p = _bookCache.get(k);
   if (!p) {
-    p = fetch(`/data/bible/${id}.json`).then((r) => {
+    p = fetch(urlFor(tr, id)).then((r) => {
       if (!r.ok) throw new Error("Livro não encontrado");
       return r.json();
     });
-    _bookCache.set(id, p);
+    _bookCache.set(k, p);
   }
   return p;
 }
 
-export async function loadChapter(id: string, chapter: number): Promise<Chapter | null> {
-  const book = await loadBook(id);
+export async function loadChapter(
+  id: string,
+  chapter: number,
+  tr: Translation = "arc",
+): Promise<Chapter | null> {
+  const book = await loadBook(id, tr);
   const arr = book[chapter - 1];
   if (!arr) return null;
   return {
@@ -115,6 +131,15 @@ export async function loadChapter(id: string, chapter: number): Promise<Chapter 
     chapter,
     verses: arr.map((text, i) => ({ verse: i + 1, text })),
   };
+}
+
+export async function isTranslationAvailable(tr: Translation): Promise<boolean> {
+  try {
+    const r = await fetch(urlFor(tr, "gn"), { method: "HEAD" });
+    return r.ok;
+  } catch {
+    return false;
+  }
 }
 
 // === Full bible (for search) — fetched once, cached ===
