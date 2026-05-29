@@ -148,7 +148,7 @@ export type CloudSermon = {
   objective: string | null;
   duration_min: number | null;
   audience: string | null;
-  content: unknown;
+  content: any;
   personal_notes: string;
   favorite: boolean;
   created_at: string;
@@ -203,9 +203,10 @@ export const saveSermon = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }) => {
     const { supabase, userId } = context;
+    const payload: any = { ...data, user_id: userId, content: data.content ?? {} };
     const { data: row, error } = await supabase
       .from("sermons")
-      .upsert({ ...data, user_id: userId }, { onConflict: "id" })
+      .upsert(payload, { onConflict: "id" })
       .select()
       .single();
     if (error) throw new Error(error.message);
