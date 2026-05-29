@@ -14,7 +14,189 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      favorite_hymns: {
+        Row: {
+          created_at: string
+          hymn_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          hymn_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          hymn_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      favorite_verses: {
+        Row: {
+          book: string
+          chapter: number
+          created_at: string
+          id: string
+          text: string
+          user_id: string
+          verse: number
+        }
+        Insert: {
+          book: string
+          chapter: number
+          created_at?: string
+          id?: string
+          text: string
+          user_id: string
+          verse: number
+        }
+        Update: {
+          book?: string
+          chapter?: number
+          created_at?: string
+          id?: string
+          text?: string
+          user_id?: string
+          verse?: number
+        }
+        Relationships: []
+      }
+      notes: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bible_translation: string
+          created_at: string
+          display_name: string | null
+          id: string
+          theme: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bible_translation?: string
+          created_at?: string
+          display_name?: string | null
+          id: string
+          theme?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bible_translation?: string
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          theme?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reading_history: {
+        Row: {
+          book: string
+          chapter: number
+          id: string
+          opened_at: string
+          user_id: string
+        }
+        Insert: {
+          book: string
+          chapter: number
+          id?: string
+          opened_at?: string
+          user_id: string
+        }
+        Update: {
+          book?: string
+          chapter?: number
+          id?: string
+          opened_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sermons: {
+        Row: {
+          audience: string | null
+          content: Json
+          created_at: string
+          duration_min: number | null
+          favorite: boolean
+          id: string
+          objective: string | null
+          personal_notes: string
+          subject: string | null
+          theme: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          audience?: string | null
+          content: Json
+          created_at?: string
+          duration_min?: number | null
+          favorite?: boolean
+          id?: string
+          objective?: string | null
+          personal_notes?: string
+          subject?: string | null
+          theme?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          audience?: string | null
+          content?: Json
+          created_at?: string
+          duration_min?: number | null
+          favorite?: boolean
+          id?: string
+          objective?: string | null
+          personal_notes?: string
+          subject?: string | null
+          theme?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
