@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
@@ -35,6 +36,11 @@ import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$ch
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/devocional': typeof DevocionalRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/harpa'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/biblia/$book'
     | '/denominacoes/$id'
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/devocional'
     | '/favoritos'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/denominacoes/$id'
     | '/estudos/$id'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/harpa'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/biblia/$book'
     | '/denominacoes/$id'
@@ -293,6 +305,7 @@ export interface RootRouteChildren {
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -533,6 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
   LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
