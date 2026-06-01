@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark } from "lucide-react";
+import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2 } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { getDailyDevocional } from "@/lib/devocional-data";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const dev = getDailyDevocional();
+  const { user } = useAuth();
   const quickItems = [
     { to: "/biblia", icon: BookOpen, title: "Bíblia", desc: "Almeida Revista e Corrigida" },
     { to: "/harpa", icon: Music, title: "Harpa Cristã", desc: "Hinos de adoração" },
@@ -26,6 +28,13 @@ function Index() {
       {/* Hero */}
       <header className="relative overflow-hidden bg-gradient-spiritual text-primary-foreground">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 20% 10%, white, transparent 50%)" }} />
+        <Link
+          to={user ? "/conta" : "/login"}
+          className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/10 backdrop-blur px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-white/20"
+        >
+          <UserCircle2 className="size-4" />
+          {user ? "Minha conta" : "Entrar"}
+        </Link>
         <div className="relative mx-auto max-w-3xl px-6 pt-12 pb-16 animate-fade-up">
           <div className="flex items-center gap-2 text-gold">
             <Sparkles className="size-4" />
