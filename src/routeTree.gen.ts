@@ -9,11 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as EstudosRouteImport } from './routes/estudos'
 import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as DenominacoesRouteImport } from './routes/denominacoes'
+import { Route as ContaRouteImport } from './routes/conta'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
@@ -30,6 +34,21 @@ import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HarpaRoute = HarpaRouteImport.update({
   id: '/harpa',
   path: '/harpa',
@@ -53,6 +72,11 @@ const DevocionalRoute = DevocionalRouteImport.update({
 const DenominacoesRoute = DenominacoesRouteImport.update({
   id: '/denominacoes',
   path: '/denominacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContaRoute = ContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
@@ -137,11 +161,15 @@ export interface FileRoutesByFullPath {
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
@@ -158,8 +186,12 @@ export interface FileRoutesByTo {
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/conta': typeof ContaRoute
   '/devocional': typeof DevocionalRoute
   '/favoritos': typeof FavoritosRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -177,11 +209,15 @@ export interface FileRoutesById {
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
@@ -201,11 +237,15 @@ export interface FileRouteTypes {
     | '/biblia'
     | '/busca'
     | '/configuracoes'
+    | '/conta'
     | '/denominacoes'
     | '/devocional'
     | '/estudos'
     | '/favoritos'
     | '/harpa'
+    | '/login'
+    | '/reset-password'
+    | '/signup'
     | '/biblia/$book'
     | '/denominacoes/$id'
     | '/estudos/$id'
@@ -222,8 +262,12 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/busca'
     | '/configuracoes'
+    | '/conta'
     | '/devocional'
     | '/favoritos'
+    | '/login'
+    | '/reset-password'
+    | '/signup'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -240,11 +284,15 @@ export interface FileRouteTypes {
     | '/biblia'
     | '/busca'
     | '/configuracoes'
+    | '/conta'
     | '/denominacoes'
     | '/devocional'
     | '/estudos'
     | '/favoritos'
     | '/harpa'
+    | '/login'
+    | '/reset-password'
+    | '/signup'
     | '/biblia/$book'
     | '/denominacoes/$id'
     | '/estudos/$id'
@@ -263,15 +311,40 @@ export interface RootRouteChildren {
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
+  ContaRoute: typeof ContaRoute
   DenominacoesRoute: typeof DenominacoesRouteWithChildren
   DevocionalRoute: typeof DevocionalRoute
   EstudosRoute: typeof EstudosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/harpa': {
       id: '/harpa'
       path: '/harpa'
@@ -305,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/denominacoes'
       fullPath: '/denominacoes'
       preLoaderRoute: typeof DenominacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conta': {
+      id: '/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof ContaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configuracoes': {
@@ -487,11 +567,15 @@ const rootRouteChildren: RootRouteChildren = {
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
+  ContaRoute: ContaRoute,
   DenominacoesRoute: DenominacoesRouteWithChildren,
   DevocionalRoute: DevocionalRoute,
   EstudosRoute: EstudosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
