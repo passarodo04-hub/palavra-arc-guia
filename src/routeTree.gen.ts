@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as EstudosRouteImport } from './routes/estudos'
@@ -30,6 +31,11 @@ import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HarpaRoute = HarpaRouteImport.update({
   id: '/harpa',
   path: '/harpa',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
+  '/login': typeof LoginRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
@@ -160,6 +167,7 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof ConfiguracoesRoute
   '/devocional': typeof DevocionalRoute
   '/favoritos': typeof FavoritosRoute
+  '/login': typeof LoginRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
+  '/login': typeof LoginRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/estudos'
     | '/favoritos'
     | '/harpa'
+    | '/login'
     | '/biblia/$book'
     | '/denominacoes/$id'
     | '/estudos/$id'
@@ -224,6 +234,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/devocional'
     | '/favoritos'
+    | '/login'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -245,6 +256,7 @@ export interface FileRouteTypes {
     | '/estudos'
     | '/favoritos'
     | '/harpa'
+    | '/login'
     | '/biblia/$book'
     | '/denominacoes/$id'
     | '/estudos/$id'
@@ -268,10 +280,18 @@ export interface RootRouteChildren {
   EstudosRoute: typeof EstudosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/harpa': {
       id: '/harpa'
       path: '/harpa'
@@ -492,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   EstudosRoute: EstudosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
