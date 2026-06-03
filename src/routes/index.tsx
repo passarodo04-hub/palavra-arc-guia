@@ -4,6 +4,7 @@ import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight,
 import { BottomNav } from "@/components/BottomNav";
 import { getDailyDevocional } from "@/lib/devocional-data";
 import { useAuth } from "@/lib/auth-context";
+import { AdSlot } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -99,6 +100,14 @@ function Index() {
             </Link>
           </div>
         </section>
+
+        <AdSlot slot="home-bottom" />
+
+        <footer className="mt-10 text-center text-xs text-muted-foreground space-x-4">
+          <Link to="/privacidade" className="hover:text-foreground">Privacidade</Link>
+          <span>·</span>
+          <Link to="/termos" className="hover:text-foreground">Termos</Link>
+        </footer>
       </main>
 
       <BottomNav />
