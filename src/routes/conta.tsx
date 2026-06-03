@@ -134,6 +134,12 @@ function ContaPage() {
             <Trash2 className="size-4" /> Excluir conta permanentemente
           </button>
         </section>
+
+        <section className="text-center text-xs text-muted-foreground space-x-4 pt-2">
+          <Link to="/privacidade" className="hover:text-foreground">Privacidade</Link>
+          <span>·</span>
+          <Link to="/termos" className="hover:text-foreground">Termos</Link>
+        </section>
       </main>
       <BottomNav />
     </div>

@@ -176,3 +176,12 @@
   }
   .animate-fade-up { animation: fade-up 0.5s ease-out both; }
 }
+
+/* PWA: respect iOS safe areas in standalone mode (status bar + home indicator) */
+@layer base {
+  html, body { -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+  body { padding-top: env(safe-area-inset-top); }
+  @supports (-webkit-touch-callout: none) {
+    input, textarea, select { font-size: 16px; } /* prevent iOS zoom on focus */
+  }
+}
