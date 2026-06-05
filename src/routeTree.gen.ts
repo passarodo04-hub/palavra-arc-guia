@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResumoRouteImport } from './routes/resumo'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as LoginRouteImport } from './routes/login'
@@ -44,6 +45,11 @@ const TermosRoute = TermosRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumoRoute = ResumoRouteImport.update({
+  id: '/resumo',
+  path: '/resumo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resumo': typeof ResumoRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
@@ -206,6 +213,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resumo': typeof ResumoRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
@@ -234,6 +242,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resumo': typeof ResumoRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
@@ -264,6 +273,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacidade'
     | '/reset-password'
+    | '/resumo'
     | '/signup'
     | '/termos'
     | '/biblia/$book'
@@ -288,6 +298,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacidade'
     | '/reset-password'
+    | '/resumo'
     | '/signup'
     | '/termos'
     | '/denominacoes/$id'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacidade'
     | '/reset-password'
+    | '/resumo'
     | '/signup'
     | '/termos'
     | '/biblia/$book'
@@ -344,6 +356,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ResumoRoute: typeof ResumoRoute
   SignupRoute: typeof SignupRoute
   TermosRoute: typeof TermosRoute
 }
@@ -362,6 +375,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resumo': {
+      id: '/resumo'
+      path: '/resumo'
+      fullPath: '/resumo'
+      preLoaderRoute: typeof ResumoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -616,9 +636,20 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ResumoRoute: ResumoRoute,
   SignupRoute: SignupRoute,
   TermosRoute: TermosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
