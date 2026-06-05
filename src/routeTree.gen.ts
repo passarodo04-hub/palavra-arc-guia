@@ -26,6 +26,7 @@ import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
 import { Route as AnotacoesRouteImport } from './routes/anotacoes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResumoIndexRouteImport } from './routes/resumo.index'
 import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
 import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
@@ -122,6 +123,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResumoIndexRoute = ResumoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResumoRoute,
+} as any)
 const HarpaIndexRoute = HarpaIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -188,7 +194,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/resumo': typeof ResumoRoute
+  '/resumo': typeof ResumoRouteWithChildren
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
+  '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
@@ -213,7 +220,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/resumo': typeof ResumoRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
@@ -223,6 +229,7 @@ export interface FileRoutesByTo {
   '/denominacoes': typeof DenominacoesIndexRoute
   '/estudos': typeof EstudosIndexRoute
   '/harpa': typeof HarpaIndexRoute
+  '/resumo': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/biblia/$book': typeof BibliaBookIndexRoute
 }
@@ -242,7 +249,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/resumo': typeof ResumoRoute
+  '/resumo': typeof ResumoRouteWithChildren
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
@@ -253,6 +260,7 @@ export interface FileRoutesById {
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
+  '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
@@ -284,6 +292,7 @@ export interface FileRouteTypes {
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
+    | '/resumo/'
     | '/biblia/$book/$chapter'
     | '/biblia/$book/'
   fileRoutesByTo: FileRoutesByTo
@@ -298,7 +307,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacidade'
     | '/reset-password'
-    | '/resumo'
     | '/signup'
     | '/termos'
     | '/denominacoes/$id'
@@ -308,6 +316,7 @@ export interface FileRouteTypes {
     | '/denominacoes'
     | '/estudos'
     | '/harpa'
+    | '/resumo'
     | '/biblia/$book/$chapter'
     | '/biblia/$book'
   id:
@@ -337,6 +346,7 @@ export interface FileRouteTypes {
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
+    | '/resumo/'
     | '/biblia/$book/$chapter'
     | '/biblia/$book/'
   fileRoutesById: FileRoutesById
@@ -356,7 +366,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  ResumoRoute: typeof ResumoRoute
+  ResumoRoute: typeof ResumoRouteWithChildren
   SignupRoute: typeof SignupRoute
   TermosRoute: typeof TermosRoute
 }
@@ -481,6 +491,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/resumo/': {
+      id: '/resumo/'
+      path: '/'
+      fullPath: '/resumo/'
+      preLoaderRoute: typeof ResumoIndexRouteImport
+      parentRoute: typeof ResumoRoute
     }
     '/harpa/': {
       id: '/harpa/'
@@ -621,6 +638,17 @@ const HarpaRouteChildren: HarpaRouteChildren = {
 
 const HarpaRouteWithChildren = HarpaRoute._addFileChildren(HarpaRouteChildren)
 
+interface ResumoRouteChildren {
+  ResumoIndexRoute: typeof ResumoIndexRoute
+}
+
+const ResumoRouteChildren: ResumoRouteChildren = {
+  ResumoIndexRoute: ResumoIndexRoute,
+}
+
+const ResumoRouteWithChildren =
+  ResumoRoute._addFileChildren(ResumoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnotacoesRoute: AnotacoesRoute,
@@ -636,7 +664,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  ResumoRoute: ResumoRoute,
+  ResumoRoute: ResumoRouteWithChildren,
   SignupRoute: SignupRoute,
   TermosRoute: TermosRoute,
 }
