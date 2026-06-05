@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2 } from "lucide-react";
+import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { getDailyDevocional } from "@/lib/devocional-data";
 import { useAuth } from "@/lib/auth-context";
@@ -15,6 +15,7 @@ function Index() {
   const { user } = useAuth();
   const quickItems = [
     { to: "/biblia", icon: BookOpen, title: "Bíblia", desc: "Almeida Revista e Corrigida" },
+    { to: "/resumo", icon: BookOpenCheck, title: "Resumo Bíblico", desc: "Visão geral dos 66 livros" },
     { to: "/harpa", icon: Music, title: "Harpa Cristã", desc: "Hinos de adoração" },
     { to: "/devocional", icon: Sun, title: "Devocional", desc: "Mensagem do dia" },
     { to: "/estudos", icon: Sparkles, title: "Estudos IA", desc: "Sermões organizados" },

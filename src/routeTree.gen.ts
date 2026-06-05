@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResumoRouteImport } from './routes/resumo'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as LoginRouteImport } from './routes/login'
@@ -25,10 +26,12 @@ import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
 import { Route as AnotacoesRouteImport } from './routes/anotacoes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResumoIndexRouteImport } from './routes/resumo.index'
 import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
 import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
+import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
@@ -44,6 +47,11 @@ const TermosRoute = TermosRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumoRoute = ResumoRouteImport.update({
+  id: '/resumo',
+  path: '/resumo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -116,6 +124,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResumoIndexRoute = ResumoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResumoRoute,
+} as any)
 const HarpaIndexRoute = HarpaIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -135,6 +148,11 @@ const BibliaIndexRoute = BibliaIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BibliaRoute,
+} as any)
+const ResumoBookRoute = ResumoBookRouteImport.update({
+  id: '/$book',
+  path: '/$book',
+  getParentRoute: () => ResumoRoute,
 } as any)
 const HarpaIdRoute = HarpaIdRouteImport.update({
   id: '/$id',
@@ -182,16 +200,19 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resumo': typeof ResumoRouteWithChildren
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
+  '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
+  '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
@@ -211,10 +232,12 @@ export interface FileRoutesByTo {
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
+  '/resumo/$book': typeof ResumoBookRoute
   '/biblia': typeof BibliaIndexRoute
   '/denominacoes': typeof DenominacoesIndexRoute
   '/estudos': typeof EstudosIndexRoute
   '/harpa': typeof HarpaIndexRoute
+  '/resumo': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/biblia/$book': typeof BibliaBookIndexRoute
 }
@@ -234,16 +257,19 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resumo': typeof ResumoRouteWithChildren
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
+  '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
+  '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
@@ -264,16 +290,19 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacidade'
     | '/reset-password'
+    | '/resumo'
     | '/signup'
     | '/termos'
     | '/biblia/$book'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
+    | '/resumo/$book'
     | '/biblia/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
+    | '/resumo/'
     | '/biblia/$book/$chapter'
     | '/biblia/$book/'
   fileRoutesByTo: FileRoutesByTo
@@ -293,10 +322,12 @@ export interface FileRouteTypes {
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
+    | '/resumo/$book'
     | '/biblia'
     | '/denominacoes'
     | '/estudos'
     | '/harpa'
+    | '/resumo'
     | '/biblia/$book/$chapter'
     | '/biblia/$book'
   id:
@@ -315,16 +346,19 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacidade'
     | '/reset-password'
+    | '/resumo'
     | '/signup'
     | '/termos'
     | '/biblia/$book'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
+    | '/resumo/$book'
     | '/biblia/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
+    | '/resumo/'
     | '/biblia/$book/$chapter'
     | '/biblia/$book/'
   fileRoutesById: FileRoutesById
@@ -344,6 +378,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ResumoRoute: typeof ResumoRouteWithChildren
   SignupRoute: typeof SignupRoute
   TermosRoute: typeof TermosRoute
 }
@@ -362,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resumo': {
+      id: '/resumo'
+      path: '/resumo'
+      fullPath: '/resumo'
+      preLoaderRoute: typeof ResumoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -462,6 +504,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resumo/': {
+      id: '/resumo/'
+      path: '/'
+      fullPath: '/resumo/'
+      preLoaderRoute: typeof ResumoIndexRouteImport
+      parentRoute: typeof ResumoRoute
+    }
     '/harpa/': {
       id: '/harpa/'
       path: '/'
@@ -489,6 +538,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/biblia/'
       preLoaderRoute: typeof BibliaIndexRouteImport
       parentRoute: typeof BibliaRoute
+    }
+    '/resumo/$book': {
+      id: '/resumo/$book'
+      path: '/$book'
+      fullPath: '/resumo/$book'
+      preLoaderRoute: typeof ResumoBookRouteImport
+      parentRoute: typeof ResumoRoute
     }
     '/harpa/$id': {
       id: '/harpa/$id'
@@ -601,6 +657,19 @@ const HarpaRouteChildren: HarpaRouteChildren = {
 
 const HarpaRouteWithChildren = HarpaRoute._addFileChildren(HarpaRouteChildren)
 
+interface ResumoRouteChildren {
+  ResumoBookRoute: typeof ResumoBookRoute
+  ResumoIndexRoute: typeof ResumoIndexRoute
+}
+
+const ResumoRouteChildren: ResumoRouteChildren = {
+  ResumoBookRoute: ResumoBookRoute,
+  ResumoIndexRoute: ResumoIndexRoute,
+}
+
+const ResumoRouteWithChildren =
+  ResumoRoute._addFileChildren(ResumoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnotacoesRoute: AnotacoesRoute,
@@ -616,6 +685,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ResumoRoute: ResumoRouteWithChildren,
   SignupRoute: SignupRoute,
   TermosRoute: TermosRoute,
 }
