@@ -54,10 +54,12 @@ function ResumoBookPage() {
 
       <main className="mx-auto max-w-3xl px-4 -mt-6 space-y-4">
         <Card>
-          <Field label="Autor tradicional">{resumo.author}</Field>
-          <Field label="Contexto histórico">{resumo.context}</Field>
-          <Field label="Tema principal">{resumo.theme}</Field>
-          <Field label="Propósito">{resumo.purpose}</Field>
+          <div className="space-y-4">
+            <Field label="Autor tradicional">{resumo.author}</Field>
+            <Field label="Contexto histórico">{resumo.context}</Field>
+            <Field label="Tema principal">{resumo.theme}</Field>
+            <Field label="Propósito">{resumo.purpose}</Field>
+          </div>
         </Card>
 
         <Card>
@@ -120,7 +122,7 @@ function Card({ children }: { children: React.ReactNode }) {
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="not-first:mt-4">
+    <div>
       <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{label}</div>
       <div className="mt-1 text-sm text-card-foreground">{children}</div>
     </div>
