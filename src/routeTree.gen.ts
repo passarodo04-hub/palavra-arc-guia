@@ -31,6 +31,7 @@ import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
 import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
+import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
@@ -148,6 +149,11 @@ const BibliaIndexRoute = BibliaIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BibliaRoute,
 } as any)
+const ResumoBookRoute = ResumoBookRouteImport.update({
+  id: '/$book',
+  path: '/$book',
+  getParentRoute: () => ResumoRoute,
+} as any)
 const HarpaIdRoute = HarpaIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -201,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
+  '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
@@ -225,6 +232,7 @@ export interface FileRoutesByTo {
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
+  '/resumo/$book': typeof ResumoBookRoute
   '/biblia': typeof BibliaIndexRoute
   '/denominacoes': typeof DenominacoesIndexRoute
   '/estudos': typeof EstudosIndexRoute
@@ -256,6 +264,7 @@ export interface FileRoutesById {
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
+  '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
@@ -288,6 +297,7 @@ export interface FileRouteTypes {
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
+    | '/resumo/$book'
     | '/biblia/'
     | '/denominacoes/'
     | '/estudos/'
@@ -312,6 +322,7 @@ export interface FileRouteTypes {
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
+    | '/resumo/$book'
     | '/biblia'
     | '/denominacoes'
     | '/estudos'
@@ -342,6 +353,7 @@ export interface FileRouteTypes {
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
+    | '/resumo/$book'
     | '/biblia/'
     | '/denominacoes/'
     | '/estudos/'
@@ -527,6 +539,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaIndexRouteImport
       parentRoute: typeof BibliaRoute
     }
+    '/resumo/$book': {
+      id: '/resumo/$book'
+      path: '/$book'
+      fullPath: '/resumo/$book'
+      preLoaderRoute: typeof ResumoBookRouteImport
+      parentRoute: typeof ResumoRoute
+    }
     '/harpa/$id': {
       id: '/harpa/$id'
       path: '/$id'
@@ -639,10 +658,12 @@ const HarpaRouteChildren: HarpaRouteChildren = {
 const HarpaRouteWithChildren = HarpaRoute._addFileChildren(HarpaRouteChildren)
 
 interface ResumoRouteChildren {
+  ResumoBookRoute: typeof ResumoBookRoute
   ResumoIndexRoute: typeof ResumoIndexRoute
 }
 
 const ResumoRouteChildren: ResumoRouteChildren = {
+  ResumoBookRoute: ResumoBookRoute,
   ResumoIndexRoute: ResumoIndexRoute,
 }
 
