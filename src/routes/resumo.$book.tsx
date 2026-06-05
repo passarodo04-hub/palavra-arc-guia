@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, BookOpen, Quote, Sparkles } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
-import { getResumoById } from "@/lib/resumo-biblico-data";
+import { getResumoById, type ResumoBiblico } from "@/lib/resumo-biblico-data";
 
 export const Route = createFileRoute("/resumo/$book")({
   component: ResumoBookPage,
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/resumo/$book")({
 });
 
 function ResumoBookPage() {
-  const { resumo } = Route.useLoaderData();
+  const { resumo } = Route.useLoaderData() as { resumo: ResumoBiblico };
 
   return (
     <div className="min-h-screen bg-background pb-24">
