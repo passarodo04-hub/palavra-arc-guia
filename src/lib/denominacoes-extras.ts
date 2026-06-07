@@ -15,45 +15,8 @@ export type DenominacaoExtra = {
   }[];
 };
 
-// Stable Unsplash CDN photos (churches, cathedrals, temples) used as
-// representative headquarters imagery when a faithful licensed photo of the
-// real building is not bundled with the app.
-const IMG = {
-  templo_salomao:
-    "https://images.unsplash.com/photo-1548625361-1adcab316530?auto=format&fit=crop&w=1600&q=70",
-  catedral_brasilia:
-    "https://images.unsplash.com/photo-1543340713-8c1a4147f6a8?auto=format&fit=crop&w=1600&q=70",
-  bras_sp:
-    "https://images.unsplash.com/photo-1473177104440-ffee2f376098?auto=format&fit=crop&w=1600&q=70",
-  igreja_classica:
-    "https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&w=1600&q=70",
-  catedral_gotica:
-    "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=1600&q=70",
-  catedral_moderna:
-    "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1600&q=70",
-  capela:
-    "https://images.unsplash.com/photo-1490127252417-7c393f993ee4?auto=format&fit=crop&w=1600&q=70",
-  templo_madeira:
-    "https://images.unsplash.com/photo-1519491050282-7f8e1c2f1f3a?auto=format&fit=crop&w=1600&q=70",
-  igreja_branca:
-    "https://images.unsplash.com/photo-1519010470956-9c61b16ec9c4?auto=format&fit=crop&w=1600&q=70",
-  cruz_ceu:
-    "https://images.unsplash.com/photo-1507692812060-98338d07aca3?auto=format&fit=crop&w=1600&q=70",
-  catedral_londres:
-    "https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?auto=format&fit=crop&w=1600&q=70",
-  catedral_alema:
-    "https://images.unsplash.com/photo-1551880094-7c2e5bb37e1f?auto=format&fit=crop&w=1600&q=70",
-  templo_brasilia:
-    "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1600&q=70",
-  templo_glassic:
-    "https://images.unsplash.com/photo-1520637836862-4d197d17c55a?auto=format&fit=crop&w=1600&q=70",
-  templo_grande:
-    "https://images.unsplash.com/photo-1543340713-1c5b9a8c2f44?auto=format&fit=crop&w=1600&q=70",
-};
-
 export const denominacoesExtras: Record<string, DenominacaoExtra> = {
   "assembleia-de-deus": {
-    image: IMG.templo_brasilia,
     imageCaption: "Sede da CGADB — Brasília/DF",
     timeline: [
       { year: "1911", event: "Fundação em Belém do Pará por Daniel Berg e Gunnar Vingren." },
@@ -80,7 +43,6 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   "congregacao-crista": {
-    image: IMG.bras_sp,
     imageCaption: "Templo Sede — Brás, São Paulo/SP",
     timeline: [
       { year: "1910", event: "Fundação por Louis Francescon no Brás, em São Paulo." },
@@ -89,7 +51,6 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   batista: {
-    image: IMG.igreja_branca,
     imageCaption: "Sede da Convenção Batista Brasileira — Rio de Janeiro/RJ",
     timeline: [
       { year: "1882", event: "Primeira Igreja Batista organizada em Salvador/BA." },
@@ -98,7 +59,6 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   presbiteriana: {
-    image: IMG.catedral_gotica,
     imageCaption: "Catedral Evangélica de São Paulo — IPB",
     timeline: [
       { year: "1859", event: "Chegada de Ashbel Green Simonton ao Rio de Janeiro." },
@@ -108,7 +68,6 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   quadrangular: {
-    image: IMG.catedral_moderna,
     imageCaption: "Catedral da Fé — IEQ, São Paulo/SP",
     timeline: [
       { year: "1923", event: "Fundação mundial por Aimee Semple McPherson em Los Angeles." },
@@ -117,7 +76,6 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   universal: {
-    image: IMG.templo_salomao,
     imageCaption: "Templo de Salomão — São Paulo/SP",
     timeline: [
       { year: "1977", event: "Fundação por Edir Macedo no Rio de Janeiro." },
@@ -126,15 +84,12 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   mundial: {
-    image: IMG.templo_grande,
     imageCaption: "Templo Sede — Brás, São Paulo/SP",
   },
   "deus-e-amor": {
-    image: IMG.catedral_moderna,
     imageCaption: "Catedral da Glória — São Paulo/SP",
   },
   adventista: {
-    image: IMG.igreja_classica,
     imageCaption: "Sede Sul-Americana da IASD — Brasília/DF",
     timeline: [
       { year: "1863", event: "Organização oficial da IASD em Battle Creek, EUA." },
@@ -143,43 +98,33 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
     ],
   },
   metodista: {
-    image: IMG.catedral_londres,
     imageCaption: "Catedral Metodista — São Paulo/SP",
   },
   nazareno: {
-    image: IMG.capela,
     imageCaption: "Sede Regional — Campinas/SP",
   },
   luterana: {
-    image: IMG.catedral_alema,
     imageCaption: "Sede da IECLB — Porto Alegre/RS",
   },
   anglicana: {
-    image: IMG.catedral_londres,
     imageCaption: "Catedral Anglicana — Porto Alegre/RS",
   },
   "casa-da-bencao": {
-    image: IMG.templo_glassic,
     imageCaption: "Sede da Casa da Bênção — Belo Horizonte/MG",
   },
   "internacional-graca": {
-    image: IMG.templo_grande,
     imageCaption: "Sede da Graça de Deus — Rio de Janeiro/RJ",
   },
   renascer: {
-    image: IMG.templo_brasilia,
     imageCaption: "Sede Mundial Renascer — São Paulo/SP",
   },
   "bola-de-neve": {
-    image: IMG.cruz_ceu,
     imageCaption: "Sede Bola de Neve — São Paulo/SP",
   },
   videira: {
-    image: IMG.catedral_moderna,
     imageCaption: "Sede Mundial Videira — Goiânia/GO",
   },
   "sara-nossa-terra": {
-    image: IMG.templo_brasilia,
     imageCaption: "Sede Sara Nossa Terra — Brasília/DF",
   },
 };
