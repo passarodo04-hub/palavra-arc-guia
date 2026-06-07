@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { getDenominacao } from "@/lib/denominacoes-data";
 import { getDenominacaoExtra } from "@/lib/denominacoes-extras";
-import { MapPin } from "lucide-react";
 import {
   ChevronLeft,
   Calendar,
