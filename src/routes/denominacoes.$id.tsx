@@ -1,7 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { getDenominacao } from "@/lib/denominacoes-data";
-import { ChevronLeft, Calendar, Users, MapPin, History, Globe, Sparkles, Landmark } from "lucide-react";
+import { getDenominacaoExtra } from "@/lib/denominacoes-extras";
+import {
+  ChevronLeft,
+  Calendar,
+  Users,
+  MapPin,
+  History,
+  Globe,
+  Sparkles,
+  Landmark,
+  Clock,
+  BookOpen,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export const Route = createFileRoute("/denominacoes/$id")({ component: DenominacaoDetail });
@@ -9,6 +21,7 @@ export const Route = createFileRoute("/denominacoes/$id")({ component: Denominac
 function DenominacaoDetail() {
   const { id } = Route.useParams();
   const d = getDenominacao(id);
+  const extra = getDenominacaoExtra(id);
 
   if (!d) {
     return (
@@ -31,6 +44,25 @@ function DenominacaoDetail() {
 
   return (
     <div className="min-h-screen bg-background pb-28 animate-fade-up">
+      {extra?.image && (
+        <figure className="relative w-full overflow-hidden bg-muted">
+          <div className="aspect-[16/9] sm:aspect-[21/9] w-full">
+            <img
+              src={extra.image}
+              alt={extra.imageCaption ?? `Sede da ${d.name}`}
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
+          {extra.imageCaption && (
+            <figcaption className="absolute bottom-2 left-3 right-3 text-[11px] text-primary-foreground/90 drop-shadow">
+              {extra.imageCaption}
+            </figcaption>
+          )}
+        </figure>
+      )}
       <header className="bg-gradient-spiritual text-primary-foreground px-6 py-7">
         <Link
           to="/denominacoes"
@@ -119,6 +151,50 @@ function DenominacaoDetail() {
             </ul>
           </section>
         )}
+
+        {extra?.timeline && extra.timeline.length > 0 && (
+          <section className="rounded-2xl border border-border bg-card p-5">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+              <Clock className="size-3.5" /> Linha do tempo
+            </div>
+            <ol className="mt-4 relative border-l border-border pl-4 space-y-4">
+              {extra.timeline.map((t, i) => (
+                <li key={i} className="relative">
+                  <span className="absolute -left-[21px] top-1 size-3 rounded-full bg-gold ring-4 ring-card" />
+                  <div className="text-xs font-semibold text-gold">{t.year}</div>
+                  <p className="text-sm text-card-foreground">{t.event}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {extra?.extras?.map((ex, i) => (
+          <section
+            key={i}
+            className="rounded-2xl border border-gold/30 bg-card p-5 shadow-sm"
+          >
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+              <BookOpen className="size-3.5" /> {ex.title}
+            </div>
+            {ex.subtitle && (
+              <div className="mt-1 text-sm font-serif text-card-foreground/80">
+                {ex.subtitle}
+              </div>
+            )}
+            <p className="mt-3 text-sm leading-relaxed text-card-foreground">{ex.body}</p>
+            {ex.bullets && ex.bullets.length > 0 && (
+              <ul className="mt-3 space-y-2 text-sm text-card-foreground">
+                {ex.bullets.map((b, j) => (
+                  <li key={j} className="flex gap-2">
+                    <span className="text-gold">•</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
       </main>
       <BottomNav />
     </div>
