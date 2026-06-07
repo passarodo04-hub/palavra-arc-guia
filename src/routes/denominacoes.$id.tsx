@@ -44,12 +44,12 @@ function DenominacaoDetail() {
 
   return (
     <div className="min-h-screen bg-background pb-28 animate-fade-up">
-      {extra?.image && (
+      {extra?.image ? (
         <figure className="relative w-full overflow-hidden bg-muted">
           <div className="aspect-[16/9] sm:aspect-[21/9] w-full">
             <img
               src={extra.image}
-              alt={extra.imageCaption ?? `Sede da ${d.name}`}
+              alt={extra.imageCaption ?? `Fachada da sede nacional — ${d.name}`}
               loading="eager"
               decoding="async"
               className="h-full w-full object-cover"
@@ -58,10 +58,31 @@ function DenominacaoDetail() {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
           {extra.imageCaption && (
             <figcaption className="absolute bottom-2 left-3 right-3 text-[11px] text-primary-foreground/90 drop-shadow">
-              {extra.imageCaption}
+              {extra.imageCaption} · Fachada da sede nacional
             </figcaption>
           )}
         </figure>
+      ) : (
+        <div className="w-full bg-gradient-spiritual/10 border-b border-border">
+          <div className="mx-auto max-w-3xl px-4 py-6 flex items-center gap-3">
+            <div className="size-12 rounded-xl bg-secondary flex items-center justify-center shrink-0">
+              <Landmark className="size-6 text-gold" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[10px] uppercase tracking-widest text-gold font-semibold">
+                Imagem da sede principal
+              </div>
+              <p className="text-sm text-muted-foreground truncate">
+                Foto oficial da fachada ainda não disponível.
+              </p>
+              {d.headquarters && (
+                <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                  {d.headquarters}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
       )}
       <header className="bg-gradient-spiritual text-primary-foreground px-6 py-7">
         <Link
