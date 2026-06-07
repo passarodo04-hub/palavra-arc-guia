@@ -4,7 +4,7 @@
 export type TimelineEvent = { year: string; event: string };
 
 export type DenominacaoExtra = {
-  image: string;
+  image?: string;
   imageCaption?: string;
   timeline?: TimelineEvent[];
   extras?: {
