@@ -42,6 +42,7 @@ function LoginPage() {
         <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground mb-6">
           <ChevronLeft className="size-4" /> Voltar
         </Link>
+        <div className="text-[10px] uppercase tracking-[0.25em] text-gold font-semibold mb-2">Palavra+</div>
         <h1 className="font-serif text-3xl">Entrar</h1>
         <p className="text-sm text-muted-foreground mt-1">Acesse sua conta para sincronizar Bíblia, notas e sermões.</p>
 
