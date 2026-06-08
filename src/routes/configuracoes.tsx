@@ -28,7 +28,7 @@ function SettingsPage() {
         </button>
         <div className="rounded-xl border border-border bg-card p-5 text-sm text-muted-foreground">
           <p className="font-serif text-base text-foreground">Sobre o app</p>
-          <p className="mt-2">Bíblia Sagrada ARC — Almeida Revista e Corrigida. Inclui Harpa Cristã, devocionais diários e ferramentas de estudo.</p>
+          <p className="mt-2">Palavra+ — Bíblia (ARC e NVI), Harpa Cristã, devocionais diários e ferramentas de estudo.</p>
         </div>
       </div>
       <BottomNav />
