@@ -4,8 +4,8 @@ import { ArrowLeft } from "lucide-react";
 export const Route = createFileRoute("/termos")({
   head: () => ({
     meta: [
-      { title: "Termos de Uso — Bíblia Sagrada" },
-      { name: "description", content: "Termos de uso do aplicativo cristão Bíblia Sagrada, Harpa Cristã, Devocional e Estudos." },
+      { title: "Termos de Uso — Palavra+" },
+      { name: "description", content: "Termos de uso do aplicativo cristão Palavra+ — Bíblia, Harpa Cristã, Devocional e Estudos." },
     ],
   }),
   component: TermsPage,

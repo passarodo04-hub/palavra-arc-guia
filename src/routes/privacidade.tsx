@@ -4,8 +4,8 @@ import { ArrowLeft } from "lucide-react";
 export const Route = createFileRoute("/privacidade")({
   head: () => ({
     meta: [
-      { title: "Política de Privacidade — Bíblia Sagrada" },
-      { name: "description", content: "Como tratamos os seus dados no aplicativo Bíblia Sagrada, Harpa Cristã, Devocional e Estudos." },
+      { title: "Política de Privacidade — Palavra+" },
+      { name: "description", content: "Como tratamos os seus dados no aplicativo Palavra+ — Bíblia, Harpa Cristã, Devocional e Estudos." },
     ],
   }),
   component: PrivacyPage,

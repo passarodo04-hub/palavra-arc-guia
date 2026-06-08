@@ -1,7 +1,7 @@
 {
-  "name": "Bíblia Sagrada — ARC, Harpa e Devocional",
-  "short_name": "Bíblia ARC",
-  "description": "Bíblia ARC/NVI, Harpa Cristã, devocional diário e estudos cristãos com IA.",
+  "name": "Palavra+",
+  "short_name": "Palavra+",
+  "description": "Palavra+ — Bíblia ARC/NVI, Harpa Cristã, devocional diário e estudos cristãos com IA.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
