@@ -40,7 +40,7 @@ function Index() {
         <div className="relative mx-auto max-w-3xl px-6 pt-12 pb-16 animate-fade-up">
           <div className="flex items-center gap-2 text-gold">
             <Sparkles className="size-4" />
-            <span className="text-xs font-medium uppercase tracking-[0.2em]">Bíblia Sagrada ARC</span>
+            <span className="text-xs font-medium uppercase tracking-[0.2em]">Palavra+</span>
           </div>
           <h1 className="mt-4 font-serif text-4xl md:text-5xl font-medium leading-tight">
             Leve a Palavra de Deus<br />com você todos os dias.
