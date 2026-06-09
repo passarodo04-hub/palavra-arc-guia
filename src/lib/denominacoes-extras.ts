@@ -3,10 +3,19 @@
 
 export type TimelineEvent = { year: string; event: string };
 
+export type Personality = {
+  name: string;
+  biography: string;
+  contribution: string;
+  historicalRelevance: string;
+  ministry: string;
+};
+
 export type DenominacaoExtra = {
   image?: string;
   imageCaption?: string;
   timeline?: TimelineEvent[];
+  personalities?: Personality[];
   extras?: {
     title: string;
     subtitle?: string;
