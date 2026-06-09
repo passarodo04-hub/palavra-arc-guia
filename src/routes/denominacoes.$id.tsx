@@ -114,6 +114,59 @@ function DenominacaoDetail() {
           </section>
         )}
 
+        {extra?.personalities && extra.personalities.length > 0 && (
+          <section className="rounded-2xl border border-border bg-card p-5">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+              <Users className="size-3.5" /> Personalidades Importantes
+            </div>
+            <div className="mt-4 grid grid-cols-1 gap-4">
+              {extra.personalities.map((p, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl border border-border bg-secondary/40 p-4"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="size-10 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                      <User className="size-5 text-gold" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-serif text-base font-semibold text-foreground">
+                        {p.name}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="mt-3 space-y-3 text-sm text-card-foreground">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest text-gold font-semibold">
+                        Biografia
+                      </span>
+                      <p className="mt-1 leading-relaxed">{p.biography}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest text-gold font-semibold">
+                        Contribuição
+                      </span>
+                      <p className="mt-1 leading-relaxed">{p.contribution}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest text-gold font-semibold">
+                        Relevância histórica
+                      </span>
+                      <p className="mt-1 leading-relaxed">{p.historicalRelevance}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest text-gold font-semibold">
+                        Ministério e liderança
+                      </span>
+                      <p className="mt-1 leading-relaxed">{p.ministry}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className="rounded-2xl border border-border bg-card p-5">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
             <History className="size-3.5" /> História
