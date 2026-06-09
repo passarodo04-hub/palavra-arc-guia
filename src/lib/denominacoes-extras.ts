@@ -3,10 +3,19 @@
 
 export type TimelineEvent = { year: string; event: string };
 
+export type Personality = {
+  name: string;
+  biography: string;
+  contribution: string;
+  historicalRelevance: string;
+  ministry: string;
+};
+
 export type DenominacaoExtra = {
   image?: string;
   imageCaption?: string;
   timeline?: TimelineEvent[];
+  personalities?: Personality[];
   extras?: {
     title: string;
     subtitle?: string;
@@ -25,6 +34,30 @@ export const denominacoesExtras: Record<string, DenominacaoExtra> = {
       { year: "1946", event: "Fundação da CGADB (Convenção Geral)." },
       { year: "1989", event: "Criação da CONAMAD (Convenção Nacional dos Ministros das ADs Madureira)." },
       { year: "2011", event: "Centenário da Assembleia de Deus no Brasil." },
+    ],
+    personalities: [
+      {
+        name: "Bispo Manoel Ferreira",
+        biography:
+          "Bispo Manoel Ferreira da Silva foi um dos líderes mais emblemáticos da Assembleia de Deus no Brasil. Com uma trajetória marcada pela fé e pela liderança espiritual, ele desempenhou papel central na consolidação e expansão do Ministério Madureira, uma das maiores vertentes da denominação no país.",
+        contribution:
+          "Sob sua liderança, o Ministério Madureira se expandiu para dezenas de estados brasileiros, com centenas de templos e uma estrutura organizada de escolas bíblicas, obras sociais e missões. Sua visão administrativa e espiritual transformou a AD em uma das maiores expressões do pentecostalismo brasileiro.",
+        historicalRelevance:
+          "É reconhecido como um dos principais obreiros da segunda geração da Assembleia de Deus no Brasil, responsável por solidificar a identidade e a autonomia do ministério que hoje abrange milhões de membros.",
+        ministry:
+          "Pastor, administrador e bispo, seu ministério foi caracterizado pela pregação da Palavra, ordenação de obreiros e pela construção de uma estrutura eclesiástica capaz de sustentar o crescimento acelerado da denominação nas décadas de 1960 a 1990.",
+      },
+      {
+        name: "Bispo Samuel Ferreira",
+        biography:
+          "Bispo Samuel Ferreira é filho do Bispo Manoel Ferreira e continuou o legado paterno na liderança da Assembleia de Deus. Tornou-se uma das figuras mais proeminentes da denominação no século XXI, assumindo a presidência da CONAMAD (Convenção Nacional dos Ministérios das Assembleias de Deus — Madureira).",
+        contribution:
+          "À frente da CONAMAD, Samuel Ferreira expandiu ainda mais a presença da Assembleia de Deus no Brasil e no exterior, modernizando a gestão da convenção, ampliando os projetos sociais e fortalecendo a formação teológica de milhares de obreiros.",
+        historicalRelevance:
+          "Representa a continuidade e a renovação da liderança da AD no Brasil. Sua atuação política e religiosa colocou a denominação em destaque nacional, preservando suas raízes pentecostais ao mesmo tempo em que amplia sua relevância institucional.",
+        ministry:
+          "Pastor, bispo e líder convenção, seu ministério combina a pregação evangélica com uma atuação pública de representação da igreja, defendendo os valores cristãos e liderando uma das maiores comunidades de fé do país.",
+      },
     ],
     extras: [
       {
