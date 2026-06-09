@@ -13,6 +13,7 @@ import {
   Landmark,
   Clock,
   BookOpen,
+  User,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
