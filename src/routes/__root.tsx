@@ -87,11 +87,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       { name: "apple-mobile-web-app-title", content: "Palavra+" },
       { name: "format-detection", content: "telephone=no" },
-      { property: "og:title", content: "Palavra+" },
-      { property: "og:description", content: "Palavra+ — Bíblia, Harpa Cristã, devocional diário e estudos." },
+      { property: "og:title", content: "Palavra+ — Bíblia, Harpa e Devocional" },
+      { property: "og:description", content: "Palavra+ — Leia a Bíblia ARC, cante a Harpa Cristã, receba devocionais diários e organize seus estudos bíblicos em um só lugar." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Palavra+ — Bíblia, Harpa e Devocional" },
+      { name: "twitter:description", content: "Palavra+ — Leia a Bíblia ARC, cante a Harpa Cristã, receba devocionais diários e organize seus estudos bíblicos em um só lugar." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/crG5LTKX64dXR0F5w4JeBWTt3C52/social-images/social-1781044112380-WhatsApp_Image_2026-06-09_at_18.42.56.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/crG5LTKX64dXR0F5w4JeBWTt3C52/social-images/social-1781044112380-WhatsApp_Image_2026-06-09_at_18.42.56.webp" },
     ],
     links: [
       {
