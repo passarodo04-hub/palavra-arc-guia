@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useRouter } from "@tanstack/react-router";
@@ -23,17 +23,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const qc = useQueryClient();
+  const prevUserIdRef = useRef<string | null | undefined>(undefined);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
-      setLoading(false);
-      router.invalidate();
-      qc.invalidateQueries();
-    });
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      prevUserIdRef.current = data.session?.user?.id ?? null;
       setLoading(false);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, s) => {
+      // Ignore noisy events that don't change identity (TOKEN_REFRESHED, INITIAL_SESSION, USER_UPDATED)
+      setSession(s);
+      setLoading(false);
+      const nextId = s?.user?.id ?? null;
+      const identityChanged =
+        event === "SIGNED_IN" || event === "SIGNED_OUT"
+          ? prevUserIdRef.current !== nextId
+          : false;
+      if (identityChanged) {
+        prevUserIdRef.current = nextId;
+        router.invalidate();
+        qc.invalidateQueries();
+      }
     });
     return () => subscription.unsubscribe();
   }, [router, qc]);
