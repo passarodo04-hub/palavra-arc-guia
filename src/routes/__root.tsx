@@ -7,14 +7,10 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-
 import appCss from "../styles.css?url";
 import { TranslationProvider } from "@/lib/translation-context";
 import { AuthProvider } from "@/lib/auth-context";
 import { ThemeProvider } from "@/lib/theme-context";
-import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -142,24 +138,10 @@ function RootComponent() {
       <ThemeProvider>
         <AuthProvider>
           <TranslationProvider>
-            <AuthSyncer />
             <Outlet />
           </TranslationProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
-}
-
-function AuthSyncer() {
-  const router = useRouter();
-  const qc = useQueryClient();
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      router.invalidate();
-      qc.invalidateQueries();
-    });
-    return () => subscription.unsubscribe();
-  }, [router, qc]);
-  return null;
 }
