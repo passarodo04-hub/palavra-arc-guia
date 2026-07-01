@@ -18,6 +18,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as EstudosRouteImport } from './routes/estudos'
+import { Route as DevocionalSalvosRouteImport } from './routes/devocional-salvos'
 import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ContaRouteImport } from './routes/conta'
@@ -82,6 +83,11 @@ const FavoritosRoute = FavoritosRouteImport.update({
 const EstudosRoute = EstudosRouteImport.update({
   id: '/estudos',
   path: '/estudos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevocionalSalvosRoute = DevocionalSalvosRouteImport.update({
+  id: '/devocional-salvos',
+  path: '/devocional-salvos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevocionalRoute = DevocionalRouteImport.update({
@@ -194,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
+  '/devocional-salvos': typeof DevocionalSalvosRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
@@ -223,6 +230,7 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/devocional': typeof DevocionalRoute
+  '/devocional-salvos': typeof DevocionalSalvosRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
   '/devocional': typeof DevocionalRoute
+  '/devocional-salvos': typeof DevocionalSalvosRoute
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
@@ -284,6 +293,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/denominacoes'
     | '/devocional'
+    | '/devocional-salvos'
     | '/estudos'
     | '/favoritos'
     | '/harpa'
@@ -313,6 +323,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/conta'
     | '/devocional'
+    | '/devocional-salvos'
     | '/favoritos'
     | '/login'
     | '/privacidade'
@@ -340,6 +351,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/denominacoes'
     | '/devocional'
+    | '/devocional-salvos'
     | '/estudos'
     | '/favoritos'
     | '/harpa'
@@ -372,6 +384,7 @@ export interface RootRouteChildren {
   ContaRoute: typeof ContaRoute
   DenominacoesRoute: typeof DenominacoesRouteWithChildren
   DevocionalRoute: typeof DevocionalRoute
+  DevocionalSalvosRoute: typeof DevocionalSalvosRoute
   EstudosRoute: typeof EstudosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
@@ -446,6 +459,13 @@ declare module '@tanstack/react-router' {
       path: '/estudos'
       fullPath: '/estudos'
       preLoaderRoute: typeof EstudosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devocional-salvos': {
+      id: '/devocional-salvos'
+      path: '/devocional-salvos'
+      fullPath: '/devocional-salvos'
+      preLoaderRoute: typeof DevocionalSalvosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/devocional': {
@@ -679,6 +699,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContaRoute: ContaRoute,
   DenominacoesRoute: DenominacoesRouteWithChildren,
   DevocionalRoute: DevocionalRoute,
+  DevocionalSalvosRoute: DevocionalSalvosRoute,
   EstudosRoute: EstudosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
