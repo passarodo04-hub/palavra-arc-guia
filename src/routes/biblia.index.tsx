@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
+import { PageHero } from "@/components/PageHero";
 import { bibleBooks, TRANSLATIONS, type Translation } from "@/lib/bible-data";
 import { useTranslation } from "@/lib/translation-context";
 import { useState } from "react";
@@ -26,12 +27,10 @@ function BibliaPage() {
   };
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h1 className="font-serif text-3xl">Bíblia Sagrada</h1>
-            <p className="text-sm text-primary-foreground/70">{current.full}</p>
-          </div>
+      <PageHero
+        title="Bíblia Sagrada"
+        description={current.full}
+        right={
           <div className="flex items-center gap-1 rounded-full bg-white/10 p-1">
             {TRANSLATIONS.map((t) => (
               <button
@@ -47,8 +46,8 @@ function BibliaPage() {
               </button>
             ))}
           </div>
-        </div>
-      </header>
+        }
+      />
       <div className="mx-auto max-w-3xl px-4 pt-6">
         <div className="flex gap-2 rounded-full bg-secondary p-1 w-fit">
           {(["old", "new"] as const).map((t) => (
