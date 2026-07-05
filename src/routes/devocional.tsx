@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
+import { PageHero } from "@/components/PageHero";
 import { getDailyDevocional } from "@/lib/devocional-data";
 import { Share2, Bookmark, BookmarkCheck, Check, Copy, Link as LinkIcon } from "lucide-react";
 import { Link } from "@tanstack/react-router";
@@ -62,20 +63,18 @@ function DevocionalPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="font-serif text-3xl">Devocional Diário</h1>
-            <p className="text-sm text-primary-foreground/70">Uma palavra para hoje</p>
-          </div>
+      <PageHero
+        title="Devocional Diário"
+        description="Uma palavra para hoje."
+        right={
           <Link
             to="/devocional-salvos"
             className="rounded-full bg-primary-foreground/10 px-4 py-2 text-xs backdrop-blur hover:bg-primary-foreground/20"
           >
             Salvos ({list.length})
           </Link>
-        </div>
-      </header>
+        }
+      />
       <main className="mx-auto max-w-2xl px-4 pt-6">
         <article className="rounded-3xl border border-border bg-card p-8 shadow-elegant animate-fade-up">
           <div className="text-xs uppercase tracking-widest text-gold">Versículo do Dia</div>
