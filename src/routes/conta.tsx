@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
+import { PageHero } from "@/components/PageHero";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme, type ThemeMode } from "@/lib/theme-context";
 import { getMyProfile, updateMyProfile } from "@/lib/cloud.functions";
 import { deleteMyAccount } from "@/lib/account.functions";
-import { LogOut, Trash2, Sun, Moon, Monitor, ChevronLeft, Loader2 } from "lucide-react";
+import { LogOut, Trash2, Sun, Moon, Monitor, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/conta")({ component: ContaPage });
 
@@ -70,13 +71,7 @@ function ContaPage() {
 
   return (
     <div className="min-h-screen bg-background pb-28">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <Link to="/" className="inline-flex items-center gap-1 text-xs text-primary-foreground/70 mb-3">
-          <ChevronLeft className="size-4" /> Início
-        </Link>
-        <h1 className="font-serif text-3xl">Minha conta</h1>
-        <p className="text-sm text-primary-foreground/70 mt-1">{user.email}</p>
-      </header>
+      <PageHero backTo="/" backLabel="Início" title="Minha conta" description={user.email} />
 
       <main className="mx-auto max-w-3xl px-4 pt-6 space-y-6">
         <section className="rounded-2xl border border-border bg-card p-5 shadow-soft space-y-3">

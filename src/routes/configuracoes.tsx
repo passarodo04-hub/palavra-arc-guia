@@ -3,6 +3,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { useEffect } from "react";
 import { useLocalStorage } from "@/lib/storage";
 import { Moon, Sun } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
 
 export const Route = createFileRoute("/configuracoes")({ component: SettingsPage });
 
@@ -13,9 +14,7 @@ function SettingsPage() {
   }, [dark]);
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <h1 className="font-serif text-3xl">Configurações</h1>
-      </header>
+      <PageHero title="Configurações" description="Ajuste sua experiência no Palavra+." />
       <div className="mx-auto max-w-3xl px-4 pt-6 space-y-3">
         <button onClick={() => setDark(!dark)} className="w-full flex items-center justify-between rounded-xl border border-border bg-card p-5">
           <div className="flex items-center gap-3">

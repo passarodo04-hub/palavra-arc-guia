@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
+import { PageHero } from "@/components/PageHero";
 import { getDailyDevocional } from "@/lib/devocional-data";
 import { useAuth } from "@/lib/auth-context";
 import { AdSlot } from "@/components/AdSlot";
@@ -27,34 +28,29 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Hero */}
-      <header className="relative overflow-hidden bg-gradient-spiritual text-primary-foreground">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 20% 10%, white, transparent 50%)" }} />
-        <Link
-          to={user ? "/conta" : "/login"}
-          className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/10 backdrop-blur px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-white/20"
-        >
-          <UserCircle2 className="size-4" />
-          {user ? "Minha conta" : "Entrar"}
-        </Link>
-        <div className="relative mx-auto max-w-3xl px-6 pt-12 pb-16 animate-fade-up">
-          <div className="flex items-center gap-2 text-gold">
-            <Sparkles className="size-4" />
-            <span className="text-xs font-medium uppercase tracking-[0.2em]">Palavra+</span>
-          </div>
-          <h1 className="mt-4 font-serif text-4xl md:text-5xl font-medium leading-tight">
-            Leve a Palavra de Deus<br />com você todos os dias.
-          </h1>
-          <p className="mt-3 text-sm md:text-base text-primary-foreground/70 max-w-md">
-            Bíblia, Harpa Cristã, devocional diário e estudos — em um só lugar, com paz e elegância.
-          </p>
-          <Link to="/biblia" className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground shadow-soft transition-transform hover:scale-[1.02]">
-            Começar a ler <ArrowRight className="size-4" />
+      <PageHero
+        eyebrow={{ icon: Sparkles, label: "Palavra+" }}
+        title={<>Leve a Palavra de Deus<br />com você todos os dias.</>}
+        description="Bíblia, Harpa Cristã, devocional diário e estudos — em um só lugar, com paz e elegância."
+        right={
+          <Link
+            to={user ? "/conta" : "/login"}
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/10 backdrop-blur px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-white/20"
+          >
+            <UserCircle2 className="size-4" />
+            {user ? "Minha conta" : "Entrar"}
           </Link>
-        </div>
-      </header>
+        }
+      >
+        <Link
+          to="/biblia"
+          className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground shadow-soft transition-transform hover:scale-[1.02]"
+        >
+          Começar a ler <ArrowRight className="size-4" />
+        </Link>
+      </PageHero>
 
-      <main className="mx-auto max-w-3xl px-4 -mt-10">
+      <main className="mx-auto max-w-3xl px-4 pt-6">
         {/* Daily verse */}
         <section className="relative rounded-3xl border border-border bg-card p-6 md:p-8 shadow-elegant animate-fade-up">
           <div className="text-xs font-semibold uppercase tracking-widest text-gold">Versículo do Dia</div>

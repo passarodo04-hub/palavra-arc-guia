@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
 import { loadHymnIndex } from "@/lib/harpa-data";
 import { useMemo, useState } from "react";
+import { PageHero } from "@/components/PageHero";
 
 export const Route = createFileRoute("/harpa/")({ component: HarpaPage });
 
@@ -19,10 +20,7 @@ function HarpaPage() {
   }, [index, q]);
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <h1 className="font-serif text-3xl">Harpa Cristã</h1>
-        <p className="text-sm text-primary-foreground/70">640 hinos para adoração</p>
-      </header>
+      <PageHero title="Harpa Cristã" description="640 hinos para adoração." />
       <div className="mx-auto max-w-3xl px-4 pt-6">
         <input
           value={q}
