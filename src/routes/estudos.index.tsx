@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { BottomNav } from "@/components/BottomNav";
+import { PageHero } from "@/components/PageHero";
 import { useAuth } from "@/lib/auth-context";
 import { generateSermon } from "@/lib/sermon.functions";
 import { listSermons, saveSermon, deleteSermon } from "@/lib/cloud.functions";
@@ -74,16 +75,11 @@ function EstudosPage() {
 
   return (
     <div className="min-h-screen bg-background pb-28">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <div className="flex items-center gap-2 text-gold">
-          <Sparkles className="size-4" />
-          <span className="text-xs font-medium uppercase tracking-[0.2em]">Estudos IA</span>
-        </div>
-        <h1 className="font-serif text-3xl mt-2">Assistente de Sermões</h1>
-        <p className="text-sm text-primary-foreground/70 mt-1">
-          Gere um esboço completo de pregação com introdução, pontos, versículos, hinos e oração — em segundos.
-        </p>
-      </header>
+      <PageHero
+        eyebrow={{ icon: Sparkles, label: "Estudos IA" }}
+        title="Assistente de Sermões"
+        description="Gere um esboço completo de pregação com introdução, pontos, versículos, hinos e oração — em segundos."
+      />
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
         {!user && !authLoading && (
