@@ -8,7 +8,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useTheme, type ThemeMode } from "@/lib/theme-context";
 import { getMyProfile, updateMyProfile } from "@/lib/cloud.functions";
 import { deleteMyAccount } from "@/lib/account.functions";
-import { LogOut, Trash2, Sun, Moon, Monitor, ChevronLeft, Loader2 } from "lucide-react";
+import { LogOut, Trash2, Sun, Moon, Monitor, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/conta")({ component: ContaPage });
 
