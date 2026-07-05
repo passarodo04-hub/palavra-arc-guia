@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowLeft, BookOpenCheck, Search, Sparkles } from "lucide-react";
+import { BookOpenCheck, Search, Sparkles } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { resumosBiblicos, searchResumos } from "@/lib/resumo-biblico-data";
+import { PageHero } from "@/components/PageHero";
 
 export const Route = createFileRoute("/resumo/")({
   component: ResumoIndex,
@@ -22,26 +23,15 @@ function ResumoIndex() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className="relative overflow-hidden bg-gradient-spiritual text-primary-foreground">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 80% 10%, white, transparent 50%)" }} />
-        <div className="relative mx-auto max-w-3xl px-6 pt-10 pb-12">
-          <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-primary-foreground/80 hover:text-primary-foreground">
-            <ArrowLeft className="size-3.5" /> Início
-          </Link>
-          <div className="mt-4 flex items-center gap-2 text-gold">
-            <Sparkles className="size-4" />
-            <span className="text-xs font-medium uppercase tracking-[0.2em]">Resumo Bíblico</span>
-          </div>
-          <h1 className="mt-3 font-serif text-3xl md:text-4xl leading-tight">
-            Conheça cada livro da Bíblia<br />em poucos minutos.
-          </h1>
-          <p className="mt-2 text-sm text-primary-foreground/70 max-w-md">
-            Autor, contexto, tema, propósito e versículos-chave dos 66 livros, com leitura rápida e elegante.
-          </p>
-        </div>
-      </header>
+      <PageHero
+        backTo="/"
+        backLabel="Início"
+        eyebrow={{ icon: Sparkles, label: "Resumo Bíblico" }}
+        title={<>Conheça cada livro da Bíblia<br />em poucos minutos.</>}
+        description="Autor, contexto, tema, propósito e versículos-chave dos 66 livros, com leitura rápida e elegante."
+      />
 
-      <main className="mx-auto max-w-3xl px-4 -mt-8">
+      <main className="mx-auto max-w-3xl px-4 pt-6">
         <div className="rounded-2xl border border-border bg-card p-3 shadow-elegant">
           <div className="flex items-center gap-2 rounded-xl bg-secondary px-3 py-2">
             <Search className="size-4 text-muted-foreground" />
