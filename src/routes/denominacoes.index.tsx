@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { BottomNav } from "@/components/BottomNav";
 import { denominacoes } from "@/lib/denominacoes-data";
 import { Search, Landmark, ChevronRight } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
 
 export const Route = createFileRoute("/denominacoes/")({ component: DenominacoesPage });
 
@@ -20,16 +21,11 @@ function DenominacoesPage() {
 
   return (
     <div className="min-h-screen bg-background pb-28 animate-fade-up">
-      <header className="bg-gradient-spiritual text-primary-foreground px-6 py-8">
-        <div className="flex items-center gap-2 text-gold">
-          <Landmark className="size-4" />
-          <span className="text-xs font-medium uppercase tracking-[0.2em]">Enciclopédia</span>
-        </div>
-        <h1 className="font-serif text-3xl mt-2">Denominações Cristãs</h1>
-        <p className="text-sm text-primary-foreground/70 mt-1">
-          Conheça a história, fundadores e curiosidades das principais igrejas cristãs do Brasil e do mundo.
-        </p>
-      </header>
+      <PageHero
+        eyebrow={{ icon: Landmark, label: "Enciclopédia" }}
+        title="Denominações Cristãs"
+        description="Conheça a história, fundadores e curiosidades das principais igrejas cristãs do Brasil e do mundo."
+      />
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
         <div className="relative">
