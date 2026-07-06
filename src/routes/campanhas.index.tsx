@@ -4,7 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/campanhas")({
+export const Route = createFileRoute("/campanhas/")({
   head: () => ({
     meta: [
       { title: "Campanhas — Palavra+" },
