@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck } from "lucide-react";
+import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck, Target } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { getDailyDevocional } from "@/lib/devocional-data";
@@ -20,6 +20,7 @@ function Index() {
     { to: "/harpa", icon: Music, title: "Harpa Cristã", desc: "Hinos de adoração" },
     { to: "/devocional", icon: Sun, title: "Devocional", desc: "Mensagem do dia" },
     { to: "/estudos", icon: Sparkles, title: "Estudos IA", desc: "Sermões organizados" },
+    { to: "/campanhas", icon: Target, title: "Campanhas", desc: "Desafios espirituais" },
     { to: "/denominacoes", icon: Landmark, title: "Denominações", desc: "Enciclopédia cristã" },
     { to: "/anotacoes", icon: NotebookPen, title: "Anotações", desc: "Suas notas e estudos" },
     { to: "/favoritos", icon: Heart, title: "Favoritos", desc: "Versos guardados" },

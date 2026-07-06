@@ -23,6 +23,7 @@ import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as CampanhasRouteImport } from './routes/campanhas'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
 import { Route as AnotacoesRouteImport } from './routes/anotacoes'
@@ -108,6 +109,11 @@ const ContaRoute = ContaRouteImport.update({
 const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasRoute = CampanhasRouteImport.update({
+  id: '/campanhas',
+  path: '/campanhas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuscaRoute = BuscaRouteImport.update({
@@ -196,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
+  '/campanhas': typeof CampanhasRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
+  '/campanhas': typeof CampanhasRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/devocional': typeof DevocionalRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
+  '/campanhas': typeof CampanhasRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -289,6 +298,7 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
+    | '/campanhas'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/'
     | '/anotacoes'
     | '/busca'
+    | '/campanhas'
     | '/configuracoes'
     | '/conta'
     | '/devocional'
@@ -347,6 +358,7 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
+    | '/campanhas'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -380,6 +392,7 @@ export interface RootRouteChildren {
   AnotacoesRoute: typeof AnotacoesRoute
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
+  CampanhasRoute: typeof CampanhasRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ContaRoute: typeof ContaRoute
   DenominacoesRoute: typeof DenominacoesRouteWithChildren
@@ -494,6 +507,13 @@ declare module '@tanstack/react-router' {
       path: '/configuracoes'
       fullPath: '/configuracoes'
       preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas': {
+      id: '/campanhas'
+      path: '/campanhas'
+      fullPath: '/campanhas'
+      preLoaderRoute: typeof CampanhasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/busca': {
@@ -695,6 +715,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnotacoesRoute: AnotacoesRoute,
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
+  CampanhasRoute: CampanhasRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ContaRoute: ContaRoute,
   DenominacoesRoute: DenominacoesRouteWithChildren,
