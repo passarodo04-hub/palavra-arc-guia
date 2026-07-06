@@ -23,7 +23,6 @@ import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
-import { Route as CampanhasRouteImport } from './routes/campanhas'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
 import { Route as AnotacoesRouteImport } from './routes/anotacoes'
@@ -32,11 +31,13 @@ import { Route as ResumoIndexRouteImport } from './routes/resumo.index'
 import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
 import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
+import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
+import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
@@ -111,11 +112,6 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasRoute = CampanhasRouteImport.update({
-  id: '/campanhas',
-  path: '/campanhas',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BuscaRoute = BuscaRouteImport.update({
   id: '/busca',
   path: '/busca',
@@ -156,6 +152,11 @@ const DenominacoesIndexRoute = DenominacoesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DenominacoesRoute,
 } as any)
+const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
+  id: '/campanhas/',
+  path: '/campanhas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BibliaIndexRoute = BibliaIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -181,6 +182,11 @@ const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => DenominacoesRoute,
 } as any)
+const CampanhasLeiaBibliaRoute = CampanhasLeiaBibliaRouteImport.update({
+  id: '/campanhas/leia-biblia',
+  path: '/campanhas/leia-biblia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BibliaBookRoute = BibliaBookRouteImport.update({
   id: '/$book',
   path: '/$book',
@@ -202,7 +208,6 @@ export interface FileRoutesByFullPath {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
-  '/campanhas': typeof CampanhasRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -218,11 +223,13 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
+  '/campanhas/': typeof CampanhasIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -234,7 +241,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
-  '/campanhas': typeof CampanhasRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/devocional': typeof DevocionalRoute
@@ -245,11 +251,13 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
+  '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia': typeof BibliaIndexRoute
+  '/campanhas': typeof CampanhasIndexRoute
   '/denominacoes': typeof DenominacoesIndexRoute
   '/estudos': typeof EstudosIndexRoute
   '/harpa': typeof HarpaIndexRoute
@@ -263,7 +271,6 @@ export interface FileRoutesById {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
-  '/campanhas': typeof CampanhasRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -279,11 +286,13 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
+  '/campanhas/': typeof CampanhasIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -298,7 +307,6 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
-    | '/campanhas'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -314,11 +322,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/termos'
     | '/biblia/$book'
+    | '/campanhas/leia-biblia'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
     | '/resumo/$book'
     | '/biblia/'
+    | '/campanhas/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
@@ -330,7 +340,6 @@ export interface FileRouteTypes {
     | '/'
     | '/anotacoes'
     | '/busca'
-    | '/campanhas'
     | '/configuracoes'
     | '/conta'
     | '/devocional'
@@ -341,11 +350,13 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/termos'
+    | '/campanhas/leia-biblia'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
     | '/resumo/$book'
     | '/biblia'
+    | '/campanhas'
     | '/denominacoes'
     | '/estudos'
     | '/harpa'
@@ -358,7 +369,6 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
-    | '/campanhas'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -374,11 +384,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/termos'
     | '/biblia/$book'
+    | '/campanhas/leia-biblia'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
     | '/resumo/$book'
     | '/biblia/'
+    | '/campanhas/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
@@ -392,7 +404,6 @@ export interface RootRouteChildren {
   AnotacoesRoute: typeof AnotacoesRoute
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
-  CampanhasRoute: typeof CampanhasRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ContaRoute: typeof ContaRoute
   DenominacoesRoute: typeof DenominacoesRouteWithChildren
@@ -407,6 +418,8 @@ export interface RootRouteChildren {
   ResumoRoute: typeof ResumoRouteWithChildren
   SignupRoute: typeof SignupRoute
   TermosRoute: typeof TermosRoute
+  CampanhasLeiaBibliaRoute: typeof CampanhasLeiaBibliaRoute
+  CampanhasIndexRoute: typeof CampanhasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -509,13 +522,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campanhas': {
-      id: '/campanhas'
-      path: '/campanhas'
-      fullPath: '/campanhas'
-      preLoaderRoute: typeof CampanhasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/busca': {
       id: '/busca'
       path: '/busca'
@@ -572,6 +578,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DenominacoesIndexRouteImport
       parentRoute: typeof DenominacoesRoute
     }
+    '/campanhas/': {
+      id: '/campanhas/'
+      path: '/campanhas'
+      fullPath: '/campanhas/'
+      preLoaderRoute: typeof CampanhasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/biblia/': {
       id: '/biblia/'
       path: '/'
@@ -606,6 +619,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/denominacoes/$id'
       preLoaderRoute: typeof DenominacoesIdRouteImport
       parentRoute: typeof DenominacoesRoute
+    }
+    '/campanhas/leia-biblia': {
+      id: '/campanhas/leia-biblia'
+      path: '/campanhas/leia-biblia'
+      fullPath: '/campanhas/leia-biblia'
+      preLoaderRoute: typeof CampanhasLeiaBibliaRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/biblia/$book': {
       id: '/biblia/$book'
@@ -715,7 +735,6 @@ const rootRouteChildren: RootRouteChildren = {
   AnotacoesRoute: AnotacoesRoute,
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
-  CampanhasRoute: CampanhasRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ContaRoute: ContaRoute,
   DenominacoesRoute: DenominacoesRouteWithChildren,
@@ -730,6 +749,8 @@ const rootRouteChildren: RootRouteChildren = {
   ResumoRoute: ResumoRouteWithChildren,
   SignupRoute: SignupRoute,
   TermosRoute: TermosRoute,
+  CampanhasLeiaBibliaRoute: CampanhasLeiaBibliaRoute,
+  CampanhasIndexRoute: CampanhasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
