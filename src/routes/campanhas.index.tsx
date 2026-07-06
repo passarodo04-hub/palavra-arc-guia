@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock } from "lucide-react";
@@ -174,9 +174,12 @@ function CampanhasPage() {
             <Button
               type="button"
               className="mt-5 rounded-full bg-gold text-gold-foreground hover:bg-gold/90 h-11 px-6 font-semibold shadow-soft"
+              asChild
             >
-              Começar Jornada
-              <ArrowRight className="size-4" />
+              <Link to="/campanhas/leia-biblia">
+                Começar Jornada
+                <ArrowRight className="size-4" />
+              </Link>
             </Button>
           </div>
         </section>
