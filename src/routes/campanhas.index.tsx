@@ -1,8 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
-import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock } from "lucide-react";
+import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock, Brain, Flame, CheckCircle, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  CAMPAIGNS,
+  campaignById,
+  computeDateStreak,
+  evaluateBadges,
+  readBiblePlanRaw,
+  summarizeCampaigns,
+  useAllCampaigns,
+} from "@/lib/campaigns";
+import { StatCard } from "@/components/campaigns/StatCard";
 
 export const Route = createFileRoute("/campanhas/")({
   head: () => ({
@@ -18,6 +28,7 @@ export const Route = createFileRoute("/campanhas/")({
 
 type Difficulty = "Iniciante" | "Intermediário" | "Avançado";
 type Campaign = {
+  route?: string;
   title: string;
   description: string;
   difficulty: Difficulty;
@@ -36,11 +47,11 @@ const CATEGORIES: Category[] = [
     label: "Leitura Bíblica",
     icon: BookOpen,
     campaigns: [
-      { title: "Ler toda a Bíblia", description: "Do Gênesis ao Apocalipse no seu ritmo.", difficulty: "Avançado", duration: "365 dias" },
-      { title: "Novo Testamento", description: "Do Evangelho de Mateus ao Apocalipse.", difficulty: "Intermediário", duration: "90 dias" },
-      { title: "Evangelhos", description: "Mateus, Marcos, Lucas e João.", difficulty: "Iniciante", duration: "40 dias" },
-      { title: "Salmos", description: "Um salmo por dia para meditar.", difficulty: "Iniciante", duration: "150 dias" },
-      { title: "Provérbios", description: "Sabedoria diária de Salomão.", difficulty: "Iniciante", duration: "31 dias" },
+      { route: "/campanhas/leia-biblia", title: "Ler toda a Bíblia", description: "Do Gênesis ao Apocalipse no seu ritmo.", difficulty: "Avançado", duration: "365 dias" },
+      { route: "/campanhas/leia-biblia", title: "Novo Testamento", description: "Do Evangelho de Mateus ao Apocalipse.", difficulty: "Intermediário", duration: "90 dias" },
+      { route: "/campanhas/leia-biblia", title: "Evangelhos", description: "Mateus, Marcos, Lucas e João.", difficulty: "Iniciante", duration: "40 dias" },
+      { route: "/campanhas/leia-biblia", title: "Salmos", description: "Um salmo por dia para meditar.", difficulty: "Iniciante", duration: "150 dias" },
+      { route: "/campanhas/leia-biblia", title: "Provérbios", description: "Sabedoria diária de Salomão.", difficulty: "Iniciante", duration: "31 dias" },
     ],
   },
   {
@@ -48,9 +59,9 @@ const CATEGORIES: Category[] = [
     label: "Oração",
     icon: HandHeart,
     campaigns: [
-      { title: "7 Dias de Oração", description: "Uma semana intensa de comunhão.", difficulty: "Iniciante", duration: "7 dias" },
-      { title: "21 Dias de Oração", description: "Formando um hábito espiritual.", difficulty: "Intermediário", duration: "21 dias" },
-      { title: "40 Dias de Oração", description: "Uma jornada profunda de fé.", difficulty: "Avançado", duration: "40 dias" },
+      { route: "/campanhas/oracao", title: "Rotina de Oração", description: "Escolha duração, horário e comece.", difficulty: "Iniciante", duration: "diário" },
+      { route: "/campanhas/oracao", title: "21 Dias de Oração", description: "Formando um hábito espiritual.", difficulty: "Intermediário", duration: "21 dias" },
+      { route: "/campanhas/oracao", title: "40 Dias de Oração", description: "Uma jornada profunda de fé.", difficulty: "Avançado", duration: "40 dias" },
     ],
   },
   {
@@ -58,9 +69,9 @@ const CATEGORIES: Category[] = [
     label: "Jejum",
     icon: Utensils,
     campaigns: [
-      { title: "Jejum Parcial", description: "Renovação através do jejum leve.", difficulty: "Iniciante", duration: "7 dias" },
-      { title: "Jejum de Daniel", description: "Alimentação simples e oração.", difficulty: "Intermediário", duration: "21 dias" },
-      { title: "Jejum de Redes Sociais", description: "Silêncio digital para ouvir a Deus.", difficulty: "Iniciante", duration: "14 dias" },
+      { route: "/campanhas/jejum", title: "Jejum Parcial", description: "Renovação através do jejum leve.", difficulty: "Iniciante", duration: "7 dias" },
+      { route: "/campanhas/jejum", title: "Jejum de Daniel", description: "Alimentação simples e oração.", difficulty: "Intermediário", duration: "21 dias" },
+      { route: "/campanhas/jejum", title: "Jejum de Redes Sociais", description: "Silêncio digital para ouvir a Deus.", difficulty: "Iniciante", duration: "14 dias" },
     ],
   },
   {
@@ -68,9 +79,10 @@ const CATEGORIES: Category[] = [
     label: "Harpa Cristã",
     icon: Music,
     campaigns: [
-      { title: "50 Hinos", description: "Adoração diária com clássicos.", difficulty: "Iniciante", duration: "50 dias" },
-      { title: "100 Hinos", description: "Aprofunde-se no cancioneiro.", difficulty: "Intermediário", duration: "100 dias" },
-      { title: "Toda a Harpa", description: "Cante todos os 640 hinos.", difficulty: "Avançado", duration: "640 dias" },
+      { route: "/campanhas/harpa-desafio", title: "30 Hinos", description: "Comece devagar.", difficulty: "Iniciante", duration: "30 hinos" },
+      { route: "/campanhas/harpa-desafio", title: "50 Hinos", description: "Adoração diária com clássicos.", difficulty: "Iniciante", duration: "50 hinos" },
+      { route: "/campanhas/harpa-desafio", title: "100 Hinos", description: "Aprofunde-se no cancioneiro.", difficulty: "Intermediário", duration: "100 hinos" },
+      { route: "/campanhas/harpa-desafio", title: "Toda a Harpa", description: "Cante todos os 640 hinos.", difficulty: "Avançado", duration: "640 hinos" },
     ],
   },
   {
@@ -78,10 +90,10 @@ const CATEGORIES: Category[] = [
     label: "Conhecimento Bíblico",
     icon: GraduationCap,
     campaigns: [
-      { title: "Personagens Bíblicos", description: "Vidas que marcaram a história.", difficulty: "Intermediário", duration: "30 dias" },
-      { title: "Profetas", description: "Mensageiros da voz de Deus.", difficulty: "Intermediário", duration: "21 dias" },
-      { title: "Milagres", description: "As obras extraordinárias do Senhor.", difficulty: "Iniciante", duration: "14 dias" },
-      { title: "Parábolas", description: "As histórias que Jesus contou.", difficulty: "Iniciante", duration: "21 dias" },
+      { route: "/campanhas/conhecimento", title: "Personagens Bíblicos", description: "Vidas que marcaram a história.", difficulty: "Intermediário", duration: "30 dias" },
+      { route: "/campanhas/conhecimento", title: "Profetas, Reis, Apóstolos", description: "Estude cada grupo em profundidade.", difficulty: "Intermediário", duration: "21 dias" },
+      { route: "/campanhas/conhecimento", title: "Milagres e Parábolas", description: "As obras e ensinos do Senhor.", difficulty: "Iniciante", duration: "14 dias" },
+      { route: "/campanhas/quiz", title: "Quiz Bíblico", description: "Teste seu conhecimento em 4 níveis.", difficulty: "Intermediário", duration: "diário" },
     ],
   },
   {
@@ -89,10 +101,9 @@ const CATEGORIES: Category[] = [
     label: "Crescimento Espiritual",
     icon: Sprout,
     campaigns: [
-      { title: "Devocional Diário", description: "Um momento com Deus todo dia.", difficulty: "Iniciante", duration: "30 dias" },
-      { title: "Gratidão", description: "Cultive um coração agradecido.", difficulty: "Iniciante", duration: "21 dias" },
-      { title: "Bondade", description: "Pratique um ato de bondade por dia.", difficulty: "Intermediário", duration: "30 dias" },
-      { title: "Amor ao Próximo", description: "Viva o segundo maior mandamento.", difficulty: "Intermediário", duration: "40 dias" },
+      { route: "/campanhas/devocional-diario", title: "Devocional Diário", description: "Um momento com Deus todo dia.", difficulty: "Iniciante", duration: "30 dias" },
+      { route: "/campanhas/gratidao", title: "Gratidão", description: "Cultive um coração agradecido.", difficulty: "Iniciante", duration: "21 dias" },
+      { route: "/campanhas/crescimento", title: "Fruto do Espírito", description: "Bondade, amor, humildade, paciência...", difficulty: "Intermediário", duration: "40 dias" },
     ],
   },
   {
@@ -100,8 +111,8 @@ const CATEGORIES: Category[] = [
     label: "Família",
     icon: Heart,
     campaigns: [
-      { title: "Culto em Família", description: "Reúna a casa em oração diária.", difficulty: "Iniciante", duration: "30 dias" },
-      { title: "Bênção dos Filhos", description: "Ore por cada filho todos os dias.", difficulty: "Iniciante", duration: "21 dias" },
+      { route: "/campanhas/familia", title: "Culto em Família", description: "Reúna a casa em oração diária.", difficulty: "Iniciante", duration: "30 dias" },
+      { route: "/campanhas/familia", title: "Bênção dos Filhos", description: "Ore por cada filho todos os dias.", difficulty: "Iniciante", duration: "21 dias" },
     ],
   },
   {
@@ -109,8 +120,8 @@ const CATEGORIES: Category[] = [
     label: "Casais",
     icon: Users,
     campaigns: [
-      { title: "Oração a Dois", description: "Uma oração diária com o cônjuge.", difficulty: "Iniciante", duration: "30 dias" },
-      { title: "Cantares", description: "Leia Cantares juntos e reflita.", difficulty: "Iniciante", duration: "8 dias" },
+      { route: "/campanhas/casais", title: "Oração a Dois", description: "Uma oração diária com o cônjuge.", difficulty: "Iniciante", duration: "30 dias" },
+      { route: "/campanhas/casais", title: "Cantares", description: "Leia Cantares juntos e reflita.", difficulty: "Iniciante", duration: "8 dias" },
     ],
   },
   {
@@ -118,8 +129,8 @@ const CATEGORIES: Category[] = [
     label: "Crianças",
     icon: Baby,
     campaigns: [
-      { title: "Histórias Bíblicas", description: "Uma história por dia para as crianças.", difficulty: "Iniciante", duration: "30 dias" },
-      { title: "Versículos para Memorizar", description: "Palavra guardada no coração.", difficulty: "Iniciante", duration: "21 dias" },
+      { route: "/campanhas/criancas", title: "Histórias Bíblicas", description: "Uma história por dia para as crianças.", difficulty: "Iniciante", duration: "30 dias" },
+      { route: "/campanhas/criancas", title: "Versículos para Memorizar", description: "Palavra guardada no coração.", difficulty: "Iniciante", duration: "21 dias" },
     ],
   },
   {
@@ -127,9 +138,9 @@ const CATEGORIES: Category[] = [
     label: "Desafios",
     icon: Trophy,
     campaigns: [
-      { title: "Sem Reclamar", description: "21 dias sem uma única reclamação.", difficulty: "Avançado", duration: "21 dias" },
-      { title: "Perdão", description: "Perdoe uma pessoa por dia.", difficulty: "Avançado", duration: "7 dias" },
-      { title: "Silêncio e Escuta", description: "Ouça mais, fale menos.", difficulty: "Intermediário", duration: "14 dias" },
+      { route: "/campanhas/crescimento", title: "Sem Reclamar", description: "21 dias sem uma única reclamação.", difficulty: "Avançado", duration: "21 dias" },
+      { route: "/campanhas/crescimento", title: "Perdão", description: "Perdoe uma pessoa por dia.", difficulty: "Avançado", duration: "7 dias" },
+      { route: "/campanhas/crescimento", title: "Silêncio e Escuta", description: "Ouça mais, fale menos.", difficulty: "Intermediário", duration: "14 dias" },
     ],
   },
 ];
@@ -141,6 +152,56 @@ const DIFFICULTY_CLASSES: Record<Difficulty, string> = {
 };
 
 function CampanhasPage() {
+  const state = useAllCampaigns();
+  const summary = summarizeCampaigns(state);
+  const badges = evaluateBadges(state);
+  const plan = readBiblePlanRaw();
+
+  const active: {
+    id: string;
+    title: string;
+    route: string;
+    percent: number;
+    detail: string;
+  }[] = [];
+  if (plan.active) {
+    const cpd = plan.goalDays ? Math.max(1, Math.ceil(1189 / plan.goalDays)) : 1;
+    const done = plan.completedDays?.length ?? 0;
+    const chapters = Math.min(1189, done * cpd);
+    active.push({
+      id: "leia-biblia",
+      title: "Leia toda a Bíblia",
+      route: "/campanhas/leia-biblia",
+      percent: Math.round((chapters / 1189) * 100),
+      detail: `${done}/${plan.goalDays ?? 0} dias · ${Math.max(0, (plan.goalDays ?? 0) - done)} restantes`,
+    });
+  }
+  for (const [id, c] of Object.entries(state)) {
+    if (!c?.active) continue;
+    const meta = campaignById(id);
+    if (!meta) continue;
+    let percent = 0;
+    let detail = "";
+    if (c.target) {
+      percent = Math.min(100, Math.round(((c.counter ?? 0) / c.target) * 100));
+      detail = `${c.counter ?? 0} de ${c.target}`;
+    } else if (c.endDate && c.startDate) {
+      const total = Math.max(1, Math.round((new Date(c.endDate + "T00:00:00").getTime() - new Date(c.startDate + "T00:00:00").getTime()) / 86_400_000));
+      const elapsed = Math.min(total, Math.max(0, Math.round((Date.now() - new Date(c.startDate + "T00:00:00").getTime()) / 86_400_000)));
+      percent = Math.round((elapsed / total) * 100);
+      detail = `dia ${Math.min(elapsed + 1, total)}/${total}`;
+    } else if (c.goalDays) {
+      percent = Math.min(100, Math.round(((c.completedDates?.length ?? 0) / c.goalDays) * 100));
+      detail = `${c.completedDates?.length ?? 0}/${c.goalDays} dias`;
+    } else if (c.completedDates?.length) {
+      const streak = computeDateStreak(c.completedDates);
+      detail = `${streak} ${streak === 1 ? "dia" : "dias"} de sequência`;
+    } else if (c.sessions) {
+      detail = `${c.sessions} sessões`;
+    }
+    active.push({ id, title: meta.title, route: meta.route, percent, detail });
+  }
+
   return (
     <div className="min-h-screen bg-background pb-24">
       <PageHero
@@ -187,17 +248,78 @@ function CampanhasPage() {
         {/* Continue journey */}
         <section className="mt-8">
           <h2 className="px-2 font-serif text-2xl text-foreground">Continue sua caminhada</h2>
-          <div className="mt-4 rounded-3xl border border-dashed border-border bg-secondary/40 p-8 text-center animate-fade-up">
-            <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-card text-gold shadow-soft">
-              <Target className="size-7" />
+          {active.length === 0 ? (
+            <div className="mt-4 rounded-3xl border border-dashed border-border bg-secondary/40 p-8 text-center animate-fade-up">
+              <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-card text-gold shadow-soft">
+                <Target className="size-7" />
+              </div>
+              <h3 className="mt-4 font-serif text-lg text-foreground">
+                Você ainda não iniciou nenhuma campanha.
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
+                Escolha uma campanha abaixo para começar sua jornada.
+              </p>
             </div>
-            <h3 className="mt-4 font-serif text-lg text-foreground">
-              Você ainda não iniciou nenhuma campanha.
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
-              Escolha uma campanha abaixo para começar sua jornada.
-            </p>
+          ) : (
+            <ul className="mt-4 grid gap-3 md:grid-cols-2">
+              {active.map((a) => (
+                <li key={a.id}>
+                  <Link
+                    to={a.route}
+                    className="group block rounded-3xl border border-border bg-card p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-elegant"
+                  >
+                    <div className="text-[10px] font-semibold uppercase tracking-widest text-gold">Em andamento</div>
+                    <div className="mt-1 font-serif text-lg text-card-foreground">{a.title}</div>
+                    <div className="mt-3 h-1.5 rounded-full bg-secondary overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-gold to-primary" style={{ width: `${a.percent}%` }} />
+                    </div>
+                    <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+                      <span>{a.detail}</span>
+                      <span className="inline-flex items-center gap-1 text-gold">Continuar <ArrowRight className="size-3.5" /></span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* Profile summary */}
+        <section className="mt-10">
+          <h2 className="px-2 font-serif text-2xl text-foreground">Meu progresso</h2>
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <StatCard icon={Target} label="Ativas" value={String(summary.activeCount)} accent />
+            <StatCard icon={CheckCircle} label="Concluídas" value={String(summary.completedCount)} />
+            <StatCard icon={Flame} label="Sequência atual" value={`${summary.currentStreak} ${summary.currentStreak === 1 ? "dia" : "dias"}`} accent />
+            <StatCard icon={Flame} label="Maior sequência" value={`${summary.longestStreak}`} />
+            <StatCard icon={BookOpen} label="Minutos lendo" value={String(summary.readingMinutes)} />
+            <StatCard icon={HandHeart} label="Minutos orando" value={String(summary.prayerMinutes)} />
+            <StatCard icon={CalendarDays} label="Devocionais" value={String(summary.devocionaisCompletos)} />
+            <StatCard icon={Music} label="Hinos" value={String(summary.hinosCompletos)} />
+            <StatCard icon={Brain} label="Acertos no Quiz" value={String(summary.quizAcertos)} />
           </div>
+        </section>
+
+        {/* Achievements */}
+        <section className="mt-10">
+          <h2 className="px-2 font-serif text-2xl text-foreground">Meus emblemas</h2>
+          <ul className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+            {badges.map((b) => (
+              <li
+                key={b.id}
+                className={`rounded-2xl border p-4 text-center transition-all ${
+                  b.earned ? "border-gold/40 bg-gold/5 shadow-soft" : "border-border bg-secondary/40 opacity-60"
+                }`}
+                title={b.description}
+              >
+                <div className="text-3xl">{b.emoji}</div>
+                <div className="mt-2 font-serif text-sm text-foreground">{b.label}</div>
+                <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {b.earned ? "Conquistado" : "Bloqueado"}
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* Categories */}
@@ -237,11 +359,8 @@ function CategoryRow({ category }: { category: Category }) {
 }
 
 function CampaignCard({ campaign }: { campaign: Campaign }) {
-  return (
-    <button
-      type="button"
-      className="group relative flex h-full w-full flex-col items-start overflow-hidden rounded-2xl border border-border bg-card p-5 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-elegant active:scale-[0.98]"
-    >
+  const inner = (
+    <>
       <div
         className="pointer-events-none absolute inset-0 opacity-60"
         style={{
@@ -269,6 +388,20 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
           {campaign.duration}
         </span>
       </div>
+    </>
+  );
+  const className =
+    "group relative flex h-full w-full flex-col items-start overflow-hidden rounded-2xl border border-border bg-card p-5 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-elegant active:scale-[0.98]";
+  if (campaign.route) {
+    return (
+      <Link to={campaign.route} className={className}>
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" className={className}>
+      {inner}
     </button>
   );
 }
