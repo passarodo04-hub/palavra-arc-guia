@@ -37,7 +37,18 @@ import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
+import { Route as CampanhasQuizRouteImport } from './routes/campanhas.quiz'
+import { Route as CampanhasOracaoRouteImport } from './routes/campanhas.oracao'
 import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
+import { Route as CampanhasJejumRouteImport } from './routes/campanhas.jejum'
+import { Route as CampanhasHarpaDesafioRouteImport } from './routes/campanhas.harpa-desafio'
+import { Route as CampanhasGratidaoRouteImport } from './routes/campanhas.gratidao'
+import { Route as CampanhasFamiliaRouteImport } from './routes/campanhas.familia'
+import { Route as CampanhasDevocionalDiarioRouteImport } from './routes/campanhas.devocional-diario'
+import { Route as CampanhasCriancasRouteImport } from './routes/campanhas.criancas'
+import { Route as CampanhasCrescimentoRouteImport } from './routes/campanhas.crescimento'
+import { Route as CampanhasConhecimentoRouteImport } from './routes/campanhas.conhecimento'
+import { Route as CampanhasCasaisRouteImport } from './routes/campanhas.casais'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
@@ -182,9 +193,65 @@ const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => DenominacoesRoute,
 } as any)
+const CampanhasQuizRoute = CampanhasQuizRouteImport.update({
+  id: '/campanhas/quiz',
+  path: '/campanhas/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasOracaoRoute = CampanhasOracaoRouteImport.update({
+  id: '/campanhas/oracao',
+  path: '/campanhas/oracao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CampanhasLeiaBibliaRoute = CampanhasLeiaBibliaRouteImport.update({
   id: '/campanhas/leia-biblia',
   path: '/campanhas/leia-biblia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasJejumRoute = CampanhasJejumRouteImport.update({
+  id: '/campanhas/jejum',
+  path: '/campanhas/jejum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasHarpaDesafioRoute = CampanhasHarpaDesafioRouteImport.update({
+  id: '/campanhas/harpa-desafio',
+  path: '/campanhas/harpa-desafio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasGratidaoRoute = CampanhasGratidaoRouteImport.update({
+  id: '/campanhas/gratidao',
+  path: '/campanhas/gratidao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasFamiliaRoute = CampanhasFamiliaRouteImport.update({
+  id: '/campanhas/familia',
+  path: '/campanhas/familia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasDevocionalDiarioRoute =
+  CampanhasDevocionalDiarioRouteImport.update({
+    id: '/campanhas/devocional-diario',
+    path: '/campanhas/devocional-diario',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CampanhasCriancasRoute = CampanhasCriancasRouteImport.update({
+  id: '/campanhas/criancas',
+  path: '/campanhas/criancas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasCrescimentoRoute = CampanhasCrescimentoRouteImport.update({
+  id: '/campanhas/crescimento',
+  path: '/campanhas/crescimento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasConhecimentoRoute = CampanhasConhecimentoRouteImport.update({
+  id: '/campanhas/conhecimento',
+  path: '/campanhas/conhecimento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasCasaisRoute = CampanhasCasaisRouteImport.update({
+  id: '/campanhas/casais',
+  path: '/campanhas/casais',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BibliaBookRoute = BibliaBookRouteImport.update({
@@ -223,7 +290,18 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/campanhas/casais': typeof CampanhasCasaisRoute
+  '/campanhas/conhecimento': typeof CampanhasConhecimentoRoute
+  '/campanhas/crescimento': typeof CampanhasCrescimentoRoute
+  '/campanhas/criancas': typeof CampanhasCriancasRoute
+  '/campanhas/devocional-diario': typeof CampanhasDevocionalDiarioRoute
+  '/campanhas/familia': typeof CampanhasFamiliaRoute
+  '/campanhas/gratidao': typeof CampanhasGratidaoRoute
+  '/campanhas/harpa-desafio': typeof CampanhasHarpaDesafioRoute
+  '/campanhas/jejum': typeof CampanhasJejumRoute
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
+  '/campanhas/oracao': typeof CampanhasOracaoRoute
+  '/campanhas/quiz': typeof CampanhasQuizRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -251,7 +329,18 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
+  '/campanhas/casais': typeof CampanhasCasaisRoute
+  '/campanhas/conhecimento': typeof CampanhasConhecimentoRoute
+  '/campanhas/crescimento': typeof CampanhasCrescimentoRoute
+  '/campanhas/criancas': typeof CampanhasCriancasRoute
+  '/campanhas/devocional-diario': typeof CampanhasDevocionalDiarioRoute
+  '/campanhas/familia': typeof CampanhasFamiliaRoute
+  '/campanhas/gratidao': typeof CampanhasGratidaoRoute
+  '/campanhas/harpa-desafio': typeof CampanhasHarpaDesafioRoute
+  '/campanhas/jejum': typeof CampanhasJejumRoute
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
+  '/campanhas/oracao': typeof CampanhasOracaoRoute
+  '/campanhas/quiz': typeof CampanhasQuizRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -286,7 +375,18 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/campanhas/casais': typeof CampanhasCasaisRoute
+  '/campanhas/conhecimento': typeof CampanhasConhecimentoRoute
+  '/campanhas/crescimento': typeof CampanhasCrescimentoRoute
+  '/campanhas/criancas': typeof CampanhasCriancasRoute
+  '/campanhas/devocional-diario': typeof CampanhasDevocionalDiarioRoute
+  '/campanhas/familia': typeof CampanhasFamiliaRoute
+  '/campanhas/gratidao': typeof CampanhasGratidaoRoute
+  '/campanhas/harpa-desafio': typeof CampanhasHarpaDesafioRoute
+  '/campanhas/jejum': typeof CampanhasJejumRoute
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
+  '/campanhas/oracao': typeof CampanhasOracaoRoute
+  '/campanhas/quiz': typeof CampanhasQuizRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -322,7 +422,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/termos'
     | '/biblia/$book'
+    | '/campanhas/casais'
+    | '/campanhas/conhecimento'
+    | '/campanhas/crescimento'
+    | '/campanhas/criancas'
+    | '/campanhas/devocional-diario'
+    | '/campanhas/familia'
+    | '/campanhas/gratidao'
+    | '/campanhas/harpa-desafio'
+    | '/campanhas/jejum'
     | '/campanhas/leia-biblia'
+    | '/campanhas/oracao'
+    | '/campanhas/quiz'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -350,7 +461,18 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/termos'
+    | '/campanhas/casais'
+    | '/campanhas/conhecimento'
+    | '/campanhas/crescimento'
+    | '/campanhas/criancas'
+    | '/campanhas/devocional-diario'
+    | '/campanhas/familia'
+    | '/campanhas/gratidao'
+    | '/campanhas/harpa-desafio'
+    | '/campanhas/jejum'
     | '/campanhas/leia-biblia'
+    | '/campanhas/oracao'
+    | '/campanhas/quiz'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -384,7 +506,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/termos'
     | '/biblia/$book'
+    | '/campanhas/casais'
+    | '/campanhas/conhecimento'
+    | '/campanhas/crescimento'
+    | '/campanhas/criancas'
+    | '/campanhas/devocional-diario'
+    | '/campanhas/familia'
+    | '/campanhas/gratidao'
+    | '/campanhas/harpa-desafio'
+    | '/campanhas/jejum'
     | '/campanhas/leia-biblia'
+    | '/campanhas/oracao'
+    | '/campanhas/quiz'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -418,7 +551,18 @@ export interface RootRouteChildren {
   ResumoRoute: typeof ResumoRouteWithChildren
   SignupRoute: typeof SignupRoute
   TermosRoute: typeof TermosRoute
+  CampanhasCasaisRoute: typeof CampanhasCasaisRoute
+  CampanhasConhecimentoRoute: typeof CampanhasConhecimentoRoute
+  CampanhasCrescimentoRoute: typeof CampanhasCrescimentoRoute
+  CampanhasCriancasRoute: typeof CampanhasCriancasRoute
+  CampanhasDevocionalDiarioRoute: typeof CampanhasDevocionalDiarioRoute
+  CampanhasFamiliaRoute: typeof CampanhasFamiliaRoute
+  CampanhasGratidaoRoute: typeof CampanhasGratidaoRoute
+  CampanhasHarpaDesafioRoute: typeof CampanhasHarpaDesafioRoute
+  CampanhasJejumRoute: typeof CampanhasJejumRoute
   CampanhasLeiaBibliaRoute: typeof CampanhasLeiaBibliaRoute
+  CampanhasOracaoRoute: typeof CampanhasOracaoRoute
+  CampanhasQuizRoute: typeof CampanhasQuizRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
 }
 
@@ -620,11 +764,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DenominacoesIdRouteImport
       parentRoute: typeof DenominacoesRoute
     }
+    '/campanhas/quiz': {
+      id: '/campanhas/quiz'
+      path: '/campanhas/quiz'
+      fullPath: '/campanhas/quiz'
+      preLoaderRoute: typeof CampanhasQuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/oracao': {
+      id: '/campanhas/oracao'
+      path: '/campanhas/oracao'
+      fullPath: '/campanhas/oracao'
+      preLoaderRoute: typeof CampanhasOracaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/campanhas/leia-biblia': {
       id: '/campanhas/leia-biblia'
       path: '/campanhas/leia-biblia'
       fullPath: '/campanhas/leia-biblia'
       preLoaderRoute: typeof CampanhasLeiaBibliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/jejum': {
+      id: '/campanhas/jejum'
+      path: '/campanhas/jejum'
+      fullPath: '/campanhas/jejum'
+      preLoaderRoute: typeof CampanhasJejumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/harpa-desafio': {
+      id: '/campanhas/harpa-desafio'
+      path: '/campanhas/harpa-desafio'
+      fullPath: '/campanhas/harpa-desafio'
+      preLoaderRoute: typeof CampanhasHarpaDesafioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/gratidao': {
+      id: '/campanhas/gratidao'
+      path: '/campanhas/gratidao'
+      fullPath: '/campanhas/gratidao'
+      preLoaderRoute: typeof CampanhasGratidaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/familia': {
+      id: '/campanhas/familia'
+      path: '/campanhas/familia'
+      fullPath: '/campanhas/familia'
+      preLoaderRoute: typeof CampanhasFamiliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/devocional-diario': {
+      id: '/campanhas/devocional-diario'
+      path: '/campanhas/devocional-diario'
+      fullPath: '/campanhas/devocional-diario'
+      preLoaderRoute: typeof CampanhasDevocionalDiarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/criancas': {
+      id: '/campanhas/criancas'
+      path: '/campanhas/criancas'
+      fullPath: '/campanhas/criancas'
+      preLoaderRoute: typeof CampanhasCriancasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/crescimento': {
+      id: '/campanhas/crescimento'
+      path: '/campanhas/crescimento'
+      fullPath: '/campanhas/crescimento'
+      preLoaderRoute: typeof CampanhasCrescimentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/conhecimento': {
+      id: '/campanhas/conhecimento'
+      path: '/campanhas/conhecimento'
+      fullPath: '/campanhas/conhecimento'
+      preLoaderRoute: typeof CampanhasConhecimentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/casais': {
+      id: '/campanhas/casais'
+      path: '/campanhas/casais'
+      fullPath: '/campanhas/casais'
+      preLoaderRoute: typeof CampanhasCasaisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biblia/$book': {
@@ -749,7 +970,18 @@ const rootRouteChildren: RootRouteChildren = {
   ResumoRoute: ResumoRouteWithChildren,
   SignupRoute: SignupRoute,
   TermosRoute: TermosRoute,
+  CampanhasCasaisRoute: CampanhasCasaisRoute,
+  CampanhasConhecimentoRoute: CampanhasConhecimentoRoute,
+  CampanhasCrescimentoRoute: CampanhasCrescimentoRoute,
+  CampanhasCriancasRoute: CampanhasCriancasRoute,
+  CampanhasDevocionalDiarioRoute: CampanhasDevocionalDiarioRoute,
+  CampanhasFamiliaRoute: CampanhasFamiliaRoute,
+  CampanhasGratidaoRoute: CampanhasGratidaoRoute,
+  CampanhasHarpaDesafioRoute: CampanhasHarpaDesafioRoute,
+  CampanhasJejumRoute: CampanhasJejumRoute,
   CampanhasLeiaBibliaRoute: CampanhasLeiaBibliaRoute,
+  CampanhasOracaoRoute: CampanhasOracaoRoute,
+  CampanhasQuizRoute: CampanhasQuizRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
 }
 export const routeTree = rootRouteImport
