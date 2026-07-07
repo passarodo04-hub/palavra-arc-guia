@@ -37,7 +37,11 @@ import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
+import { Route as CampanhasOracaoRouteImport } from './routes/campanhas.oracao'
 import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
+import { Route as CampanhasJejumRouteImport } from './routes/campanhas.jejum'
+import { Route as CampanhasHarpaDesafioRouteImport } from './routes/campanhas.harpa-desafio'
+import { Route as CampanhasDevocionalDiarioRouteImport } from './routes/campanhas.devocional-diario'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
@@ -182,11 +186,32 @@ const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => DenominacoesRoute,
 } as any)
+const CampanhasOracaoRoute = CampanhasOracaoRouteImport.update({
+  id: '/campanhas/oracao',
+  path: '/campanhas/oracao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CampanhasLeiaBibliaRoute = CampanhasLeiaBibliaRouteImport.update({
   id: '/campanhas/leia-biblia',
   path: '/campanhas/leia-biblia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CampanhasJejumRoute = CampanhasJejumRouteImport.update({
+  id: '/campanhas/jejum',
+  path: '/campanhas/jejum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasHarpaDesafioRoute = CampanhasHarpaDesafioRouteImport.update({
+  id: '/campanhas/harpa-desafio',
+  path: '/campanhas/harpa-desafio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasDevocionalDiarioRoute =
+  CampanhasDevocionalDiarioRouteImport.update({
+    id: '/campanhas/devocional-diario',
+    path: '/campanhas/devocional-diario',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BibliaBookRoute = BibliaBookRouteImport.update({
   id: '/$book',
   path: '/$book',
@@ -223,7 +248,11 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/campanhas/devocional-diario': typeof CampanhasDevocionalDiarioRoute
+  '/campanhas/harpa-desafio': typeof CampanhasHarpaDesafioRoute
+  '/campanhas/jejum': typeof CampanhasJejumRoute
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
+  '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -251,7 +280,11 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
+  '/campanhas/devocional-diario': typeof CampanhasDevocionalDiarioRoute
+  '/campanhas/harpa-desafio': typeof CampanhasHarpaDesafioRoute
+  '/campanhas/jejum': typeof CampanhasJejumRoute
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
+  '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -286,7 +319,11 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
   '/biblia/$book': typeof BibliaBookRouteWithChildren
+  '/campanhas/devocional-diario': typeof CampanhasDevocionalDiarioRoute
+  '/campanhas/harpa-desafio': typeof CampanhasHarpaDesafioRoute
+  '/campanhas/jejum': typeof CampanhasJejumRoute
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
+  '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -322,7 +359,11 @@ export interface FileRouteTypes {
     | '/signup'
     | '/termos'
     | '/biblia/$book'
+    | '/campanhas/devocional-diario'
+    | '/campanhas/harpa-desafio'
+    | '/campanhas/jejum'
     | '/campanhas/leia-biblia'
+    | '/campanhas/oracao'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -350,7 +391,11 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/termos'
+    | '/campanhas/devocional-diario'
+    | '/campanhas/harpa-desafio'
+    | '/campanhas/jejum'
     | '/campanhas/leia-biblia'
+    | '/campanhas/oracao'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -384,7 +429,11 @@ export interface FileRouteTypes {
     | '/signup'
     | '/termos'
     | '/biblia/$book'
+    | '/campanhas/devocional-diario'
+    | '/campanhas/harpa-desafio'
+    | '/campanhas/jejum'
     | '/campanhas/leia-biblia'
+    | '/campanhas/oracao'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -418,7 +467,11 @@ export interface RootRouteChildren {
   ResumoRoute: typeof ResumoRouteWithChildren
   SignupRoute: typeof SignupRoute
   TermosRoute: typeof TermosRoute
+  CampanhasDevocionalDiarioRoute: typeof CampanhasDevocionalDiarioRoute
+  CampanhasHarpaDesafioRoute: typeof CampanhasHarpaDesafioRoute
+  CampanhasJejumRoute: typeof CampanhasJejumRoute
   CampanhasLeiaBibliaRoute: typeof CampanhasLeiaBibliaRoute
+  CampanhasOracaoRoute: typeof CampanhasOracaoRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
 }
 
@@ -620,11 +673,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DenominacoesIdRouteImport
       parentRoute: typeof DenominacoesRoute
     }
+    '/campanhas/oracao': {
+      id: '/campanhas/oracao'
+      path: '/campanhas/oracao'
+      fullPath: '/campanhas/oracao'
+      preLoaderRoute: typeof CampanhasOracaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/campanhas/leia-biblia': {
       id: '/campanhas/leia-biblia'
       path: '/campanhas/leia-biblia'
       fullPath: '/campanhas/leia-biblia'
       preLoaderRoute: typeof CampanhasLeiaBibliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/jejum': {
+      id: '/campanhas/jejum'
+      path: '/campanhas/jejum'
+      fullPath: '/campanhas/jejum'
+      preLoaderRoute: typeof CampanhasJejumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/harpa-desafio': {
+      id: '/campanhas/harpa-desafio'
+      path: '/campanhas/harpa-desafio'
+      fullPath: '/campanhas/harpa-desafio'
+      preLoaderRoute: typeof CampanhasHarpaDesafioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/devocional-diario': {
+      id: '/campanhas/devocional-diario'
+      path: '/campanhas/devocional-diario'
+      fullPath: '/campanhas/devocional-diario'
+      preLoaderRoute: typeof CampanhasDevocionalDiarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biblia/$book': {
@@ -749,7 +830,11 @@ const rootRouteChildren: RootRouteChildren = {
   ResumoRoute: ResumoRouteWithChildren,
   SignupRoute: SignupRoute,
   TermosRoute: TermosRoute,
+  CampanhasDevocionalDiarioRoute: CampanhasDevocionalDiarioRoute,
+  CampanhasHarpaDesafioRoute: CampanhasHarpaDesafioRoute,
+  CampanhasJejumRoute: CampanhasJejumRoute,
   CampanhasLeiaBibliaRoute: CampanhasLeiaBibliaRoute,
+  CampanhasOracaoRoute: CampanhasOracaoRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
 }
 export const routeTree = rootRouteImport
