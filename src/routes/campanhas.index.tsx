@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
-import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock, Brain, Flame, CheckCircle, CalendarDays } from "lucide-react";
+import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock, Brain, Flame, CheckCircle, CalendarDays, Award, TrendingUp, Compass, CheckCircle2, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   CAMPAIGNS,
@@ -11,8 +11,20 @@ import {
   readBiblePlanRaw,
   summarizeCampaigns,
   useAllCampaigns,
+  computeXP,
+  journeyStageFor,
+  JOURNEY_STAGES,
+  todayTasks,
+  recommendationsFor,
+  encouragementForDay,
+  activityMap,
+  greetingForNow,
+  BADGES,
 } from "@/lib/campaigns";
 import { StatCard } from "@/components/campaigns/StatCard";
+import { ActivityCalendar } from "@/components/campaigns/ActivityCalendar";
+import { useAuth } from "@/lib/auth-context";
+import { useMemo } from "react";
 
 export const Route = createFileRoute("/campanhas/")({
   head: () => ({
@@ -153,9 +165,32 @@ const DIFFICULTY_CLASSES: Record<Difficulty, string> = {
 
 function CampanhasPage() {
   const state = useAllCampaigns();
-  const summary = summarizeCampaigns(state);
-  const badges = evaluateBadges(state);
+  const { user } = useAuth();
+  const summary = useMemo(() => summarizeCampaigns(state), [state]);
+  const badges = useMemo(() => evaluateBadges(state), [state]);
+  const xp = useMemo(() => computeXP(state), [state]);
+  const journey = useMemo(() => journeyStageFor(xp.level), [xp.level]);
+  const tasks = useMemo(() => todayTasks(state), [state]);
+  const recs = useMemo(() => recommendationsFor(state), [state]);
+  const encouragement = useMemo(() => encouragementForDay(), []);
+  const actMap = useMemo(() => activityMap(state), [state]);
   const plan = readBiblePlanRaw();
+
+  const displayName =
+    (user?.user_metadata as { full_name?: string; name?: string } | undefined)?.full_name ??
+    (user?.user_metadata as { name?: string } | undefined)?.name ??
+    user?.email?.split("@")[0] ??
+    null;
+  const badgesByCat = useMemo(() => {
+    const m = new Map<string, typeof badges>();
+    for (const b of badges) {
+      const k = b.category ?? "Especial";
+      const arr = m.get(k) ?? [];
+      arr.push(b);
+      m.set(k, arr);
+    }
+    return Array.from(m.entries());
+  }, [badges]);
 
   const active: {
     id: string;
@@ -206,14 +241,96 @@ function CampanhasPage() {
     <div className="min-h-screen bg-background pb-24">
       <PageHero
         eyebrow={{ icon: Target, label: "Campanhas" }}
-        title="Campanhas"
-        description="Fortaleça sua caminhada com Deus através de desafios espirituais, metas pessoais e crescimento diário."
+        title={`${greetingForNow()}${displayName ? `, ${displayName}` : ""}!`}
+        description="Sua jornada com Deus, um dia de cada vez."
       />
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
+        {/* Today's Journey */}
+        <section aria-labelledby="today-title" className="animate-fade-up">
+          <div className="flex items-end justify-between px-2">
+            <h2 id="today-title" className="font-serif text-2xl text-foreground">Jornada de hoje</h2>
+            <span className="text-xs text-muted-foreground">{new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" })}</span>
+          </div>
+          {tasks.length === 0 ? (
+            <p className="mt-3 px-2 text-sm text-muted-foreground">Comece uma campanha abaixo para receber uma jornada diária personalizada.</p>
+          ) : (
+            <ul className="mt-4 grid gap-3 md:grid-cols-2">
+              {tasks.map((t) => (
+                <li key={t.id}>
+                  <Link
+                    to={t.route}
+                    className="group flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-elegant"
+                  >
+                    <span aria-hidden className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-xl">{t.emoji}</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 font-serif text-base text-card-foreground">
+                        {t.done ? <CheckCircle2 className="size-4 text-emerald-500" /> : <Circle className="size-4 text-muted-foreground" />}
+                        <span className="truncate">{t.title}</span>
+                      </div>
+                      {t.detail && <div className="mt-0.5 truncate text-xs text-muted-foreground">{t.detail}</div>}
+                    </div>
+                    <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-gold" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* Spiritual Journey + XP */}
+        <section className="mt-8 rounded-3xl border border-border bg-card p-6 shadow-elegant animate-fade-up">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+            <Compass className="size-3.5" /> Sua caminhada
+          </div>
+          <div className="mt-3 flex items-center gap-4">
+            <div aria-hidden className="text-4xl">{journey.current.emoji}</div>
+            <div className="min-w-0 flex-1">
+              <div className="font-serif text-xl text-foreground">{journey.current.label}</div>
+              <div className="text-xs text-muted-foreground">Nível {xp.level} · {xp.xp} XP</div>
+            </div>
+            {journey.next && (
+              <div className="text-right text-[10px] uppercase tracking-widest text-muted-foreground">
+                Próximo<br />
+                <span className="text-foreground">{journey.next.emoji} {journey.next.label}</span>
+              </div>
+            )}
+          </div>
+          <div className="mt-4">
+            <div className="h-2 overflow-hidden rounded-full bg-secondary" role="progressbar" aria-valuenow={xp.percent} aria-valuemin={0} aria-valuemax={100}>
+              <div className="h-full rounded-full bg-gradient-to-r from-gold to-primary transition-[width] duration-700 motion-reduce:transition-none" style={{ width: `${xp.percent}%` }} />
+            </div>
+            <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
+              <span>{xp.levelXp} XP</span>
+              <span>{xp.nextLevelXp - xp.levelXp} XP para o próximo nível</span>
+            </div>
+          </div>
+          {/* Journey stages track */}
+          <ol className="mt-5 flex items-center gap-1 overflow-x-auto scrollbar-none">
+            {JOURNEY_STAGES.map((s, i) => {
+              const reached = i <= journey.index;
+              return (
+                <li key={s.id} className="flex items-center gap-1">
+                  <div
+                    className={`flex size-9 shrink-0 items-center justify-center rounded-full text-base transition-colors ${
+                      reached ? "bg-gold/15 ring-1 ring-gold" : "bg-secondary text-muted-foreground"
+                    }`}
+                    title={s.label}
+                  >
+                    {s.emoji}
+                  </div>
+                  {i < JOURNEY_STAGES.length - 1 && (
+                    <div className={`h-px w-4 ${i < journey.index ? "bg-gold" : "bg-border"}`} />
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+
         {/* Featured campaign */}
         <section
-          className="relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
+          className="mt-8 relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
           style={{ background: "var(--gradient-primary, linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.7)))" }}
         >
           <div
@@ -284,9 +401,51 @@ function CampanhasPage() {
           )}
         </section>
 
+        {/* Monthly activity calendar */}
+        <section className="mt-10 animate-fade-up">
+          <h2 className="px-2 font-serif text-2xl text-foreground">Meu mês</h2>
+          <div className="mt-4">
+            <ActivityCalendar map={actMap} />
+          </div>
+        </section>
+
+        {/* Smart recommendations */}
+        {recs.length > 0 && (
+          <section className="mt-10 animate-fade-up">
+            <div className="flex items-center gap-2 px-2">
+              <Sparkles className="size-4 text-gold" />
+              <h2 className="font-serif text-2xl text-foreground">Recomendado para você</h2>
+            </div>
+            <ul className="mt-4 grid gap-3 md:grid-cols-2">
+              {recs.map((r) => (
+                <li key={r.id}>
+                  <Link to={r.route} className="group flex items-start gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-elegant">
+                    <span aria-hidden className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-xl">{r.emoji}</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-serif text-base text-card-foreground">{r.title}</div>
+                      <div className="mt-0.5 text-xs text-muted-foreground">{r.reason}</div>
+                    </div>
+                    <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-gold" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Encouragement of the day */}
+        <section className="mt-10 rounded-3xl border border-border bg-secondary/40 p-6 animate-fade-up">
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-gold">Inspiração do dia · {encouragement.kind}</div>
+          <blockquote className="mt-3 font-serif text-lg text-foreground">"{encouragement.text}"</blockquote>
+          <div className="mt-1 text-xs text-muted-foreground">— {encouragement.source}</div>
+        </section>
+
         {/* Profile summary */}
         <section className="mt-10">
-          <h2 className="px-2 font-serif text-2xl text-foreground">Meu progresso</h2>
+          <div className="flex items-center gap-2 px-2">
+            <TrendingUp className="size-4 text-gold" />
+            <h2 className="font-serif text-2xl text-foreground">Estatísticas pessoais</h2>
+          </div>
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
             <StatCard icon={Target} label="Ativas" value={String(summary.activeCount)} accent />
             <StatCard icon={CheckCircle} label="Concluídas" value={String(summary.completedCount)} />
@@ -302,24 +461,35 @@ function CampanhasPage() {
 
         {/* Achievements */}
         <section className="mt-10">
-          <h2 className="px-2 font-serif text-2xl text-foreground">Meus emblemas</h2>
-          <ul className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-            {badges.map((b) => (
-              <li
-                key={b.id}
-                className={`rounded-2xl border p-4 text-center transition-all ${
-                  b.earned ? "border-gold/40 bg-gold/5 shadow-soft" : "border-border bg-secondary/40 opacity-60"
-                }`}
-                title={b.description}
-              >
-                <div className="text-3xl">{b.emoji}</div>
-                <div className="mt-2 font-serif text-sm text-foreground">{b.label}</div>
-                <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">
-                  {b.earned ? "Conquistado" : "Bloqueado"}
-                </div>
-              </li>
+          <div className="flex items-center gap-2 px-2">
+            <Award className="size-4 text-gold" />
+            <h2 className="font-serif text-2xl text-foreground">Conquistas</h2>
+          </div>
+          <div className="mt-4 space-y-6">
+            {badgesByCat.map(([cat, list]) => (
+              <div key={cat}>
+                <h3 className="px-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">{cat}</h3>
+                <ul className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {list.map((b) => (
+                    <li
+                      key={b.id}
+                      className={`rounded-2xl border p-4 text-center transition-all ${
+                        b.earned ? "border-gold/40 bg-gold/5 shadow-soft animate-fade-up" : "border-border bg-secondary/40 opacity-60"
+                      }`}
+                      title={b.description}
+                    >
+                      <div aria-hidden className={`text-3xl ${b.earned ? "" : "grayscale"}`}>{b.emoji}</div>
+                      <div className="mt-2 font-serif text-sm text-foreground">{b.label}</div>
+                      <div className="mt-1 text-[10px] leading-tight text-muted-foreground line-clamp-2">{b.description}</div>
+                      <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">
+                        {b.earned ? "Conquistado" : "Bloqueado"}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
 
         {/* Categories */}
