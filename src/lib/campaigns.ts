@@ -238,6 +238,7 @@ export type Badge = {
   emoji: string;
   label: string;
   description: string;
+  category?: string;
 };
 
 export const BADGES: Badge[] = [
