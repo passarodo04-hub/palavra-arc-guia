@@ -241,15 +241,23 @@ export type Badge = {
 };
 
 export const BADGES: Badge[] = [
-  { id: "first-book", emoji: "📖", label: "Primeiro Livro", description: "Complete um livro inteiro da Bíblia." },
-  { id: "7-prayer", emoji: "🙏", label: "7 Dias de Oração", description: "Ore por 7 dias consecutivos." },
-  { id: "first-fast", emoji: "🍞", label: "Primeiro Jejum", description: "Conclua o seu primeiro jejum." },
-  { id: "50-hymns", emoji: "🎵", label: "50 Hinos", description: "Alcance 50 hinos no desafio da Harpa." },
-  { id: "bible-scholar", emoji: "🧠", label: "Estudioso da Bíblia", description: "Acerte 50 respostas no Quiz." },
-  { id: "gratitude-week", emoji: "❤️", label: "Semana de Gratidão", description: "Registre gratidão por 7 dias." },
-  { id: "streak-30", emoji: "🔥", label: "Sequência de 30 dias", description: "Mantenha 30 dias seguidos de devocional." },
-  { id: "family-warrior", emoji: "👨‍👩‍👧", label: "Guerreiro da Família", description: "10 momentos em família registrados." },
+  { id: "first-book", emoji: "📖", label: "Primeiro Livro", description: "Complete um livro inteiro da Bíblia.", category: "Bíblia" },
+  { id: "reader-100", emoji: "📚", label: "Leitor Constante", description: "100 capítulos lidos no plano.", category: "Bíblia" },
+  { id: "bible-complete", emoji: "🏆", label: "Bíblia Completa", description: "Concluiu a leitura de toda a Bíblia.", category: "Bíblia" },
+  { id: "7-prayer", emoji: "🙏", label: "7 Dias de Oração", description: "Ore por 7 dias consecutivos.", category: "Oração" },
+  { id: "21-prayer", emoji: "🕊️", label: "21 Dias de Oração", description: "Uma vida de oração se formando.", category: "Oração" },
+  { id: "first-fast", emoji: "🍞", label: "Primeiro Jejum", description: "Conclua o seu primeiro jejum.", category: "Jejum" },
+  { id: "50-hymns", emoji: "🎵", label: "50 Hinos", description: "Alcance 50 hinos no desafio da Harpa.", category: "Harpa" },
+  { id: "hymn-complete", emoji: "🎶", label: "Harpa Completa", description: "Cantou todos os 640 hinos.", category: "Harpa" },
+  { id: "bible-scholar", emoji: "🧠", label: "Estudioso da Bíblia", description: "Acerte 50 respostas no Quiz.", category: "Conhecimento" },
+  { id: "gratitude-week", emoji: "❤️", label: "Semana de Gratidão", description: "Registre gratidão por 7 dias.", category: "Fé" },
+  { id: "streak-30", emoji: "🔥", label: "Sequência de 30 dias", description: "Mantenha 30 dias seguidos de devocional.", category: "Consistência" },
+  { id: "streak-100", emoji: "🌟", label: "Sequência de 100 dias", description: "100 dias caminhando com Cristo.", category: "Consistência" },
+  { id: "family-warrior", emoji: "👨\u200d👩\u200d👧", label: "Guerreiro da Família", description: "10 momentos em família registrados.", category: "Fé" },
+  { id: "devotional-365", emoji: "✨", label: "Ano Devocional", description: "365 devocionais concluídos.", category: "Especial" },
 ];
+
+export type BadgeCategory = "Bíblia" | "Oração" | "Jejum" | "Harpa" | "Conhecimento" | "Consistência" | "Fé" | "Especial";
 
 export type EarnedBadge = Badge & { earned: boolean };
 
@@ -272,13 +280,19 @@ export function evaluateBadges(state: CampaignsState): EarnedBadge[] {
     "first-book": (plan.completedDays?.length ?? 0) > 0 && !!plan.active
       ? (plan.completedDays!.length * Math.ceil(1189 / (plan.goalDays ?? 365))) >= 50
       : false,
+    "reader-100": !!plan.active && (plan.completedDays?.length ?? 0) * Math.ceil(1189 / (plan.goalDays ?? 365)) >= 100,
+    "bible-complete": !!plan.goalDays && (plan.completedDays?.length ?? 0) >= plan.goalDays,
     "7-prayer": prayerStreak >= 7 || (prayer?.sessions ?? 0) >= 7,
+    "21-prayer": prayerStreak >= 21 || (prayer?.sessions ?? 0) >= 21,
     "first-fast": !!fast?.endDate && new Date(fast.endDate + "T00:00:00").getTime() < Date.now(),
     "50-hymns": (harpa?.counter ?? 0) >= 50,
+    "hymn-complete": (harpa?.counter ?? 0) >= 640,
     "bible-scholar": (quiz?.correct ?? 0) >= 50,
     "gratitude-week": gratStreak >= 7,
     "streak-30": devStreak >= 30,
+    "streak-100": devStreak >= 100,
     "family-warrior": famDays >= 10,
+    "devotional-365": (dev?.completedDates?.length ?? 0) >= 365,
   };
   return BADGES.map((b) => ({ ...b, earned: !!conditions[b.id] }));
 }
