@@ -51,6 +51,7 @@ import { Route as CampanhasConhecimentoRouteImport } from './routes/campanhas.co
 import { Route as CampanhasCasaisRouteImport } from './routes/campanhas.casais'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
+import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 
 const TermosRoute = TermosRouteImport.update({
@@ -264,6 +265,11 @@ const BibliaBookIndexRoute = BibliaBookIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BibliaBookRoute,
 } as any)
+const CampanhasCertificadoIdRoute = CampanhasCertificadoIdRouteImport.update({
+  id: '/campanhas/certificado/$id',
+  path: '/campanhas/certificado/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
   id: '/$chapter',
   path: '/$chapter',
@@ -313,6 +319,7 @@ export interface FileRoutesByFullPath {
   '/harpa/': typeof HarpaIndexRoute
   '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
 export interface FileRoutesByTo {
@@ -352,6 +359,7 @@ export interface FileRoutesByTo {
   '/harpa': typeof HarpaIndexRoute
   '/resumo': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/biblia/$book': typeof BibliaBookIndexRoute
 }
 export interface FileRoutesById {
@@ -398,6 +406,7 @@ export interface FileRoutesById {
   '/harpa/': typeof HarpaIndexRoute
   '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
 export interface FileRouteTypes {
@@ -445,6 +454,7 @@ export interface FileRouteTypes {
     | '/harpa/'
     | '/resumo/'
     | '/biblia/$book/$chapter'
+    | '/campanhas/certificado/$id'
     | '/biblia/$book/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -484,6 +494,7 @@ export interface FileRouteTypes {
     | '/harpa'
     | '/resumo'
     | '/biblia/$book/$chapter'
+    | '/campanhas/certificado/$id'
     | '/biblia/$book'
   id:
     | '__root__'
@@ -529,6 +540,7 @@ export interface FileRouteTypes {
     | '/harpa/'
     | '/resumo/'
     | '/biblia/$book/$chapter'
+    | '/campanhas/certificado/$id'
     | '/biblia/$book/'
   fileRoutesById: FileRoutesById
 }
@@ -564,6 +576,7 @@ export interface RootRouteChildren {
   CampanhasOracaoRoute: typeof CampanhasOracaoRoute
   CampanhasQuizRoute: typeof CampanhasQuizRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
+  CampanhasCertificadoIdRoute: typeof CampanhasCertificadoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -862,6 +875,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaBookIndexRouteImport
       parentRoute: typeof BibliaBookRoute
     }
+    '/campanhas/certificado/$id': {
+      id: '/campanhas/certificado/$id'
+      path: '/campanhas/certificado/$id'
+      fullPath: '/campanhas/certificado/$id'
+      preLoaderRoute: typeof CampanhasCertificadoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/biblia/$book/$chapter': {
       id: '/biblia/$book/$chapter'
       path: '/$chapter'
@@ -983,6 +1003,7 @@ const rootRouteChildren: RootRouteChildren = {
   CampanhasOracaoRoute: CampanhasOracaoRoute,
   CampanhasQuizRoute: CampanhasQuizRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
+  CampanhasCertificadoIdRoute: CampanhasCertificadoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

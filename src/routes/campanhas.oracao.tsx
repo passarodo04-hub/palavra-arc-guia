@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { StatCard } from "@/components/campaigns/StatCard";
 import { VerseCard } from "@/components/campaigns/VerseCard";
+import { AmbientSounds } from "@/components/campaigns/AmbientSounds";
 import {
   computeDateStreak,
   todayISO,
@@ -205,6 +206,8 @@ function OracaoCampaignPage() {
         </section>
 
         <VerseCard text={v.text} ref={v.ref} />
+
+        <AmbientSounds />
 
         {/* Recommendations */}
         <section className="rounded-3xl border border-border bg-card p-6 shadow-soft animate-fade-up">
