@@ -2,7 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { Loader2, ChevronLeft } from "lucide-react";
+import { setGuestMode } from "@/lib/guest-mode";
+import { Loader2, ChevronLeft, UserRound, Info } from "lucide-react";
 
 export const Route = createFileRoute("/login")({ component: LoginPage });
 
@@ -34,6 +35,11 @@ function LoginPage() {
       options: { redirectTo: `${window.location.origin}/conta` },
     });
     if (error) setError("Falha ao entrar com Google.");
+  };
+
+  const handleGuest = () => {
+    setGuestMode(true);
+    navigate({ to: "/", replace: true });
   };
 
   return (
@@ -92,6 +98,26 @@ function LoginPage() {
             Criar conta
           </Link>
         </div>
+
+        <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="h-px flex-1 bg-border" /> ou <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <button
+          onClick={handleGuest}
+          className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card py-3 text-sm font-medium hover:bg-secondary"
+        >
+          <UserRound className="size-4" /> Continuar como convidado
+        </button>
+        <p className="mt-3 flex items-start gap-2 text-[11px] leading-relaxed text-muted-foreground">
+          <Info className="mt-0.5 size-3.5 shrink-0 text-gold" />
+          <span>
+            No modo convidado seus dados ficam salvos apenas neste dispositivo.
+            O progresso será perdido se o app for desinstalado, os dados do
+            navegador forem apagados ou você trocar de aparelho. Ao criar uma
+            conta depois, seu progresso é migrado automaticamente.
+          </span>
+        </p>
       </div>
     </div>
   );
