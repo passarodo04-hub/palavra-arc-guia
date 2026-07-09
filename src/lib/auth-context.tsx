@@ -3,6 +3,7 @@ import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useRouter } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
+import { migrateGuestDataToCloud, setGuestMode } from "@/lib/guest-mode";
 
 type Ctx = {
   user: User | null;
@@ -44,6 +45,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         prevUserIdRef.current = nextId;
         router.invalidate();
         qc.invalidateQueries();
+        if (event === "SIGNED_IN" && nextId) {
+          setGuestMode(false);
+          void migrateGuestDataToCloud(nextId);
+        }
       }
     });
     return () => subscription.unsubscribe();
