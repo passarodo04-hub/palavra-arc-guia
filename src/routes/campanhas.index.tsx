@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
-import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock, Brain, Flame, CheckCircle, CalendarDays, Award, TrendingUp, Compass, CheckCircle2, Circle } from "lucide-react";
+import { Target, BookOpen, HandHeart, Utensils, Music, GraduationCap, Sprout, Heart, Users, Baby, Trophy, ArrowRight, Sparkles, Clock, Brain, Flame, CheckCircle, CalendarDays, Award, TrendingUp, Compass, CheckCircle2, Circle, Play, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   CAMPAIGNS,
@@ -20,11 +20,12 @@ import {
   activityMap,
   greetingForNow,
   BADGES,
+  motivationForSlot,
 } from "@/lib/campaigns";
 import { StatCard } from "@/components/campaigns/StatCard";
 import { ActivityCalendar } from "@/components/campaigns/ActivityCalendar";
 import { useAuth } from "@/lib/auth-context";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export const Route = createFileRoute("/campanhas/")({
   head: () => ({
