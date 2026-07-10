@@ -699,28 +699,60 @@ function RowSkeleton() {
 
 function CategoryRow({ category }: { category: Category }) {
   const Icon = category.icon;
+  const scrollerRef = useRef<HTMLUListElement>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: "smooth" });
+  };
   return (
     <section className="animate-fade-up">
-      <div className="flex items-center gap-2 px-2">
-        <span className="flex size-9 items-center justify-center rounded-xl bg-secondary text-gold">
-          <Icon className="size-5" />
-        </span>
-        <h3 className="font-serif text-xl text-foreground">{category.label}</h3>
+      <div className="flex items-center justify-between gap-2 px-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-secondary text-gold">
+            <Icon className="size-5" />
+          </span>
+          <h3 className="truncate font-serif text-xl text-foreground">{category.label}</h3>
+        </div>
+        <div className="hidden md:flex items-center gap-1">
+          <button
+            type="button"
+            aria-label="Rolar para a esquerda"
+            onClick={() => scrollBy(-1)}
+            className="rounded-full p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Rolar para a direita"
+            onClick={() => scrollBy(1)}
+            className="rounded-full p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+          >
+            <ChevronRight className="size-4" />
+          </button>
+        </div>
       </div>
-      <div className="mt-4 -mx-4 overflow-x-auto scrollbar-none">
-        <ul className="flex gap-3 px-4 pb-2 snap-x snap-mandatory">
+      <div className="mt-4 -mx-4 relative">
+        <ul
+          ref={scrollerRef}
+          className="flex gap-3 px-4 pb-2 overflow-x-auto scrollbar-none snap-x snap-mandatory scroll-smooth"
+          style={{ scrollPaddingLeft: "1rem" }}
+        >
           {category.campaigns.map((c, i) => (
             <li key={i} className="snap-start shrink-0 w-64">
-              <CampaignCard campaign={c} />
+              <CampaignCard campaign={c} icon={Icon} />
             </li>
           ))}
         </ul>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent md:block" />
       </div>
     </section>
   );
 }
 
-function CampaignCard({ campaign }: { campaign: Campaign }) {
+function CampaignCard({ campaign, icon: Icon }: { campaign: Campaign; icon?: typeof Sparkles }) {
+  const Ico = Icon ?? Sparkles;
   const inner = (
     <>
       <div
@@ -730,8 +762,8 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
             "linear-gradient(135deg, color-mix(in oklab, var(--primary) 6%, transparent), transparent 60%)",
         }}
       />
-      <div className="relative flex size-11 items-center justify-center rounded-xl bg-secondary text-gold transition-colors group-hover:bg-gold group-hover:text-gold-foreground">
-        <Sparkles className="size-5" />
+      <div className="relative flex size-11 items-center justify-center rounded-xl bg-secondary text-gold transition-all group-hover:bg-gold group-hover:text-gold-foreground group-hover:scale-105">
+        <Ico className="size-5" />
       </div>
       <div className="relative mt-4 font-serif text-lg leading-snug text-card-foreground">
         {campaign.title}
@@ -753,7 +785,7 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
     </>
   );
   const className =
-    "group relative flex h-full w-full flex-col items-start overflow-hidden rounded-2xl border border-border bg-card p-5 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-elegant active:scale-[0.98]";
+    "group relative flex h-full w-full flex-col items-start overflow-hidden rounded-2xl border border-border bg-card p-5 text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-elegant active:scale-[0.98]";
   if (campaign.route) {
     return (
       <Link to={campaign.route} className={className}>
