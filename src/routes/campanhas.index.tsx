@@ -253,13 +253,33 @@ function CampanhasPage() {
       />
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
+        {/* Dynamic Hero — Netflix-style Continue Watching */}
+        {!hydrated ? (
+          <HeroSkeleton />
+        ) : (
+          <DynamicHero
+            active={active}
+            xp={xp}
+            journeyLabel={journey.current.label}
+            streak={summary.currentStreak}
+          />
+        )}
+
+        {/* Motivation ticker */}
+        <div className="mt-4 flex items-center gap-2 rounded-full border border-border/60 bg-secondary/40 px-4 py-2 text-xs text-muted-foreground animate-fade-up">
+          <Quote className="size-3.5 shrink-0 text-gold" />
+          <span className="truncate italic">{motivation}</span>
+        </div>
+
         {/* Today's Journey */}
-        <section aria-labelledby="today-title" className="animate-fade-up">
+        <section aria-labelledby="today-title" className="mt-8 animate-fade-up">
           <div className="flex items-end justify-between px-2">
             <h2 id="today-title" className="font-serif text-2xl text-foreground">Jornada de hoje</h2>
             <span className="text-xs text-muted-foreground">{new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" })}</span>
           </div>
-          {tasks.length === 0 ? (
+          {!hydrated ? (
+            <TaskSkeleton />
+          ) : tasks.length === 0 ? (
             <p className="mt-3 px-2 text-sm text-muted-foreground">Comece uma campanha abaixo para receber uma jornada diária personalizada.</p>
           ) : (
             <ul className="mt-4 grid gap-3 md:grid-cols-2">
@@ -499,16 +519,181 @@ function CampanhasPage() {
           </div>
         </section>
 
-        {/* Categories */}
+        {/* Categories — Netflix rails */}
         <div className="mt-10 space-y-10">
-          {CATEGORIES.map((cat) => (
-            <CategoryRow key={cat.id} category={cat} />
-          ))}
+          <div className="flex items-center gap-2 px-2">
+            <Sparkles className="size-4 text-gold" />
+            <h2 className="font-serif text-2xl text-foreground">Explore campanhas</h2>
+          </div>
+          {!hydrated ? (
+            <>
+              <RowSkeleton />
+              <RowSkeleton />
+            </>
+          ) : (
+            CATEGORIES.map((cat) => <CategoryRow key={cat.id} category={cat} />)
+          )}
         </div>
       </main>
 
       <BottomNav />
     </div>
+  );
+}
+
+/* ------------------------ Dynamic Hero ------------------------ */
+
+function DynamicHero({
+  active,
+  xp,
+  journeyLabel,
+  streak,
+}: {
+  active: { id: string; title: string; route: string; percent: number; detail: string }[];
+  xp: { level: number; xp: number; percent: number };
+  journeyLabel: string;
+  streak: number;
+}) {
+  const primary = active[0];
+  if (primary) {
+    return (
+      <section
+        className="relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
+        style={{ background: "var(--gradient-primary, linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.7)))" }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-25 animate-float-slow"
+          style={{ backgroundImage: "radial-gradient(circle at 85% 15%, white, transparent 55%)" }}
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -left-10 h-48 w-48 rounded-full opacity-20 blur-3xl"
+          style={{ background: "var(--gold)" }}
+        />
+        <div className="relative text-primary-foreground">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold">
+            <Play className="size-3" /> Continue sua caminhada
+          </div>
+          <h2 className="mt-4 font-serif text-3xl md:text-4xl leading-tight">{primary.title}</h2>
+          <p className="mt-2 text-sm text-primary-foreground/85">{primary.detail}</p>
+
+          <div className="mt-4 h-2 max-w-md rounded-full bg-white/15 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-gold to-white/90 transition-[width] duration-700"
+              style={{ width: `${primary.percent}%` }}
+            />
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-2 text-[11px] text-primary-foreground/80">
+            <HeroChip icon={Flame} label={`${streak} ${streak === 1 ? "dia" : "dias"}`} />
+            <HeroChip icon={Sparkles} label={`Nível ${xp.level}`} />
+            <HeroChip icon={TrendingUp} label={`${xp.xp} XP`} />
+            <HeroChip icon={Compass} label={journeyLabel} />
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button asChild className="rounded-full bg-gold text-gold-foreground hover:bg-gold/90 h-11 px-6 font-semibold shadow-soft animate-pulse-glow">
+              <Link to={primary.route}>
+                Continuar <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            {active[1] && (
+              <Button asChild variant="secondary" className="rounded-full h-11 px-5 bg-white/15 text-primary-foreground hover:bg-white/25 border-0">
+                <Link to={active[1].route}>Outra ativa: {active[1].title}</Link>
+              </Button>
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Recommended when nothing active
+  return (
+    <section
+      className="relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
+      style={{ background: "var(--gradient-primary, linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.7)))" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20 animate-float-slow"
+        style={{ backgroundImage: "radial-gradient(circle at 90% 10%, white, transparent 55%)" }}
+      />
+      <div className="relative text-primary-foreground">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold">
+          <Sparkles className="size-3.5" /> Comece hoje
+        </div>
+        <h2 className="mt-4 flex items-center gap-2 font-serif text-3xl md:text-4xl leading-tight">
+          <BookOpen className="size-7" />
+          Leia toda a Bíblia
+        </h2>
+        <p className="mt-2 max-w-md text-sm text-primary-foreground/85">
+          Comece uma leitura guiada no seu ritmo. Sua próxima jornada começa aqui.
+        </p>
+        <Button asChild className="mt-6 rounded-full bg-gold text-gold-foreground hover:bg-gold/90 h-11 px-6 font-semibold shadow-soft animate-pulse-glow">
+          <Link to="/campanhas/leia-biblia">
+            Começar jornada <ArrowRight className="size-4" />
+          </Link>
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+function HeroChip({ icon: Icon, label }: { icon: typeof Flame; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-white/15 backdrop-blur px-2.5 py-1">
+      <Icon className="size-3" /> {label}
+    </span>
+  );
+}
+
+/* ------------------------ Skeletons ------------------------ */
+
+function HeroSkeleton() {
+  return (
+    <div className="rounded-3xl border border-border bg-card p-6 md:p-8 shadow-soft">
+      <div className="h-4 w-40 rounded-full animate-shimmer" />
+      <div className="mt-4 h-8 w-2/3 rounded-lg animate-shimmer" />
+      <div className="mt-3 h-4 w-1/2 rounded-full animate-shimmer" />
+      <div className="mt-5 h-2 w-full max-w-md rounded-full animate-shimmer" />
+      <div className="mt-6 flex gap-2">
+        <div className="h-11 w-32 rounded-full animate-shimmer" />
+        <div className="h-11 w-24 rounded-full animate-shimmer" />
+      </div>
+    </div>
+  );
+}
+
+function TaskSkeleton() {
+  return (
+    <ul className="mt-4 grid gap-3 md:grid-cols-2">
+      {[0, 1, 2, 3].map((i) => (
+        <li key={i} className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft">
+          <div className="size-11 shrink-0 rounded-xl animate-shimmer" />
+          <div className="min-w-0 flex-1 space-y-2">
+            <div className="h-4 w-2/3 rounded-full animate-shimmer" />
+            <div className="h-3 w-1/2 rounded-full animate-shimmer" />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function RowSkeleton() {
+  return (
+    <section>
+      <div className="flex items-center gap-2 px-2">
+        <div className="size-9 rounded-xl animate-shimmer" />
+        <div className="h-5 w-40 rounded-full animate-shimmer" />
+      </div>
+      <div className="mt-4 -mx-4 overflow-hidden">
+        <div className="flex gap-3 px-4">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="shrink-0 w-64 h-40 rounded-2xl animate-shimmer" />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
