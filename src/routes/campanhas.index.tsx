@@ -167,6 +167,11 @@ const DIFFICULTY_CLASSES: Record<Difficulty, string> = {
 function CampanhasPage() {
   const state = useAllCampaigns();
   const { user } = useAuth();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    const t = requestAnimationFrame(() => setHydrated(true));
+    return () => cancelAnimationFrame(t);
+  }, []);
   const summary = useMemo(() => summarizeCampaigns(state), [state]);
   const badges = useMemo(() => evaluateBadges(state), [state]);
   const xp = useMemo(() => computeXP(state), [state]);
@@ -174,6 +179,7 @@ function CampanhasPage() {
   const tasks = useMemo(() => todayTasks(state), [state]);
   const recs = useMemo(() => recommendationsFor(state), [state]);
   const encouragement = useMemo(() => encouragementForDay(), []);
+  const motivation = useMemo(() => motivationForSlot(), []);
   const actMap = useMemo(() => activityMap(state), [state]);
   const plan = readBiblePlanRaw();
 
