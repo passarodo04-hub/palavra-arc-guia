@@ -659,3 +659,21 @@ export function greetingForNow(): string {
   if (h < 18) return "Boa tarde";
   return "Boa noite";
 }
+
+/* ------------------------ Motivational rotator ------------------------ */
+
+export const MOTIVATIONS: string[] = [
+  "Você está mais perto do objetivo do que imagina.",
+  "Hoje é um ótimo dia para continuar.",
+  "Não perca sua sequência — um dia de cada vez.",
+  "Deus honra a perseverança.",
+  "Pequenos passos diários movem grandes montanhas.",
+  "A fidelidade é construída no silêncio da rotina.",
+  "Um pouco com Deus é muito.",
+  "Sua caminhada de hoje é a bênção de amanhã.",
+];
+
+export function motivationForSlot(slotMinutes = 20): string {
+  const idx = Math.floor(Date.now() / (slotMinutes * 60_000)) % MOTIVATIONS.length;
+  return MOTIVATIONS[idx];
+}

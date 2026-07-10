@@ -176,6 +176,36 @@
   .animate-fade-up { animation: fade-up 0.5s ease-out both; }
 }
 
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+  .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  .animate-shimmer {
+    background: linear-gradient(90deg,
+      color-mix(in oklab, var(--muted) 60%, transparent) 0%,
+      color-mix(in oklab, var(--muted) 85%, transparent) 50%,
+      color-mix(in oklab, var(--muted) 60%, transparent) 100%);
+    background-size: 800px 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 40%, transparent); }
+    50% { box-shadow: 0 0 0 12px color-mix(in oklab, var(--gold) 0%, transparent); }
+  }
+  .animate-pulse-glow { animation: pulse-glow 2.2s ease-out infinite; }
+}
+
 /* PWA: respect iOS safe areas in standalone mode (status bar + home indicator) */
 @layer base {
   html, body { -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
