@@ -246,7 +246,10 @@ export const updateMyProfile = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }) => {
     const { supabase, userId } = context;
-    const { error } = await supabase.from("profiles").update(data).eq("id", userId);
+    // Upsert so the profile is created if it doesn't exist yet (e.g. OAuth signups).
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({ id: userId, ...data }, { onConflict: "id" });
     if (error) throw new Error(error.message);
     return { ok: true };
   });

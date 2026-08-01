@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { useAuth } from "@/lib/auth-context";
@@ -17,7 +18,7 @@ function ContaPage() {
   const { user, loading, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const [displayName, setDisplayName] = useState("");
-  const [saving, setSaving] = useState(false);
+  const qc = useQueryClient();
 
   const getProfile = useServerFn(getMyProfile);
   const updateProfile = useServerFn(updateMyProfile);
@@ -39,6 +40,13 @@ function ContaPage() {
 
   const saveMutation = useMutation({
     mutationFn: () => updateProfile({ data: { display_name: displayName } }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["my-profile"] });
+      toast.success("Perfil salvo com sucesso.");
+    },
+    onError: (e: unknown) => {
+      toast.error(e instanceof Error ? e.message : "Não foi possível salvar o perfil.");
+    },
   });
 
   const deleteMutation = useMutation({
@@ -57,10 +65,11 @@ function ContaPage() {
     );
   }
 
-  const handleSave = async () => {
-    setSaving(true);
-    await saveMutation.mutateAsync();
-    setSaving(false);
+  const saving = saveMutation.isPending;
+
+  const handleSave = () => {
+    if (saving) return;
+    saveMutation.mutate();
   };
 
   const handleDelete = () => {
