@@ -7,7 +7,7 @@ const items = [
   { to: "/biblia", label: "Bíblia", icon: BookOpen },
   { to: "/resumo", label: "Resumo", icon: BookOpenCheck },
   { to: "/harpa", label: "Harpa", icon: Music },
-  { to: "/campanhas", label: "Campanhas", icon: Target },
+  { to: "/campanhas", label: "Jornadas", icon: Target },
   { to: "/estudos", label: "Estudos", icon: Sparkles },
 ] as const;
 
