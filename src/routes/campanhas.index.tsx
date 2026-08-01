@@ -357,15 +357,14 @@ function CampanhasPage() {
 
         {/* Featured campaign */}
         <section
-          className="mt-8 relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
-          style={{ background: "var(--gradient-primary, linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.7)))" }}
+          className="mt-8 relative overflow-hidden rounded-3xl border border-border bg-hero p-6 md:p-8 shadow-elegant animate-fade-up"
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-20"
             style={{ backgroundImage: "radial-gradient(circle at 90% 10%, white, transparent 55%)" }}
           />
-          <div className="relative text-primary-foreground">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold">
+          <div className="relative text-hero-foreground">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-hero-accent">
               <Sparkles className="size-3.5" />
               Campanha em destaque
             </div>
@@ -373,7 +372,7 @@ function CampanhasPage() {
               <BookOpen className="size-6" />
               Leia toda a Bíblia
             </h2>
-            <p className="mt-2 max-w-md text-sm text-primary-foreground/80">
+            <p className="mt-2 max-w-md text-sm text-hero-foreground/80">
               Planeje sua leitura, acompanhe seu progresso e conclua toda a Palavra de Deus no seu ritmo.
             </p>
             <Button
@@ -558,8 +557,7 @@ function DynamicHero({
   if (primary) {
     return (
       <section
-        className="relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
-        style={{ background: "var(--gradient-primary, linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.7)))" }}
+        className="relative overflow-hidden rounded-3xl border border-border bg-hero p-6 md:p-8 shadow-elegant animate-fade-up"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-25 animate-float-slow"
@@ -569,12 +567,12 @@ function DynamicHero({
           className="pointer-events-none absolute -bottom-16 -left-10 h-48 w-48 rounded-full opacity-20 blur-3xl"
           style={{ background: "var(--gold)" }}
         />
-        <div className="relative text-primary-foreground">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold">
+        <div className="relative text-hero-foreground">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-hero-accent">
             <Play className="size-3" /> Continue sua caminhada
           </div>
           <h2 className="mt-4 font-serif text-3xl md:text-4xl leading-tight">{primary.title}</h2>
-          <p className="mt-2 text-sm text-primary-foreground/85">{primary.detail}</p>
+          <p className="mt-2 text-sm text-hero-foreground/85">{primary.detail}</p>
 
           <div className="mt-4 h-2 max-w-md rounded-full bg-white/15 overflow-hidden">
             <div
@@ -583,7 +581,7 @@ function DynamicHero({
             />
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-2 text-[11px] text-primary-foreground/80">
+          <div className="mt-5 flex flex-wrap items-center gap-2 text-[11px] text-hero-foreground/80">
             <HeroChip icon={Flame} label={`${streak} ${streak === 1 ? "dia" : "dias"}`} />
             <HeroChip icon={Sparkles} label={`Nível ${xp.level}`} />
             <HeroChip icon={TrendingUp} label={`${xp.xp} XP`} />
@@ -597,7 +595,7 @@ function DynamicHero({
               </Link>
             </Button>
             {active[1] && (
-              <Button asChild variant="secondary" className="rounded-full h-11 px-5 bg-white/15 text-primary-foreground hover:bg-white/25 border-0">
+              <Button asChild variant="secondary" className="rounded-full h-11 px-5 bg-white/15 text-hero-foreground hover:bg-white/25 border-0">
                 <Link to={active[1].route}>Outra ativa: {active[1].title}</Link>
               </Button>
             )}
@@ -610,22 +608,21 @@ function DynamicHero({
   // Recommended when nothing active
   return (
     <section
-      className="relative overflow-hidden rounded-3xl border border-border p-6 md:p-8 shadow-elegant animate-fade-up"
-      style={{ background: "var(--gradient-primary, linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.7)))" }}
+      className="relative overflow-hidden rounded-3xl border border-border bg-hero p-6 md:p-8 shadow-elegant animate-fade-up"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-20 animate-float-slow"
         style={{ backgroundImage: "radial-gradient(circle at 90% 10%, white, transparent 55%)" }}
       />
-      <div className="relative text-primary-foreground">
-        <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold">
+      <div className="relative text-hero-foreground">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-hero-accent">
           <Sparkles className="size-3.5" /> Comece hoje
         </div>
         <h2 className="mt-4 flex items-center gap-2 font-serif text-3xl md:text-4xl leading-tight">
           <BookOpen className="size-7" />
           Leia toda a Bíblia
         </h2>
-        <p className="mt-2 max-w-md text-sm text-primary-foreground/85">
+        <p className="mt-2 max-w-md text-sm text-hero-foreground/85">
           Comece uma leitura guiada no seu ritmo. Sua próxima jornada começa aqui.
         </p>
         <Button asChild className="mt-6 rounded-full bg-gold text-gold-foreground hover:bg-gold/90 h-11 px-6 font-semibold shadow-soft animate-pulse-glow">

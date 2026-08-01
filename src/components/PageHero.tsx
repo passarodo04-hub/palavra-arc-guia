@@ -28,7 +28,7 @@ export function PageHero({
 }: PageHeroProps) {
   const EyebrowIcon = eyebrow?.icon;
   return (
-    <header className="relative overflow-hidden bg-gradient-spiritual text-primary-foreground">
+    <header className="relative overflow-hidden bg-hero text-hero-foreground">
       <div
         className="pointer-events-none absolute inset-0 opacity-20"
         style={{
@@ -42,7 +42,7 @@ export function PageHero({
             {backTo && (
               <Link
                 to={backTo}
-                className="inline-flex items-center gap-1 text-xs text-primary-foreground/80 hover:text-primary-foreground"
+                className="inline-flex items-center gap-1 text-xs text-hero-foreground/80 hover:text-hero-foreground"
               >
                 <ChevronLeft className="size-3.5" />
                 {backLabel ?? "Voltar"}
@@ -50,7 +50,7 @@ export function PageHero({
             )}
             {eyebrow && (
               <div
-                className={`flex items-center gap-2 text-gold ${backTo ? "mt-4" : ""}`}
+                className={`flex items-center gap-2 text-hero-accent ${backTo ? "mt-4" : ""}`}
               >
                 {EyebrowIcon && <EyebrowIcon className="size-4" />}
                 <span className="text-xs font-medium uppercase tracking-[0.2em]">
@@ -66,7 +66,7 @@ export function PageHero({
               {title}
             </h1>
             {description && (
-              <p className="mt-2 text-sm text-primary-foreground/80 max-w-md">
+              <p className="mt-2 text-sm text-hero-foreground/80 max-w-md">
                 {description}
               </p>
             )}
