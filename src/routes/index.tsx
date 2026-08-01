@@ -20,7 +20,7 @@ function Index() {
     { to: "/harpa", icon: Music, title: "Harpa Cristã", desc: "Hinos de adoração" },
     { to: "/devocional", icon: Sun, title: "Devocional", desc: "Mensagem do dia" },
     { to: "/estudos", icon: Sparkles, title: "Estudos IA", desc: "Sermões organizados" },
-    { to: "/campanhas", icon: Target, title: "Campanhas", desc: "Desafios espirituais" },
+    { to: "/campanhas", icon: Target, title: "Jornadas", desc: "Sua caminhada espiritual" },
     { to: "/denominacoes", icon: Landmark, title: "Denominações", desc: "Enciclopédia cristã" },
     { to: "/anotacoes", icon: NotebookPen, title: "Anotações", desc: "Suas notas e estudos" },
     { to: "/favoritos", icon: Heart, title: "Favoritos", desc: "Versos guardados" },

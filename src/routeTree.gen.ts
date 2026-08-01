@@ -51,6 +51,7 @@ import { Route as CampanhasConhecimentoRouteImport } from './routes/campanhas.co
 import { Route as CampanhasCasaisRouteImport } from './routes/campanhas.casais'
 import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
+import { Route as CampanhasJornadaIdRouteImport } from './routes/campanhas.jornada.$id'
 import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 
@@ -265,6 +266,11 @@ const BibliaBookIndexRoute = BibliaBookIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BibliaBookRoute,
 } as any)
+const CampanhasJornadaIdRoute = CampanhasJornadaIdRouteImport.update({
+  id: '/campanhas/jornada/$id',
+  path: '/campanhas/jornada/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CampanhasCertificadoIdRoute = CampanhasCertificadoIdRouteImport.update({
   id: '/campanhas/certificado/$id',
   path: '/campanhas/certificado/$id',
@@ -320,6 +326,7 @@ export interface FileRoutesByFullPath {
   '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
+  '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
 export interface FileRoutesByTo {
@@ -360,6 +367,7 @@ export interface FileRoutesByTo {
   '/resumo': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
+  '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book': typeof BibliaBookIndexRoute
 }
 export interface FileRoutesById {
@@ -407,6 +415,7 @@ export interface FileRoutesById {
   '/resumo/': typeof ResumoIndexRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
+  '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
 }
 export interface FileRouteTypes {
@@ -455,6 +464,7 @@ export interface FileRouteTypes {
     | '/resumo/'
     | '/biblia/$book/$chapter'
     | '/campanhas/certificado/$id'
+    | '/campanhas/jornada/$id'
     | '/biblia/$book/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -495,6 +505,7 @@ export interface FileRouteTypes {
     | '/resumo'
     | '/biblia/$book/$chapter'
     | '/campanhas/certificado/$id'
+    | '/campanhas/jornada/$id'
     | '/biblia/$book'
   id:
     | '__root__'
@@ -541,6 +552,7 @@ export interface FileRouteTypes {
     | '/resumo/'
     | '/biblia/$book/$chapter'
     | '/campanhas/certificado/$id'
+    | '/campanhas/jornada/$id'
     | '/biblia/$book/'
   fileRoutesById: FileRoutesById
 }
@@ -577,6 +589,7 @@ export interface RootRouteChildren {
   CampanhasQuizRoute: typeof CampanhasQuizRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
   CampanhasCertificadoIdRoute: typeof CampanhasCertificadoIdRoute
+  CampanhasJornadaIdRoute: typeof CampanhasJornadaIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -875,6 +888,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaBookIndexRouteImport
       parentRoute: typeof BibliaBookRoute
     }
+    '/campanhas/jornada/$id': {
+      id: '/campanhas/jornada/$id'
+      path: '/campanhas/jornada/$id'
+      fullPath: '/campanhas/jornada/$id'
+      preLoaderRoute: typeof CampanhasJornadaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/campanhas/certificado/$id': {
       id: '/campanhas/certificado/$id'
       path: '/campanhas/certificado/$id'
@@ -1004,6 +1024,7 @@ const rootRouteChildren: RootRouteChildren = {
   CampanhasQuizRoute: CampanhasQuizRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
   CampanhasCertificadoIdRoute: CampanhasCertificadoIdRoute,
+  CampanhasJornadaIdRoute: CampanhasJornadaIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

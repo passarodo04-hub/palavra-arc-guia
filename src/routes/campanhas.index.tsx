@@ -24,15 +24,18 @@ import {
 } from "@/lib/campaigns";
 import { StatCard } from "@/components/campaigns/StatCard";
 import { ActivityCalendar } from "@/components/campaigns/ActivityCalendar";
+import { JourneyIntro } from "@/components/campaigns/JourneyIntro";
+import { JourneyRail } from "@/components/campaigns/JourneyRail";
+import { allJourneyProgress } from "@/lib/journeys";
 import { useAuth } from "@/lib/auth-context";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export const Route = createFileRoute("/campanhas/")({
   head: () => ({
     meta: [
-      { title: "Campanhas — Palavra+" },
+      { title: "Jornadas — Palavra+" },
       { name: "description", content: "Fortaleça sua caminhada com Deus através de desafios espirituais, metas pessoais e crescimento diário." },
-      { property: "og:title", content: "Campanhas — Palavra+" },
+      { property: "og:title", content: "Jornadas — Palavra+" },
       { property: "og:description", content: "Desafios espirituais, metas e crescimento diário na sua caminhada com Deus." },
     ],
   }),
@@ -247,12 +250,33 @@ function CampanhasPage() {
   return (
     <div className="min-h-screen bg-background pb-24">
       <PageHero
-        eyebrow={{ icon: Target, label: "Campanhas" }}
+        eyebrow={{ icon: Target, label: "Jornadas" }}
         title={`${greetingForNow()}${displayName ? `, ${displayName}` : ""}!`}
         description="Sua jornada com Deus, um dia de cada vez."
       />
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
+        <JourneyIntro />
+        <div className="space-y-8 pb-8">
+          <JourneyRail
+            title="Continue sua Jornada"
+            icon={<Play className="size-5 text-gold" aria-hidden />}
+            items={allJourneyProgress(state).filter((j) => j.started && j.percent < 100)}
+            wide
+          />
+          <JourneyRail
+            title="Jornadas em destaque"
+            icon={<Sparkles className="size-5 text-gold" aria-hidden />}
+            items={allJourneyProgress(state).filter((j) => j.journey.featured)}
+            wide
+          />
+          <JourneyRail
+            title="Todas as Jornadas"
+            icon={<Compass className="size-5 text-gold" aria-hidden />}
+            items={allJourneyProgress(state)}
+          />
+        </div>
+
         {/* Dynamic Hero — Netflix-style Continue Watching */}
         {!hydrated ? (
           <HeroSkeleton />
