@@ -10,6 +10,7 @@ import {
 import appCss from "../styles.css?url";
 import { TranslationProvider } from "@/lib/translation-context";
 import { AuthProvider } from "@/lib/auth-context";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/lib/theme-context";
 
 function NotFoundComponent() {
@@ -139,6 +140,7 @@ function RootComponent() {
         <AuthProvider>
           <TranslationProvider>
             <Outlet />
+            <Toaster position="top-center" richColors />
           </TranslationProvider>
         </AuthProvider>
       </ThemeProvider>
