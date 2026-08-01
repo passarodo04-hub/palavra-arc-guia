@@ -220,6 +220,24 @@
   .animate-pulse-glow { animation: pulse-glow 2.2s ease-out infinite; }
 }
 
+/* Jornadas entry animation */
+@layer utilities {
+  @keyframes intro-word {
+    0% { opacity: 0; transform: scale(0.96); letter-spacing: 0.5em; }
+    100% { opacity: 1; transform: scale(1); letter-spacing: 0.2em; }
+  }
+  .animate-intro-word { animation: intro-word 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  @keyframes intro-out {
+    to { opacity: 0; visibility: hidden; }
+  }
+  .animate-intro-out { animation: intro-out 0.4s ease-in both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-intro-word, .animate-intro-out, .animate-fade-up { animation: none !important; }
+  }
+}
+
 /* PWA: respect iOS safe areas in standalone mode (status bar + home indicator) */
 @layer base {
   html, body { -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
