@@ -55,6 +55,7 @@ import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index
 import { Route as CampanhasJornadaIdRouteImport } from './routes/campanhas.jornada.$id'
 import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
+import { Route as CampanhasJornadaBiblicaEtapaStageIdRouteImport } from './routes/campanhas.jornada-biblica.etapa.$stageId'
 
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
@@ -288,6 +289,12 @@ const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
   path: '/$chapter',
   getParentRoute: () => BibliaBookRoute,
 } as any)
+const CampanhasJornadaBiblicaEtapaStageIdRoute =
+  CampanhasJornadaBiblicaEtapaStageIdRouteImport.update({
+    id: '/campanhas/jornada-biblica/etapa/$stageId',
+    path: '/campanhas/jornada-biblica/etapa/$stageId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -336,6 +343,7 @@ export interface FileRoutesByFullPath {
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
   '/campanhas/jornada-biblica/': typeof CampanhasJornadaBiblicaIndexRoute
+  '/campanhas/jornada-biblica/etapa/$stageId': typeof CampanhasJornadaBiblicaEtapaStageIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -378,6 +386,7 @@ export interface FileRoutesByTo {
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book': typeof BibliaBookIndexRoute
   '/campanhas/jornada-biblica': typeof CampanhasJornadaBiblicaIndexRoute
+  '/campanhas/jornada-biblica/etapa/$stageId': typeof CampanhasJornadaBiblicaEtapaStageIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -427,6 +436,7 @@ export interface FileRoutesById {
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
   '/campanhas/jornada-biblica/': typeof CampanhasJornadaBiblicaIndexRoute
+  '/campanhas/jornada-biblica/etapa/$stageId': typeof CampanhasJornadaBiblicaEtapaStageIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -477,6 +487,7 @@ export interface FileRouteTypes {
     | '/campanhas/jornada/$id'
     | '/biblia/$book/'
     | '/campanhas/jornada-biblica/'
+    | '/campanhas/jornada-biblica/etapa/$stageId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -519,6 +530,7 @@ export interface FileRouteTypes {
     | '/campanhas/jornada/$id'
     | '/biblia/$book'
     | '/campanhas/jornada-biblica'
+    | '/campanhas/jornada-biblica/etapa/$stageId'
   id:
     | '__root__'
     | '/'
@@ -567,6 +579,7 @@ export interface FileRouteTypes {
     | '/campanhas/jornada/$id'
     | '/biblia/$book/'
     | '/campanhas/jornada-biblica/'
+    | '/campanhas/jornada-biblica/etapa/$stageId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -604,6 +617,7 @@ export interface RootRouteChildren {
   CampanhasCertificadoIdRoute: typeof CampanhasCertificadoIdRoute
   CampanhasJornadaIdRoute: typeof CampanhasJornadaIdRoute
   CampanhasJornadaBiblicaIndexRoute: typeof CampanhasJornadaBiblicaIndexRoute
+  CampanhasJornadaBiblicaEtapaStageIdRoute: typeof CampanhasJornadaBiblicaEtapaStageIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -930,6 +944,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaBookChapterRouteImport
       parentRoute: typeof BibliaBookRoute
     }
+    '/campanhas/jornada-biblica/etapa/$stageId': {
+      id: '/campanhas/jornada-biblica/etapa/$stageId'
+      path: '/campanhas/jornada-biblica/etapa/$stageId'
+      fullPath: '/campanhas/jornada-biblica/etapa/$stageId'
+      preLoaderRoute: typeof CampanhasJornadaBiblicaEtapaStageIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1047,6 +1068,8 @@ const rootRouteChildren: RootRouteChildren = {
   CampanhasCertificadoIdRoute: CampanhasCertificadoIdRoute,
   CampanhasJornadaIdRoute: CampanhasJornadaIdRoute,
   CampanhasJornadaBiblicaIndexRoute: CampanhasJornadaBiblicaIndexRoute,
+  CampanhasJornadaBiblicaEtapaStageIdRoute:
+    CampanhasJornadaBiblicaEtapaStageIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

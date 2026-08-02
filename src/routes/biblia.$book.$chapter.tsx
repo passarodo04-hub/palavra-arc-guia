@@ -6,6 +6,7 @@ import { useTranslation } from "@/lib/translation-context";
 import { ChevronLeft, ChevronRight, Heart, List } from "lucide-react";
 import { useLocalStorage } from "@/lib/storage";
 import { useEffect, useRef, useState } from "react";
+import { useBibleReads } from "@/hooks/use-bible-reads";
 
 type Search = { v?: number };
 
@@ -26,6 +27,8 @@ function ReaderPage() {
   const [fontSize, setFontSize] = useLocalStorage<number>("font-size", 18);
   const [verseInput, setVerseInput] = useState("");
   const { translation } = useTranslation();
+  const { isRead, toggle } = useBibleReads();
+  const chapterRead = isRead(book, chNum);
   const { data: ch, isLoading, error } = useQuery({
     queryKey: ["chapter", translation, book, chNum],
     queryFn: () => loadChapter(book, chNum, translation),
