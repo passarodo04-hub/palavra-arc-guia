@@ -135,7 +135,23 @@ function ReaderPage() {
         ) : (
           <p className="text-center text-muted-foreground py-12 font-serif">Capítulo não encontrado.</p>
         )}
-        <nav className="mt-12 flex justify-between">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4">
+          <div className="text-xs text-muted-foreground">
+            Jornada Bíblica · marque este capítulo ao terminar
+          </div>
+          <button
+            type="button"
+            onClick={() => toggle(book, chNum, !chapterRead)}
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-colors ${
+              chapterRead
+                ? "bg-secondary text-foreground"
+                : "bg-gold text-gold-foreground hover:bg-gold/90"
+            }`}
+          >
+            {chapterRead ? "Lido — desfazer" : "Marcar como lido"}
+          </button>
+        </div>
+        <nav className="mt-8 flex justify-between">
           {prev ? (
             <Link to="/biblia/$book/$chapter" params={{ book, chapter: String(prev) }} className="inline-flex items-center gap-1 text-sm text-primary">
               <ChevronLeft className="size-4" /> Cap. {prev}
