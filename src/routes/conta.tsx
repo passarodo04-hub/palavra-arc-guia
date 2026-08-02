@@ -13,6 +13,21 @@ import { LogOut, Trash2, Sun, Moon, Monitor, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/conta")({ component: ContaPage });
 
+/** Converte erros técnicos em mensagens claras, sem expor chaves ou tokens. */
+function friendlyError(e: unknown, fallback: string) {
+  const raw = e instanceof Error ? e.message : String(e ?? "");
+  if (/Missing Supabase environment/i.test(raw) || /Connect Supabase/i.test(raw)) {
+    return "Não foi possível conectar ao servidor do Palavra+. Tente novamente em instantes.";
+  }
+  if (/Unauthorized|Invalid token|authorization header/i.test(raw)) {
+    return "Sua sessão expirou. Entre novamente para continuar.";
+  }
+  if (/Failed to fetch|NetworkError|fetch failed/i.test(raw)) {
+    return "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+  }
+  return raw && raw.length < 160 ? raw : fallback;
+}
+
 function ContaPage() {
   const navigate = useNavigate();
   const { user, loading, signOut } = useAuth();
@@ -24,10 +39,11 @@ function ContaPage() {
   const updateProfile = useServerFn(updateMyProfile);
   const removeAccount = useServerFn(deleteMyAccount);
 
-  const { data: profile } = useQuery({
+  const { data: profile, error: profileError, isError: profileFailed } = useQuery({
     queryKey: ["my-profile"],
     queryFn: () => getProfile(),
     enabled: !!user,
+    retry: 1,
   });
 
   useEffect(() => {
@@ -45,7 +61,7 @@ function ContaPage() {
       toast.success("Perfil salvo com sucesso.");
     },
     onError: (e: unknown) => {
-      toast.error(e instanceof Error ? e.message : "Não foi possível salvar o perfil.");
+      toast.error(friendlyError(e, "Não foi possível salvar o perfil."));
     },
   });
 
@@ -54,6 +70,9 @@ function ContaPage() {
     onSuccess: async () => {
       await signOut();
       navigate({ to: "/", replace: true });
+    },
+    onError: (e: unknown) => {
+      toast.error(friendlyError(e, "Não foi possível excluir a conta."));
     },
   });
 
@@ -83,6 +102,11 @@ function ContaPage() {
       <PageHero backTo="/" backLabel="Início" title="Minha conta" description={user.email} />
 
       <main className="mx-auto max-w-3xl px-4 pt-6 space-y-6">
+        {profileFailed && (
+          <div className="rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+            {friendlyError(profileError, "Não foi possível carregar seu perfil.")}
+          </div>
+        )}
         <section className="rounded-2xl border border-border bg-card p-5 shadow-soft space-y-3">
           <h2 className="font-serif text-lg">Perfil</h2>
           <label className="block">
