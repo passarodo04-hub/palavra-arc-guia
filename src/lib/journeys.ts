@@ -60,6 +60,12 @@ export const JOURNEYS: Journey[] = [
     featured: true,
     modules: [
       {
+        campaignId: "jornada-biblica",
+        title: "Jornada Bíblica",
+        description: "Caminhe por etapas do Pentateuco ao Apocalipse.",
+        route: "/campanhas/jornada-biblica",
+      },
+      {
         campaignId: "leia-biblia",
         title: "Plano de leitura",
         description: "Do Gênesis ao Apocalipse no seu ritmo.",
