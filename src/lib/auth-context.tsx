@@ -27,11 +27,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const prevUserIdRef = useRef<string | null | undefined>(undefined);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      prevUserIdRef.current = data.session?.user?.id ?? null;
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(async ({ data, error }) => {
+        // Mobile browsers evict storage and rotate refresh tokens aggressively;
+        // a dead token must be cleared locally instead of leaving a "logged in"
+        // state whose every cloud call fails.
+        if (error) {
+          try {
+            await supabase.auth.signOut({ scope: "local" });
+          } catch {}
+          setSession(null);
+          prevUserIdRef.current = null;
+          setLoading(false);
+          return;
+        }
+        setSession(data.session);
+        prevUserIdRef.current = data.session?.user?.id ?? null;
+        setLoading(false);
+      })
+      .catch(() => {
+        setSession(null);
+        prevUserIdRef.current = null;
+        setLoading(false);
+      });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, s) => {
       // Ignore noisy events that don't change identity (TOKEN_REFRESHED, INITIAL_SESSION, USER_UPDATED)
       setSession(s);
