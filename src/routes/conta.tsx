@@ -50,6 +50,16 @@ function ContaPage() {
     if (!loading && !user) navigate({ to: "/login", replace: true });
   }, [user, loading, navigate]);
 
+  // Sessão inválida (token expirado no celular, storage limpo): limpa e volta ao login
+  // em vez de mostrar um erro de "servidor indisponível".
+  useEffect(() => {
+    if (!profileFailed) return;
+    const raw = profileError instanceof Error ? profileError.message : String(profileError ?? "");
+    if (/Unauthorized|Invalid token|authorization header|401/i.test(raw)) {
+      void signOut().then(() => navigate({ to: "/login", replace: true }));
+    }
+  }, [profileFailed, profileError, signOut, navigate]);
+
   useEffect(() => {
     if (profile?.display_name) setDisplayName(profile.display_name);
   }, [profile]);
