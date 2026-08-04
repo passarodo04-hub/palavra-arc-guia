@@ -221,6 +221,75 @@ export type Database = {
         }
         Relationships: []
       }
+      walk_events: {
+        Row: {
+          category: string
+          created_at: string
+          dedupe_key: string
+          detail: string
+          event_date: string
+          icon: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          dedupe_key: string
+          detail?: string
+          event_date?: string
+          icon?: string
+          id?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          dedupe_key?: string
+          detail?: string
+          event_date?: string
+          icon?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      walk_unlocks: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          unlock_id: string
+          unlocked_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          unlock_id: string
+          unlocked_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          unlock_id?: string
+          unlocked_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
