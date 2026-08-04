@@ -42,6 +42,10 @@ function CaminhadaPage() {
   const walk = useWalk();
   const [selected, setSelected] = useState<ResolvedUnlockable | null>(null);
   const s = walk.stats;
+  // The shared XP curve reports level 1 progress relative to its own threshold,
+  // which can be negative before the first 100 XP — clamp it for display.
+  const levelXp = Math.max(0, s.levelXp);
+  const remainingXp = Math.max(0, s.nextLevelXp - levelXp);
 
   const displayName =
     (user?.user_metadata as { full_name?: string; name?: string } | undefined)?.full_name ??
@@ -108,7 +112,7 @@ function CaminhadaPage() {
           <div className="mt-3 flex flex-wrap items-end justify-between gap-2">
             <div className="font-serif text-2xl text-card-foreground">⭐ Nível {s.level}</div>
             <div className="text-sm tabular-nums text-muted-foreground">
-              {s.levelXp.toLocaleString("pt-BR")} / {s.nextLevelXp.toLocaleString("pt-BR")} XP
+              {levelXp.toLocaleString("pt-BR")} / {s.nextLevelXp.toLocaleString("pt-BR")} XP
             </div>
           </div>
           <div
@@ -125,8 +129,7 @@ function CaminhadaPage() {
             />
           </div>
           <div className="mt-1 text-xs text-muted-foreground">
-            {s.percent}% · faltam {Math.max(0, s.nextLevelXp - s.levelXp).toLocaleString("pt-BR")} XP para o
-            nível {s.level + 1}
+            {s.percent}% · faltam {remainingXp.toLocaleString("pt-BR")} XP para o nível {s.level + 1}
           </div>
           <dl className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
             <Stat label="XP total" value={s.xp.toLocaleString("pt-BR")} accent />
