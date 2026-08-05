@@ -182,7 +182,7 @@ export const finishQuiz = createServerFn({ method: "POST" })
     await supabase.from("walk_events").upsert(
       {
         user_id: userId,
-        category: "conhecimento",
+        category: "outros",
         title: `Quiz concluído: ${g.correct} de ${g.total} acertos.`,
         detail: `${g.percent}% de aproveitamento`,
         icon: "🧠",
