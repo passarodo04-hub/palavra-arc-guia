@@ -149,6 +149,131 @@ export type Database = {
         }
         Relationships: []
       }
+      quiz_answers: {
+        Row: {
+          answered_at: string
+          attempt_id: string | null
+          audience: string
+          category: string
+          chosen: number
+          correct_index: number
+          difficulty: string
+          id: string
+          is_correct: boolean
+          question_id: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          attempt_id?: string | null
+          audience: string
+          category: string
+          chosen: number
+          correct_index: number
+          difficulty: string
+          id?: string
+          is_correct: boolean
+          question_id: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          attempt_id?: string | null
+          audience?: string
+          category?: string
+          chosen?: number
+          correct_index?: number
+          difficulty?: string
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_attempts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_attempts: {
+        Row: {
+          audience: string
+          category: string
+          correct: number
+          created_at: string
+          difficulty: string
+          id: string
+          percent: number
+          points: number
+          quiz_key: string
+          total: number
+          updated_at: string
+          user_id: string
+          xp_awarded: number
+        }
+        Insert: {
+          audience: string
+          category: string
+          correct?: number
+          created_at?: string
+          difficulty: string
+          id?: string
+          percent?: number
+          points?: number
+          quiz_key: string
+          total?: number
+          updated_at?: string
+          user_id: string
+          xp_awarded?: number
+        }
+        Update: {
+          audience?: string
+          category?: string
+          correct?: number
+          created_at?: string
+          difficulty?: string
+          id?: string
+          percent?: number
+          points?: number
+          quiz_key?: string
+          total?: number
+          updated_at?: string
+          user_id?: string
+          xp_awarded?: number
+        }
+        Relationships: []
+      }
+      quiz_daily_claims: {
+        Row: {
+          claim_date: string
+          claim_key: string
+          created_at: string
+          id: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          claim_date?: string
+          claim_key: string
+          created_at?: string
+          id?: string
+          user_id: string
+          xp?: number
+        }
+        Update: {
+          claim_date?: string
+          claim_key?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+          xp?: number
+        }
+        Relationships: []
+      }
       reading_history: {
         Row: {
           book: string
