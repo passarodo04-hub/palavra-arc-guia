@@ -234,3 +234,41 @@ export const getQuizStats = createServerFn({ method: "GET" })
       xpTotal: rows.reduce((s, r) => s + (r.xp_awarded ?? 0), 0),
     };
   });
+
+export type QuizHistoryItem = {
+  id: string;
+  quizKey: string;
+  audience: string;
+  category: string;
+  difficulty: string;
+  total: number;
+  correct: number;
+  percent: number;
+  xpAwarded: number;
+  createdAt: string;
+};
+
+export const getQuizHistory = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<QuizHistoryItem[]> => {
+    const { supabase, userId } = context;
+    const { data, error } = await supabase
+      .from("quiz_attempts")
+      .select("id,quiz_key,audience,category,difficulty,total,correct,percent,xp_awarded,created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((r) => ({
+      id: r.id,
+      quizKey: r.quiz_key,
+      audience: r.audience,
+      category: r.category,
+      difficulty: r.difficulty,
+      total: r.total ?? 0,
+      correct: r.correct ?? 0,
+      percent: r.percent ?? 0,
+      xpAwarded: r.xp_awarded ?? 0,
+      createdAt: r.created_at,
+    }));
+  });
