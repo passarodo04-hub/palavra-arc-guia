@@ -57,6 +57,7 @@ function QuizPage() {
   const [answers, setAnswers] = useState<{ id: string; chosen: number }[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
   const [result, setResult] = useState<QuizResult | null>(null);
+  const [emptyPool, setEmptyPool] = useState(false);
 
   const daily = quizOfTheDay(audience);
   const cats = categoriesFor(audience);
@@ -80,6 +81,7 @@ function QuizPage() {
       setAnswers([]);
       setSelected(null);
       setResult(null);
+      setEmptyPool(data.questions.length === 0);
       setPhase(data.questions.length ? "playing" : "setup");
     },
   });
@@ -99,6 +101,7 @@ function QuizPage() {
   });
 
   function start(cat: string, diff: QuizDifficulty) {
+    setEmptyPool(false);
     setCategory(cat);
     setDifficulty(diff);
     startMutation.mutate({ audience, category: cat, difficulty: diff });
@@ -214,6 +217,11 @@ function QuizPage() {
                   </button>
                 ))}
               </div>
+              {emptyPool && (
+                <p className="mt-4 text-sm text-muted-foreground">
+                  Ainda não há perguntas para esta combinação de categoria e nível. Escolha outra dificuldade.
+                </p>
+              )}
               {startMutation.isError && (
                 <p className="mt-4 text-sm text-destructive">Não foi possível carregar o quiz. Tente novamente.</p>
               )}
