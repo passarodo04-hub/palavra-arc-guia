@@ -119,3 +119,38 @@ export function todayKeyISO(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
+
+function hashKey(str: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/** "Quiz do Dia": same pick for everyone, renewed at every date change. */
+export function quizOfTheDay(audience: QuizAudience): { category: QuizCategoryMeta; difficulty: QuizDifficulty } {
+  const list = categoriesFor(audience);
+  const seed = hashKey(`${audience}:${todayKeyISO()}`);
+  const category = list[seed % list.length]!;
+  const difficulty = DIFFICULTIES[(seed >>> 8) % DIFFICULTIES.length]!.id;
+  return { category, difficulty };
+}
+
+export type QuizAchievement = { id: string; emoji: string; label: string; description: string; unlocked: boolean };
+
+export function quizAchievements(stats: {
+  attempts: number;
+  totalCorrect: number;
+  accuracy: number;
+  bestPercent: number;
+}): QuizAchievement[] {
+  return [
+    { id: "primeiro-quiz", emoji: "🎯", label: "Primeiro Quiz", description: "Conclua o seu primeiro quiz.", unlocked: stats.attempts >= 1 },
+    { id: "dez-quizzes", emoji: "🧠", label: "Estudioso", description: "Conclua 10 quizzes.", unlocked: stats.attempts >= 10 },
+    { id: "cem-acertos", emoji: "📚", label: "Cem Acertos", description: "Acerte 100 perguntas no total.", unlocked: stats.totalCorrect >= 100 },
+    { id: "gabarito", emoji: "🏆", label: "Gabarito", description: "Faça 100% em um quiz.", unlocked: stats.bestPercent >= 100 },
+    { id: "precisao", emoji: "🎖️", label: "Precisão", description: "Mantenha 80% de aproveitamento geral.", unlocked: stats.accuracy >= 80 && stats.attempts >= 3 },
+  ];
+}
