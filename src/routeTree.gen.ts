@@ -24,6 +24,7 @@ import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as CaminhadaRouteImport } from './routes/caminhada'
 import { Route as CalendarioRouteImport } from './routes/calendario'
 import { Route as BuscaRouteImport } from './routes/busca'
@@ -34,6 +35,7 @@ import { Route as ResumoIndexRouteImport } from './routes/resumo.index'
 import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
 import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
+import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
 import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
@@ -135,6 +137,11 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadeRoute = ComunidadeRouteImport.update({
+  id: '/comunidade',
+  path: '/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaminhadaRoute = CaminhadaRouteImport.update({
   id: '/caminhada',
   path: '/caminhada',
@@ -184,6 +191,11 @@ const DenominacoesIndexRoute = DenominacoesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DenominacoesRoute,
+} as any)
+const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ComunidadeRoute,
 } as any)
 const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
   id: '/campanhas/',
@@ -321,6 +333,7 @@ export interface FileRoutesByFullPath {
   '/busca': typeof BuscaRoute
   '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
+  '/comunidade': typeof ComunidadeRouteWithChildren
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -355,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -401,6 +415,7 @@ export interface FileRoutesByTo {
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia': typeof BibliaIndexRoute
   '/campanhas': typeof CampanhasIndexRoute
+  '/comunidade': typeof ComunidadeIndexRoute
   '/denominacoes': typeof DenominacoesIndexRoute
   '/estudos': typeof EstudosIndexRoute
   '/harpa': typeof HarpaIndexRoute
@@ -420,6 +435,7 @@ export interface FileRoutesById {
   '/busca': typeof BuscaRoute
   '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
+  '/comunidade': typeof ComunidadeRouteWithChildren
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -454,6 +470,7 @@ export interface FileRoutesById {
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -474,6 +491,7 @@ export interface FileRouteTypes {
     | '/busca'
     | '/calendario'
     | '/caminhada'
+    | '/comunidade'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -508,6 +526,7 @@ export interface FileRouteTypes {
     | '/resumo/$book'
     | '/biblia/'
     | '/campanhas/'
+    | '/comunidade/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
@@ -554,6 +573,7 @@ export interface FileRouteTypes {
     | '/resumo/$book'
     | '/biblia'
     | '/campanhas'
+    | '/comunidade'
     | '/denominacoes'
     | '/estudos'
     | '/harpa'
@@ -572,6 +592,7 @@ export interface FileRouteTypes {
     | '/busca'
     | '/calendario'
     | '/caminhada'
+    | '/comunidade'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -606,6 +627,7 @@ export interface FileRouteTypes {
     | '/resumo/$book'
     | '/biblia/'
     | '/campanhas/'
+    | '/comunidade/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
@@ -625,6 +647,7 @@ export interface RootRouteChildren {
   BuscaRoute: typeof BuscaRoute
   CalendarioRoute: typeof CalendarioRoute
   CaminhadaRoute: typeof CaminhadaRoute
+  ComunidadeRoute: typeof ComunidadeRouteWithChildren
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ContaRoute: typeof ContaRoute
   DenominacoesRoute: typeof DenominacoesRouteWithChildren
@@ -766,6 +789,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidade': {
+      id: '/comunidade'
+      path: '/comunidade'
+      fullPath: '/comunidade'
+      preLoaderRoute: typeof ComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/caminhada': {
       id: '/caminhada'
       path: '/caminhada'
@@ -835,6 +865,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/denominacoes/'
       preLoaderRoute: typeof DenominacoesIndexRouteImport
       parentRoute: typeof DenominacoesRoute
+    }
+    '/comunidade/': {
+      id: '/comunidade/'
+      path: '/'
+      fullPath: '/comunidade/'
+      preLoaderRoute: typeof ComunidadeIndexRouteImport
+      parentRoute: typeof ComunidadeRoute
     }
     '/campanhas/': {
       id: '/campanhas/'
@@ -1041,6 +1078,18 @@ const BibliaRouteChildren: BibliaRouteChildren = {
 const BibliaRouteWithChildren =
   BibliaRoute._addFileChildren(BibliaRouteChildren)
 
+interface ComunidadeRouteChildren {
+  ComunidadeIndexRoute: typeof ComunidadeIndexRoute
+}
+
+const ComunidadeRouteChildren: ComunidadeRouteChildren = {
+  ComunidadeIndexRoute: ComunidadeIndexRoute,
+}
+
+const ComunidadeRouteWithChildren = ComunidadeRoute._addFileChildren(
+  ComunidadeRouteChildren,
+)
+
 interface DenominacoesRouteChildren {
   DenominacoesIdRoute: typeof DenominacoesIdRoute
   DenominacoesIndexRoute: typeof DenominacoesIndexRoute
@@ -1100,6 +1149,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuscaRoute: BuscaRoute,
   CalendarioRoute: CalendarioRoute,
   CaminhadaRoute: CaminhadaRoute,
+  ComunidadeRoute: ComunidadeRouteWithChildren,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ContaRoute: ContaRoute,
   DenominacoesRoute: DenominacoesRouteWithChildren,
