@@ -42,6 +42,7 @@ import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
+import { Route as ComunidadeIdRouteImport } from './routes/comunidade.$id'
 import { Route as CampanhasQuizRouteImport } from './routes/campanhas.quiz'
 import { Route as CampanhasOracaoRouteImport } from './routes/campanhas.oracao'
 import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
@@ -227,6 +228,11 @@ const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => DenominacoesRoute,
 } as any)
+const ComunidadeIdRoute = ComunidadeIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ComunidadeRoute,
+} as any)
 const CampanhasQuizRoute = CampanhasQuizRouteImport.update({
   id: '/campanhas/quiz',
   path: '/campanhas/quiz',
@@ -362,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/campanhas/quiz': typeof CampanhasQuizRoute
+  '/comunidade/$id': typeof ComunidadeIdRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -409,6 +416,7 @@ export interface FileRoutesByTo {
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/campanhas/quiz': typeof CampanhasQuizRoute
+  '/comunidade/$id': typeof ComunidadeIdRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -464,6 +472,7 @@ export interface FileRoutesById {
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/campanhas/quiz': typeof CampanhasQuizRoute
+  '/comunidade/$id': typeof ComunidadeIdRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
@@ -520,6 +529,7 @@ export interface FileRouteTypes {
     | '/campanhas/leia-biblia'
     | '/campanhas/oracao'
     | '/campanhas/quiz'
+    | '/comunidade/$id'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -567,6 +577,7 @@ export interface FileRouteTypes {
     | '/campanhas/leia-biblia'
     | '/campanhas/oracao'
     | '/campanhas/quiz'
+    | '/comunidade/$id'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -621,6 +632,7 @@ export interface FileRouteTypes {
     | '/campanhas/leia-biblia'
     | '/campanhas/oracao'
     | '/campanhas/quiz'
+    | '/comunidade/$id'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
@@ -915,6 +927,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DenominacoesIdRouteImport
       parentRoute: typeof DenominacoesRoute
     }
+    '/comunidade/$id': {
+      id: '/comunidade/$id'
+      path: '/$id'
+      fullPath: '/comunidade/$id'
+      preLoaderRoute: typeof ComunidadeIdRouteImport
+      parentRoute: typeof ComunidadeRoute
+    }
     '/campanhas/quiz': {
       id: '/campanhas/quiz'
       path: '/campanhas/quiz'
@@ -1079,10 +1098,12 @@ const BibliaRouteWithChildren =
   BibliaRoute._addFileChildren(BibliaRouteChildren)
 
 interface ComunidadeRouteChildren {
+  ComunidadeIdRoute: typeof ComunidadeIdRoute
   ComunidadeIndexRoute: typeof ComunidadeIndexRoute
 }
 
 const ComunidadeRouteChildren: ComunidadeRouteChildren = {
+  ComunidadeIdRoute: ComunidadeIdRoute,
   ComunidadeIndexRoute: ComunidadeIndexRoute,
 }
 
@@ -1187,3 +1208,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
