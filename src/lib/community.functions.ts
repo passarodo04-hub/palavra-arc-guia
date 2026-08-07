@@ -134,7 +134,12 @@ export const updateCommunity = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }) => {
     const { supabase } = context;
-    const patch: Record<string, unknown> = {};
+    const patch: {
+      name?: string;
+      description?: string;
+      invite_active?: boolean;
+      invite_code?: string;
+    } = {};
     if (data.name !== undefined) patch.name = data.name;
     if (data.description !== undefined) patch.description = data.description;
     if (data.inviteActive !== undefined) patch.invite_active = data.inviteActive;
