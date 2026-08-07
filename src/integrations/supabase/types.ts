@@ -38,6 +38,311 @@ export type Database = {
         }
         Relationships: []
       }
+      calendar_event_completions: {
+        Row: {
+          completed_at: string
+          event_id: string
+          id: string
+          occurrence_date: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          event_id: string
+          id?: string
+          occurrence_date: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          event_id?: string
+          id?: string
+          occurrence_date?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calendar_event_completions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "calendar_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      calendar_events: {
+        Row: {
+          all_day: boolean
+          category: string
+          created_at: string
+          description: string
+          event_date: string
+          event_time: string | null
+          id: string
+          notes: string
+          recurrence: string
+          reminder_minutes: number | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          all_day?: boolean
+          category?: string
+          created_at?: string
+          description?: string
+          event_date: string
+          event_time?: string | null
+          id?: string
+          notes?: string
+          recurrence?: string
+          reminder_minutes?: number | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          all_day?: boolean
+          category?: string
+          created_at?: string
+          description?: string
+          event_date?: string
+          event_time?: string | null
+          id?: string
+          notes?: string
+          recurrence?: string
+          reminder_minutes?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      communities: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          invite_active: boolean
+          invite_code: string
+          name: string
+          owner_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          invite_active?: boolean
+          invite_code: string
+          name: string
+          owner_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          invite_active?: boolean
+          invite_code?: string
+          name?: string
+          owner_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      community_activities: {
+        Row: {
+          community_id: string
+          created_at: string
+          created_by: string
+          description: string
+          id: string
+          kind: string
+          scheduled_date: string
+          scheduled_time: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          community_id: string
+          created_at?: string
+          created_by: string
+          description?: string
+          id?: string
+          kind?: string
+          scheduled_date: string
+          scheduled_time?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          community_id?: string
+          created_at?: string
+          created_by?: string
+          description?: string
+          id?: string
+          kind?: string
+          scheduled_date?: string
+          scheduled_time?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_activities_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_activity_participants: {
+        Row: {
+          activity_id: string
+          community_id: string
+          completed_at: string | null
+          created_at: string
+          id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activity_id: string
+          community_id: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activity_id?: string
+          community_id?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_activity_participants_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "community_activities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_activity_participants_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_members: {
+        Row: {
+          badges: number
+          community_id: string
+          display_name: string
+          id: string
+          joined_at: string
+          journeys_completed: number
+          level: number
+          role: string
+          streak: number
+          updated_at: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          badges?: number
+          community_id: string
+          display_name?: string
+          id?: string
+          joined_at?: string
+          journeys_completed?: number
+          level?: number
+          role?: string
+          streak?: number
+          updated_at?: string
+          user_id: string
+          xp?: number
+        }
+        Update: {
+          badges?: number
+          community_id?: string
+          display_name?: string
+          id?: string
+          joined_at?: string
+          journeys_completed?: number
+          level?: number
+          role?: string
+          streak?: number
+          updated_at?: string
+          user_id?: string
+          xp?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_members_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_posts: {
+        Row: {
+          author_name: string
+          community_id: string
+          content: string
+          created_at: string
+          id: string
+          kind: string
+          reference: string
+          user_id: string
+        }
+        Insert: {
+          author_name?: string
+          community_id: string
+          content: string
+          created_at?: string
+          id?: string
+          kind?: string
+          reference?: string
+          user_id: string
+        }
+        Update: {
+          author_name?: string
+          community_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          reference?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_posts_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       favorite_hymns: {
         Row: {
           created_at: string
@@ -89,6 +394,68 @@ export type Database = {
         }
         Relationships: []
       }
+      mentor_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mentor_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          refs: Json
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content?: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          refs?: Json
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          refs?: Json
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "mentor_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notes: {
         Row: {
           category: string
@@ -123,6 +490,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bible_translation: string
+          birth_date: string | null
           created_at: string
           display_name: string | null
           id: string
@@ -132,6 +500,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           bible_translation?: string
+          birth_date?: string | null
           created_at?: string
           display_name?: string | null
           id: string
@@ -141,6 +510,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           bible_translation?: string
+          birth_date?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
@@ -420,7 +790,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_community_admin: {
+        Args: { _community_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_community_member: {
+        Args: { _community_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
