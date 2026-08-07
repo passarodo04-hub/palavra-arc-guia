@@ -1,5 +1,10 @@
-/** Server-only Mentor policy: system prompt, safety guard and usage cap.
- *  Never imported by client code — the AI key and prompt stay on the server. */
+/** Server-only Mentor policy: system prompt, safety guard, usage cap and the
+ *  gateway call. Never reaches the browser — the AI key stays on the server. */
+import { extractRefs, type MentorRef } from "@/lib/mentor-shared";
+
+export type MentorRunResult =
+  | { ok: true; content: string; refs: MentorRef[]; conversationId: string | null }
+  | { ok: false; reason: string };
 
 export const MENTOR_DAILY_LIMIT = 40;
 
@@ -42,4 +47,43 @@ export function mentorGuard(question: string): string | null {
     return "Não consigo ajudar com esse assunto aqui. Posso ajudar você com dúvidas bíblicas, estudos, reflexões e preparação de sermões.";
   }
   return null;
+}
+
+/** Single place where the AI gateway is called. */
+export async function runMentor(
+  question: string,
+  history: { role: "user" | "assistant"; content: string }[],
+): Promise<MentorRunResult> {
+  const apiKey = process.env.LOVABLE_API_KEY;
+  if (!apiKey) return { ok: false, reason: "Serviço de IA indisponível no momento." };
+
+  const blocked = mentorGuard(question);
+  if (blocked) return { ok: false, reason: blocked };
+
+  try {
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "google/gemini-3.6-flash",
+        messages: [
+          { role: "system", content: MENTOR_SYSTEM_PROMPT },
+          ...history,
+          { role: "user", content: question },
+        ],
+      }),
+    });
+    if (res.status === 429) return { ok: false, reason: "Muitas solicitações agora. Tente novamente em instantes." };
+    if (res.status === 402) return { ok: false, reason: "Créditos de IA esgotados." };
+    if (!res.ok) return { ok: false, reason: "Não foi possível obter uma resposta agora." };
+    const json = await res.json();
+    const content: string = json?.choices?.[0]?.message?.content ?? "";
+    if (!content.trim()) {
+      return { ok: false, reason: "Não recebi uma resposta válida. Tente reformular a pergunta." };
+    }
+    return { ok: true, content, refs: extractRefs(content), conversationId: null };
+  } catch (e) {
+    console.error(e);
+    return { ok: false, reason: "Erro inesperado ao consultar o Mentor." };
+  }
 }
