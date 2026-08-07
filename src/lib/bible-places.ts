@@ -830,7 +830,7 @@ export function countDiscoveredPlaces(readSet: Set<string>): number {
   return BIBLE_PLACES.filter((p) => !p.core && isPlaceDiscovered(p, readSet)).length;
 }
 
-export function unlockableePlacesTotal(): number {
+export function unlockablePlacesTotal(): number {
   return BIBLE_PLACES.filter((p) => !p.core).length;
 }
 
