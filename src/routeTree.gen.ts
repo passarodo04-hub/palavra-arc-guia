@@ -14,6 +14,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResumoRouteImport } from './routes/resumo'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as MentorRouteImport } from './routes/mentor'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
@@ -81,6 +82,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorRoute = MentorRouteImport.update({
+  id: '/mentor',
+  path: '/mentor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -317,6 +323,7 @@ export interface FileRoutesByFullPath {
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/login': typeof LoginRoute
+  '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resumo': typeof ResumoRouteWithChildren
@@ -363,6 +370,7 @@ export interface FileRoutesByTo {
   '/devocional-salvos': typeof DevocionalSalvosRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
+  '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
@@ -412,6 +420,7 @@ export interface FileRoutesById {
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/login': typeof LoginRoute
+  '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resumo': typeof ResumoRouteWithChildren
@@ -464,6 +473,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/harpa'
     | '/login'
+    | '/mentor'
     | '/privacidade'
     | '/reset-password'
     | '/resumo'
@@ -510,6 +520,7 @@ export interface FileRouteTypes {
     | '/devocional-salvos'
     | '/favoritos'
     | '/login'
+    | '/mentor'
     | '/privacidade'
     | '/reset-password'
     | '/signup'
@@ -558,6 +569,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/harpa'
     | '/login'
+    | '/mentor'
     | '/privacidade'
     | '/reset-password'
     | '/resumo'
@@ -609,6 +621,7 @@ export interface RootRouteChildren {
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
   LoginRoute: typeof LoginRoute
+  MentorRoute: typeof MentorRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResumoRoute: typeof ResumoRouteWithChildren
@@ -668,6 +681,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentor': {
+      id: '/mentor'
+      path: '/mentor'
+      fullPath: '/mentor'
+      preLoaderRoute: typeof MentorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -1068,6 +1088,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
   LoginRoute: LoginRoute,
+  MentorRoute: MentorRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResumoRoute: ResumoRouteWithChildren,
@@ -1095,13 +1116,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
