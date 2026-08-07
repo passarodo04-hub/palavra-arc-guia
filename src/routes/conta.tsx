@@ -33,6 +33,7 @@ function ContaPage() {
   const { user, loading, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const [displayName, setDisplayName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const qc = useQueryClient();
 
   const getProfile = useServerFn(getMyProfile);
@@ -62,10 +63,12 @@ function ContaPage() {
 
   useEffect(() => {
     if (profile?.display_name) setDisplayName(profile.display_name);
+    if (profile?.birth_date) setBirthDate(profile.birth_date);
   }, [profile]);
 
   const saveMutation = useMutation({
-    mutationFn: () => updateProfile({ data: { display_name: displayName } }),
+    mutationFn: () =>
+      updateProfile({ data: { display_name: displayName, birth_date: birthDate || null } }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["my-profile"] });
       toast.success("Perfil salvo com sucesso.");
@@ -127,6 +130,20 @@ function ContaPage() {
               placeholder="Como devemos te chamar?"
               className="mt-1 w-full rounded-xl bg-secondary px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gold"
             />
+          </label>
+          <label className="block">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Data de nascimento
+            </span>
+            <input
+              type="date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              className="mt-1 w-full rounded-xl bg-secondary px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gold"
+            />
+            <span className="mt-1 block text-xs text-muted-foreground">
+              Usada para a saudação de aniversário no Calendário Cristão.
+            </span>
           </label>
           <button
             onClick={handleSave}
