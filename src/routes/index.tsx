@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck, Target } from "lucide-react";
+import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck, Target, MessageCircleHeart, CalendarDays, Users } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { getDailyDevocional } from "@/lib/devocional-data";
@@ -20,6 +20,9 @@ function Index() {
     { to: "/harpa", icon: Music, title: "Harpa Cristã", desc: "Hinos de adoração" },
     { to: "/devocional", icon: Sun, title: "Devocional", desc: "Mensagem do dia" },
     { to: "/estudos", icon: Sparkles, title: "Estudos IA", desc: "Sermões organizados" },
+    { to: "/mentor", icon: MessageCircleHeart, title: "Mentor Cristão", desc: "Apoio ao seu estudo" },
+    { to: "/calendario", icon: CalendarDays, title: "Calendário", desc: "Datas cristãs e agenda" },
+    { to: "/comunidade", icon: Users, title: "Comunidade", desc: "Grupos e oração" },
     { to: "/campanhas", icon: Target, title: "Jornadas", desc: "Sua caminhada espiritual" },
     { to: "/denominacoes", icon: Landmark, title: "Denominações", desc: "Enciclopédia cristã" },
     { to: "/anotacoes", icon: NotebookPen, title: "Anotações", desc: "Suas notas e estudos" },

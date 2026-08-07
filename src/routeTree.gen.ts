@@ -14,6 +14,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResumoRouteImport } from './routes/resumo'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as MentorRouteImport } from './routes/mentor'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
@@ -23,7 +24,9 @@ import { Route as DevocionalRouteImport } from './routes/devocional'
 import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as CaminhadaRouteImport } from './routes/caminhada'
+import { Route as CalendarioRouteImport } from './routes/calendario'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
 import { Route as AnotacoesRouteImport } from './routes/anotacoes'
@@ -32,12 +35,14 @@ import { Route as ResumoIndexRouteImport } from './routes/resumo.index'
 import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
 import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
 import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
+import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
 import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
 import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
 import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
 import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
+import { Route as ComunidadeIdRouteImport } from './routes/comunidade.$id'
 import { Route as CampanhasQuizRouteImport } from './routes/campanhas.quiz'
 import { Route as CampanhasOracaoRouteImport } from './routes/campanhas.oracao'
 import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
@@ -81,6 +86,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorRoute = MentorRouteImport.update({
+  id: '/mentor',
+  path: '/mentor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -128,9 +138,19 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadeRoute = ComunidadeRouteImport.update({
+  id: '/comunidade',
+  path: '/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaminhadaRoute = CaminhadaRouteImport.update({
   id: '/caminhada',
   path: '/caminhada',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarioRoute = CalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuscaRoute = BuscaRouteImport.update({
@@ -173,6 +193,11 @@ const DenominacoesIndexRoute = DenominacoesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DenominacoesRoute,
 } as any)
+const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ComunidadeRoute,
+} as any)
 const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
   id: '/campanhas/',
   path: '/campanhas/',
@@ -202,6 +227,11 @@ const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => DenominacoesRoute,
+} as any)
+const ComunidadeIdRoute = ComunidadeIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ComunidadeRoute,
 } as any)
 const CampanhasQuizRoute = CampanhasQuizRouteImport.update({
   id: '/campanhas/quiz',
@@ -307,7 +337,9 @@ export interface FileRoutesByFullPath {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
+  '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
+  '/comunidade': typeof ComunidadeRouteWithChildren
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -317,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/login': typeof LoginRoute
+  '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resumo': typeof ResumoRouteWithChildren
@@ -335,12 +368,14 @@ export interface FileRoutesByFullPath {
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/campanhas/quiz': typeof CampanhasQuizRoute
+  '/comunidade/$id': typeof ComunidadeIdRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -356,6 +391,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
+  '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
@@ -363,6 +399,7 @@ export interface FileRoutesByTo {
   '/devocional-salvos': typeof DevocionalSalvosRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
+  '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
@@ -379,12 +416,14 @@ export interface FileRoutesByTo {
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/campanhas/quiz': typeof CampanhasQuizRoute
+  '/comunidade/$id': typeof ComunidadeIdRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia': typeof BibliaIndexRoute
   '/campanhas': typeof CampanhasIndexRoute
+  '/comunidade': typeof ComunidadeIndexRoute
   '/denominacoes': typeof DenominacoesIndexRoute
   '/estudos': typeof EstudosIndexRoute
   '/harpa': typeof HarpaIndexRoute
@@ -402,7 +441,9 @@ export interface FileRoutesById {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
+  '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
+  '/comunidade': typeof ComunidadeRouteWithChildren
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
   '/denominacoes': typeof DenominacoesRouteWithChildren
@@ -412,6 +453,7 @@ export interface FileRoutesById {
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
   '/login': typeof LoginRoute
+  '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resumo': typeof ResumoRouteWithChildren
@@ -430,12 +472,14 @@ export interface FileRoutesById {
   '/campanhas/leia-biblia': typeof CampanhasLeiaBibliaRoute
   '/campanhas/oracao': typeof CampanhasOracaoRoute
   '/campanhas/quiz': typeof CampanhasQuizRoute
+  '/comunidade/$id': typeof ComunidadeIdRoute
   '/denominacoes/$id': typeof DenominacoesIdRoute
   '/estudos/$id': typeof EstudosIdRoute
   '/harpa/$id': typeof HarpaIdRoute
   '/resumo/$book': typeof ResumoBookRoute
   '/biblia/': typeof BibliaIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/denominacoes/': typeof DenominacoesIndexRoute
   '/estudos/': typeof EstudosIndexRoute
   '/harpa/': typeof HarpaIndexRoute
@@ -454,7 +498,9 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
+    | '/calendario'
     | '/caminhada'
+    | '/comunidade'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -464,6 +510,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/harpa'
     | '/login'
+    | '/mentor'
     | '/privacidade'
     | '/reset-password'
     | '/resumo'
@@ -482,12 +529,14 @@ export interface FileRouteTypes {
     | '/campanhas/leia-biblia'
     | '/campanhas/oracao'
     | '/campanhas/quiz'
+    | '/comunidade/$id'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
     | '/resumo/$book'
     | '/biblia/'
     | '/campanhas/'
+    | '/comunidade/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
@@ -503,6 +552,7 @@ export interface FileRouteTypes {
     | '/'
     | '/anotacoes'
     | '/busca'
+    | '/calendario'
     | '/caminhada'
     | '/configuracoes'
     | '/conta'
@@ -510,6 +560,7 @@ export interface FileRouteTypes {
     | '/devocional-salvos'
     | '/favoritos'
     | '/login'
+    | '/mentor'
     | '/privacidade'
     | '/reset-password'
     | '/signup'
@@ -526,12 +577,14 @@ export interface FileRouteTypes {
     | '/campanhas/leia-biblia'
     | '/campanhas/oracao'
     | '/campanhas/quiz'
+    | '/comunidade/$id'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
     | '/resumo/$book'
     | '/biblia'
     | '/campanhas'
+    | '/comunidade'
     | '/denominacoes'
     | '/estudos'
     | '/harpa'
@@ -548,7 +601,9 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
+    | '/calendario'
     | '/caminhada'
+    | '/comunidade'
     | '/configuracoes'
     | '/conta'
     | '/denominacoes'
@@ -558,6 +613,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/harpa'
     | '/login'
+    | '/mentor'
     | '/privacidade'
     | '/reset-password'
     | '/resumo'
@@ -576,12 +632,14 @@ export interface FileRouteTypes {
     | '/campanhas/leia-biblia'
     | '/campanhas/oracao'
     | '/campanhas/quiz'
+    | '/comunidade/$id'
     | '/denominacoes/$id'
     | '/estudos/$id'
     | '/harpa/$id'
     | '/resumo/$book'
     | '/biblia/'
     | '/campanhas/'
+    | '/comunidade/'
     | '/denominacoes/'
     | '/estudos/'
     | '/harpa/'
@@ -599,7 +657,9 @@ export interface RootRouteChildren {
   AnotacoesRoute: typeof AnotacoesRoute
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
+  CalendarioRoute: typeof CalendarioRoute
   CaminhadaRoute: typeof CaminhadaRoute
+  ComunidadeRoute: typeof ComunidadeRouteWithChildren
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ContaRoute: typeof ContaRoute
   DenominacoesRoute: typeof DenominacoesRouteWithChildren
@@ -609,6 +669,7 @@ export interface RootRouteChildren {
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
   LoginRoute: typeof LoginRoute
+  MentorRoute: typeof MentorRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResumoRoute: typeof ResumoRouteWithChildren
@@ -668,6 +729,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentor': {
+      id: '/mentor'
+      path: '/mentor'
+      fullPath: '/mentor'
+      preLoaderRoute: typeof MentorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -733,11 +801,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidade': {
+      id: '/comunidade'
+      path: '/comunidade'
+      fullPath: '/comunidade'
+      preLoaderRoute: typeof ComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/caminhada': {
       id: '/caminhada'
       path: '/caminhada'
       fullPath: '/caminhada'
       preLoaderRoute: typeof CaminhadaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendario': {
+      id: '/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof CalendarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/busca': {
@@ -796,6 +878,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DenominacoesIndexRouteImport
       parentRoute: typeof DenominacoesRoute
     }
+    '/comunidade/': {
+      id: '/comunidade/'
+      path: '/'
+      fullPath: '/comunidade/'
+      preLoaderRoute: typeof ComunidadeIndexRouteImport
+      parentRoute: typeof ComunidadeRoute
+    }
     '/campanhas/': {
       id: '/campanhas/'
       path: '/campanhas'
@@ -837,6 +926,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/denominacoes/$id'
       preLoaderRoute: typeof DenominacoesIdRouteImport
       parentRoute: typeof DenominacoesRoute
+    }
+    '/comunidade/$id': {
+      id: '/comunidade/$id'
+      path: '/$id'
+      fullPath: '/comunidade/$id'
+      preLoaderRoute: typeof ComunidadeIdRouteImport
+      parentRoute: typeof ComunidadeRoute
     }
     '/campanhas/quiz': {
       id: '/campanhas/quiz'
@@ -1001,6 +1097,20 @@ const BibliaRouteChildren: BibliaRouteChildren = {
 const BibliaRouteWithChildren =
   BibliaRoute._addFileChildren(BibliaRouteChildren)
 
+interface ComunidadeRouteChildren {
+  ComunidadeIdRoute: typeof ComunidadeIdRoute
+  ComunidadeIndexRoute: typeof ComunidadeIndexRoute
+}
+
+const ComunidadeRouteChildren: ComunidadeRouteChildren = {
+  ComunidadeIdRoute: ComunidadeIdRoute,
+  ComunidadeIndexRoute: ComunidadeIndexRoute,
+}
+
+const ComunidadeRouteWithChildren = ComunidadeRoute._addFileChildren(
+  ComunidadeRouteChildren,
+)
+
 interface DenominacoesRouteChildren {
   DenominacoesIdRoute: typeof DenominacoesIdRoute
   DenominacoesIndexRoute: typeof DenominacoesIndexRoute
@@ -1058,7 +1168,9 @@ const rootRouteChildren: RootRouteChildren = {
   AnotacoesRoute: AnotacoesRoute,
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
+  CalendarioRoute: CalendarioRoute,
   CaminhadaRoute: CaminhadaRoute,
+  ComunidadeRoute: ComunidadeRouteWithChildren,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ContaRoute: ContaRoute,
   DenominacoesRoute: DenominacoesRouteWithChildren,
@@ -1068,6 +1180,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
   LoginRoute: LoginRoute,
+  MentorRoute: MentorRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResumoRoute: ResumoRouteWithChildren,

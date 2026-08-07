@@ -239,6 +239,11 @@ export const updateMyProfile = createServerFn({ method: "POST" })
     z
       .object({
         display_name: z.string().max(120).optional(),
+        birth_date: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .nullable()
+          .optional(),
         theme: z.enum(["light", "dark", "system"]).optional(),
         bible_translation: z.enum(["arc", "nvi"]).optional(),
       })
