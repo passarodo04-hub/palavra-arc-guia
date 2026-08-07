@@ -25,6 +25,7 @@ import { Route as DenominacoesRouteImport } from './routes/denominacoes'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as CaminhadaRouteImport } from './routes/caminhada'
+import { Route as CalendarioRouteImport } from './routes/calendario'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as BibliaRouteImport } from './routes/biblia'
 import { Route as AnotacoesRouteImport } from './routes/anotacoes'
@@ -137,6 +138,11 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
 const CaminhadaRoute = CaminhadaRouteImport.update({
   id: '/caminhada',
   path: '/caminhada',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarioRoute = CalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuscaRoute = BuscaRouteImport.update({
@@ -313,6 +319,7 @@ export interface FileRoutesByFullPath {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
+  '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
@@ -363,6 +370,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anotacoes': typeof AnotacoesRoute
   '/busca': typeof BuscaRoute
+  '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
@@ -410,6 +418,7 @@ export interface FileRoutesById {
   '/anotacoes': typeof AnotacoesRoute
   '/biblia': typeof BibliaRouteWithChildren
   '/busca': typeof BuscaRoute
+  '/calendario': typeof CalendarioRoute
   '/caminhada': typeof CaminhadaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conta': typeof ContaRoute
@@ -463,6 +472,7 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
+    | '/calendario'
     | '/caminhada'
     | '/configuracoes'
     | '/conta'
@@ -513,6 +523,7 @@ export interface FileRouteTypes {
     | '/'
     | '/anotacoes'
     | '/busca'
+    | '/calendario'
     | '/caminhada'
     | '/configuracoes'
     | '/conta'
@@ -559,6 +570,7 @@ export interface FileRouteTypes {
     | '/anotacoes'
     | '/biblia'
     | '/busca'
+    | '/calendario'
     | '/caminhada'
     | '/configuracoes'
     | '/conta'
@@ -611,6 +623,7 @@ export interface RootRouteChildren {
   AnotacoesRoute: typeof AnotacoesRoute
   BibliaRoute: typeof BibliaRouteWithChildren
   BuscaRoute: typeof BuscaRoute
+  CalendarioRoute: typeof CalendarioRoute
   CaminhadaRoute: typeof CaminhadaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ContaRoute: typeof ContaRoute
@@ -758,6 +771,13 @@ declare module '@tanstack/react-router' {
       path: '/caminhada'
       fullPath: '/caminhada'
       preLoaderRoute: typeof CaminhadaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendario': {
+      id: '/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof CalendarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/busca': {
@@ -1078,6 +1098,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnotacoesRoute: AnotacoesRoute,
   BibliaRoute: BibliaRouteWithChildren,
   BuscaRoute: BuscaRoute,
+  CalendarioRoute: CalendarioRoute,
   CaminhadaRoute: CaminhadaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ContaRoute: ContaRoute,
