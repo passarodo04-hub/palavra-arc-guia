@@ -12,6 +12,9 @@ import { TranslationProvider } from "@/lib/translation-context";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/lib/theme-context";
+import { PilgrimProvider } from "@/lib/pilgrim-context";
+import { AmbientAudioProvider } from "@/lib/ambient-audio";
+import { AmbientPlayer } from "@/components/AmbientPlayer";
 
 function NotFoundComponent() {
   return (
@@ -139,8 +142,13 @@ function RootComponent() {
       <ThemeProvider>
         <AuthProvider>
           <TranslationProvider>
-            <Outlet />
-            <Toaster position="top-center" richColors />
+            <PilgrimProvider>
+              <AmbientAudioProvider>
+                <Outlet />
+                <AmbientPlayer />
+                <Toaster position="top-center" richColors />
+              </AmbientAudioProvider>
+            </PilgrimProvider>
           </TranslationProvider>
         </AuthProvider>
       </ThemeProvider>
