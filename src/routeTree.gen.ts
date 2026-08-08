@@ -70,6 +70,7 @@ import { Route as CampanhasJornadaBiblicaIndexRouteImport } from './routes/campa
 import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as CampanhasJornadaIdRouteImport } from './routes/campanhas.jornada.$id'
 import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
+import { Route as CampanhasCategoriaCatIdRouteImport } from './routes/campanhas.categoria.$catId'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as CampanhasJornadaBiblicaEtapaStageIdRouteImport } from './routes/campanhas.jornada-biblica.etapa.$stageId'
@@ -381,6 +382,11 @@ const CampanhasCertificadoIdRoute = CampanhasCertificadoIdRouteImport.update({
   path: '/campanhas/certificado/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CampanhasCategoriaCatIdRoute = CampanhasCategoriaCatIdRouteImport.update({
+  id: '/campanhas/categoria/$catId',
+  path: '/campanhas/categoria/$catId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
   id: '/$chapter',
   path: '/$chapter',
@@ -458,6 +464,7 @@ export interface FileRoutesByFullPath {
   '/resumo/': typeof ResumoIndexRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/campanhas/categoria/$catId': typeof CampanhasCategoriaCatIdRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
@@ -514,6 +521,7 @@ export interface FileRoutesByTo {
   '/resumo': typeof ResumoIndexRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/campanhas/categoria/$catId': typeof CampanhasCategoriaCatIdRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book': typeof BibliaBookIndexRoute
@@ -581,6 +589,7 @@ export interface FileRoutesById {
   '/resumo/': typeof ResumoIndexRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
+  '/campanhas/categoria/$catId': typeof CampanhasCategoriaCatIdRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
   '/biblia/$book/': typeof BibliaBookIndexRoute
@@ -649,6 +658,7 @@ export interface FileRouteTypes {
     | '/resumo/'
     | '/api/public/health'
     | '/biblia/$book/$chapter'
+    | '/campanhas/categoria/$catId'
     | '/campanhas/certificado/$id'
     | '/campanhas/jornada/$id'
     | '/biblia/$book/'
@@ -705,6 +715,7 @@ export interface FileRouteTypes {
     | '/resumo'
     | '/api/public/health'
     | '/biblia/$book/$chapter'
+    | '/campanhas/categoria/$catId'
     | '/campanhas/certificado/$id'
     | '/campanhas/jornada/$id'
     | '/biblia/$book'
@@ -771,6 +782,7 @@ export interface FileRouteTypes {
     | '/resumo/'
     | '/api/public/health'
     | '/biblia/$book/$chapter'
+    | '/campanhas/categoria/$catId'
     | '/campanhas/certificado/$id'
     | '/campanhas/jornada/$id'
     | '/biblia/$book/'
@@ -819,6 +831,7 @@ export interface RootRouteChildren {
   CampanhasQuizRoute: typeof CampanhasQuizRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
+  CampanhasCategoriaCatIdRoute: typeof CampanhasCategoriaCatIdRoute
   CampanhasCertificadoIdRoute: typeof CampanhasCertificadoIdRoute
   CampanhasJornadaIdRoute: typeof CampanhasJornadaIdRoute
   CampanhasJornadaBiblicaIndexRoute: typeof CampanhasJornadaBiblicaIndexRoute
@@ -1254,6 +1267,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampanhasCertificadoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/campanhas/categoria/$catId': {
+      id: '/campanhas/categoria/$catId'
+      path: '/campanhas/categoria/$catId'
+      fullPath: '/campanhas/categoria/$catId'
+      preLoaderRoute: typeof CampanhasCategoriaCatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/biblia/$book/$chapter': {
       id: '/biblia/$book/$chapter'
       path: '/$chapter'
@@ -1449,6 +1469,7 @@ const rootRouteChildren: RootRouteChildren = {
   CampanhasQuizRoute: CampanhasQuizRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
+  CampanhasCategoriaCatIdRoute: CampanhasCategoriaCatIdRoute,
   CampanhasCertificadoIdRoute: CampanhasCertificadoIdRoute,
   CampanhasJornadaIdRoute: CampanhasJornadaIdRoute,
   CampanhasJornadaBiblicaIndexRoute: CampanhasJornadaBiblicaIndexRoute,
