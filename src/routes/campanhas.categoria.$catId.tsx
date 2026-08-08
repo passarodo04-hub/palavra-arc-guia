@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
@@ -75,12 +75,13 @@ function CategoryPage() {
           <ul className="mt-3 flex flex-wrap gap-2">
             {JOURNEY_CATEGORIES.filter((c) => c.id !== category.id).map((c) => (
               <li key={c.id}>
-                <a
-                  href={`/campanhas/categoria/${c.id}`}
+                <Link
+                  to="/campanhas/categoria/$catId"
+                  params={{ catId: c.id }}
                   className="inline-block rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors hover:border-gold/50"
                 >
                   {c.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
