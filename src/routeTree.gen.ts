@@ -13,9 +13,12 @@ import { Route as TermosRouteImport } from './routes/termos'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResumoRouteImport } from './routes/resumo'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReisRouteImport } from './routes/reis'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as MentorRouteImport } from './routes/mentor'
+import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as JuizesRouteImport } from './routes/juizes'
 import { Route as HarpaRouteImport } from './routes/harpa'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as EstudosRouteImport } from './routes/estudos'
@@ -83,6 +86,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReisRoute = ReisRouteImport.update({
+  id: '/reis',
+  path: '/reis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
@@ -93,9 +101,19 @@ const MentorRoute = MentorRouteImport.update({
   path: '/mentor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MapaRoute = MapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JuizesRoute = JuizesRouteImport.update({
+  id: '/juizes',
+  path: '/juizes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HarpaRoute = HarpaRouteImport.update({
@@ -348,9 +366,12 @@ export interface FileRoutesByFullPath {
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
+  '/juizes': typeof JuizesRoute
   '/login': typeof LoginRoute
+  '/mapa': typeof MapaRoute
   '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/reis': typeof ReisRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resumo': typeof ResumoRouteWithChildren
   '/signup': typeof SignupRoute
@@ -398,9 +419,12 @@ export interface FileRoutesByTo {
   '/devocional': typeof DevocionalRoute
   '/devocional-salvos': typeof DevocionalSalvosRoute
   '/favoritos': typeof FavoritosRoute
+  '/juizes': typeof JuizesRoute
   '/login': typeof LoginRoute
+  '/mapa': typeof MapaRoute
   '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/reis': typeof ReisRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/termos': typeof TermosRoute
@@ -452,9 +476,12 @@ export interface FileRoutesById {
   '/estudos': typeof EstudosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/harpa': typeof HarpaRouteWithChildren
+  '/juizes': typeof JuizesRoute
   '/login': typeof LoginRoute
+  '/mapa': typeof MapaRoute
   '/mentor': typeof MentorRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/reis': typeof ReisRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resumo': typeof ResumoRouteWithChildren
   '/signup': typeof SignupRoute
@@ -509,9 +536,12 @@ export interface FileRouteTypes {
     | '/estudos'
     | '/favoritos'
     | '/harpa'
+    | '/juizes'
     | '/login'
+    | '/mapa'
     | '/mentor'
     | '/privacidade'
+    | '/reis'
     | '/reset-password'
     | '/resumo'
     | '/signup'
@@ -559,9 +589,12 @@ export interface FileRouteTypes {
     | '/devocional'
     | '/devocional-salvos'
     | '/favoritos'
+    | '/juizes'
     | '/login'
+    | '/mapa'
     | '/mentor'
     | '/privacidade'
+    | '/reis'
     | '/reset-password'
     | '/signup'
     | '/termos'
@@ -612,9 +645,12 @@ export interface FileRouteTypes {
     | '/estudos'
     | '/favoritos'
     | '/harpa'
+    | '/juizes'
     | '/login'
+    | '/mapa'
     | '/mentor'
     | '/privacidade'
+    | '/reis'
     | '/reset-password'
     | '/resumo'
     | '/signup'
@@ -668,9 +704,12 @@ export interface RootRouteChildren {
   EstudosRoute: typeof EstudosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   HarpaRoute: typeof HarpaRouteWithChildren
+  JuizesRoute: typeof JuizesRoute
   LoginRoute: typeof LoginRoute
+  MapaRoute: typeof MapaRoute
   MentorRoute: typeof MentorRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  ReisRoute: typeof ReisRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResumoRoute: typeof ResumoRouteWithChildren
   SignupRoute: typeof SignupRoute
@@ -724,6 +763,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reis': {
+      id: '/reis'
+      path: '/reis'
+      fullPath: '/reis'
+      preLoaderRoute: typeof ReisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacidade': {
       id: '/privacidade'
       path: '/privacidade'
@@ -738,11 +784,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mapa': {
+      id: '/mapa'
+      path: '/mapa'
+      fullPath: '/mapa'
+      preLoaderRoute: typeof MapaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/juizes': {
+      id: '/juizes'
+      path: '/juizes'
+      fullPath: '/juizes'
+      preLoaderRoute: typeof JuizesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/harpa': {
@@ -1179,9 +1239,12 @@ const rootRouteChildren: RootRouteChildren = {
   EstudosRoute: EstudosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   HarpaRoute: HarpaRouteWithChildren,
+  JuizesRoute: JuizesRoute,
   LoginRoute: LoginRoute,
+  MapaRoute: MapaRoute,
   MentorRoute: MentorRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  ReisRoute: ReisRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResumoRoute: ResumoRouteWithChildren,
   SignupRoute: SignupRoute,
