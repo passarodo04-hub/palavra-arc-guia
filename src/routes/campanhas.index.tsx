@@ -36,7 +36,7 @@ import {
   type CampaignsState,
 } from "@/lib/campaigns";
 import { trackProgress } from "@/lib/journeys";
-import { ALL_TRACKS, JOURNEY_CATEGORIES, LEVEL_CLASSES, type Track } from "@/lib/journey-catalog";
+import { ALL_TRACKS, JOURNEY_CATEGORIES, type Track } from "@/lib/journey-catalog";
 import { useAmbientAudio } from "@/lib/ambient-audio";
 import { useAuth } from "@/lib/auth-context";
 
@@ -261,7 +261,7 @@ function Hero({ item }: { item: Item }) {
       <JourneyArt theme={track.theme} className="absolute inset-0 size-full" />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/55 to-black/35"
+        className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/45 to-black/20"
       />
       <div className="relative p-6 text-hero-foreground sm:p-8 md:p-10">
         <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-hero-foreground backdrop-blur">
@@ -273,7 +273,7 @@ function Hero({ item }: { item: Item }) {
         <p className="mt-2 max-w-md text-sm text-hero-foreground/85">{track.description}</p>
 
         <div className="mt-4 flex flex-wrap items-center gap-2 text-[11px]">
-          <span className={`rounded-full px-2.5 py-1 font-semibold uppercase tracking-widest ${LEVEL_CLASSES[track.level]}`}>
+          <span className="rounded-full bg-white/20 px-2.5 py-1 font-semibold uppercase tracking-widest text-hero-foreground backdrop-blur">
             {track.level}
           </span>
           <span className="rounded-full bg-white/15 px-2.5 py-1 backdrop-blur">{track.duration}</span>
