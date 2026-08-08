@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway-errors";
 import { z } from "zod";
 
 const InputSchema = z.object({
@@ -70,7 +71,7 @@ export const analyzeSermon = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => InputSchema.parse(input))
   .handler(async ({ data }): Promise<StudyResult> => {
     const apiKey = process.env.LOVABLE_API_KEY;
-    if (!apiKey) return { ok: false, reason: "Serviço de IA indisponível no momento." };
+    if (!apiKey) return { ok: false, reason: AI_NOT_CONFIGURED };
 
     let transcript = (data.transcript ?? "").trim();
     const url = (data.url ?? "").trim();
@@ -112,7 +113,7 @@ export const analyzeSermon = createServerFn({ method: "POST" })
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
+          model: "google/gemini-3.6-flash",
           messages: [
             {
               role: "system",
@@ -178,7 +179,7 @@ Gere um JSON com os campos:
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
+          model: "google/gemini-3.6-flash",
           messages: [
             { role: "system", content: system },
             { role: "user", content: user },
