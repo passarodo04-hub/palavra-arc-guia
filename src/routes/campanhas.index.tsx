@@ -259,6 +259,10 @@ function Hero({ item }: { item: Item }) {
   return (
     <section className="relative overflow-hidden rounded-3xl border border-border shadow-elegant animate-fade-up">
       <JourneyArt theme={track.theme} className="absolute inset-0 size-full" />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/55 to-black/35"
+      />
       <div className="relative p-6 text-hero-foreground sm:p-8 md:p-10">
         <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-hero-foreground backdrop-blur">
           {progress.started ? <Play className="size-3" /> : <Sparkles className="size-3" />}
