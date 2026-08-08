@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway-errors";
 import { z } from "zod";
 
 const InputSchema = z.object({
@@ -32,7 +33,10 @@ export const generateSermon = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => InputSchema.parse(input))
   .handler(async ({ data }): Promise<SermonResult> => {
     const apiKey = process.env.LOVABLE_API_KEY;
-    if (!apiKey) return { ok: false, reason: "Serviço de IA indisponível." };
+    if (!apiKey) {
+      console.error("[ai-gateway:sermao] LOVABLE_API_KEY ausente no ambiente do servidor");
+      return { ok: false, reason: AI_NOT_CONFIGURED };
+    }
 
     const combo = `${data.title} ${data.theme} ${data.subject} ${data.objective} ${data.audience}`;
     if (BLOCK.some((re) => re.test(combo))) {
@@ -77,7 +81,7 @@ Gere de 3 a 5 pontos no desenvolvimento e de 4 a 8 versículos relevantes.`;
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
+          model: "google/gemini-3.6-flash",
           messages: [
             { role: "system", content: system },
             { role: "user", content: userPrompt },
@@ -85,9 +89,9 @@ Gere de 3 a 5 pontos no desenvolvimento e de 4 a 8 versículos relevantes.`;
           response_format: { type: "json_object" },
         }),
       });
-      if (res.status === 429) return { ok: false, reason: "Limite de requisições atingido. Tente novamente." };
-      if (res.status === 402) return { ok: false, reason: "Créditos de IA esgotados." };
-      if (!res.ok) return { ok: false, reason: "Falha ao gerar o sermão." };
+      if (!res.ok) {
+        return { ok: false, reason: await aiGatewayFailureReason(res, "Falha ao gerar o sermão.", "sermao") };
+      }
       const json = await res.json();
       const content: string = json?.choices?.[0]?.message?.content ?? "{}";
       let parsed: any;

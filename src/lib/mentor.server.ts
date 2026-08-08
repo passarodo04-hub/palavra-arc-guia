@@ -38,6 +38,8 @@ const BLOCK = [
   /\bsuic[ií]d/i,
 ];
 
+import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway-errors";
+
 /** Returns a refusal message when the question must not be answered, else null. */
 export function mentorGuard(question: string): string | null {
   if (/\bsuic[ií]d/i.test(question)) {
@@ -55,7 +57,10 @@ export async function runMentor(
   history: { role: "user" | "assistant"; content: string }[],
 ): Promise<MentorRunResult> {
   const apiKey = process.env.LOVABLE_API_KEY;
-  if (!apiKey) return { ok: false, reason: "Serviço de IA indisponível no momento." };
+  if (!apiKey) {
+    console.error("[ai-gateway:mentor] LOVABLE_API_KEY ausente no ambiente do servidor");
+    return { ok: false, reason: AI_NOT_CONFIGURED };
+  }
 
   const blocked = mentorGuard(question);
   if (blocked) return { ok: false, reason: blocked };
@@ -73,9 +78,12 @@ export async function runMentor(
         ],
       }),
     });
-    if (res.status === 429) return { ok: false, reason: "Muitas solicitações agora. Tente novamente em instantes." };
-    if (res.status === 402) return { ok: false, reason: "Créditos de IA esgotados." };
-    if (!res.ok) return { ok: false, reason: "Não foi possível obter uma resposta agora." };
+    if (!res.ok) {
+      return {
+        ok: false,
+        reason: await aiGatewayFailureReason(res, "Não foi possível obter uma resposta agora.", "mentor"),
+      };
+    }
     const json = await res.json();
     const content: string = json?.choices?.[0]?.message?.content ?? "";
     if (!content.trim()) {

@@ -71,6 +71,7 @@ import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index
 import { Route as CampanhasJornadaIdRouteImport } from './routes/campanhas.jornada.$id'
 import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
 import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as CampanhasJornadaBiblicaEtapaStageIdRouteImport } from './routes/campanhas.jornada-biblica.etapa.$stageId'
 
 const TermosRoute = TermosRouteImport.update({
@@ -385,6 +386,11 @@ const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
   path: '/$chapter',
   getParentRoute: () => BibliaBookRoute,
 } as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CampanhasJornadaBiblicaEtapaStageIdRoute =
   CampanhasJornadaBiblicaEtapaStageIdRouteImport.update({
     id: '/campanhas/jornada-biblica/etapa/$stageId',
@@ -450,6 +456,7 @@ export interface FileRoutesByFullPath {
   '/mapa/': typeof MapaIndexRoute
   '/reis/': typeof ReisIndexRoute
   '/resumo/': typeof ResumoIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
@@ -505,6 +512,7 @@ export interface FileRoutesByTo {
   '/mapa': typeof MapaIndexRoute
   '/reis': typeof ReisIndexRoute
   '/resumo': typeof ResumoIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
@@ -571,6 +579,7 @@ export interface FileRoutesById {
   '/mapa/': typeof MapaIndexRoute
   '/reis/': typeof ReisIndexRoute
   '/resumo/': typeof ResumoIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/biblia/$book/$chapter': typeof BibliaBookChapterRoute
   '/campanhas/certificado/$id': typeof CampanhasCertificadoIdRoute
   '/campanhas/jornada/$id': typeof CampanhasJornadaIdRoute
@@ -638,6 +647,7 @@ export interface FileRouteTypes {
     | '/mapa/'
     | '/reis/'
     | '/resumo/'
+    | '/api/public/health'
     | '/biblia/$book/$chapter'
     | '/campanhas/certificado/$id'
     | '/campanhas/jornada/$id'
@@ -693,6 +703,7 @@ export interface FileRouteTypes {
     | '/mapa'
     | '/reis'
     | '/resumo'
+    | '/api/public/health'
     | '/biblia/$book/$chapter'
     | '/campanhas/certificado/$id'
     | '/campanhas/jornada/$id'
@@ -758,6 +769,7 @@ export interface FileRouteTypes {
     | '/mapa/'
     | '/reis/'
     | '/resumo/'
+    | '/api/public/health'
     | '/biblia/$book/$chapter'
     | '/campanhas/certificado/$id'
     | '/campanhas/jornada/$id'
@@ -806,6 +818,7 @@ export interface RootRouteChildren {
   CampanhasOracaoRoute: typeof CampanhasOracaoRoute
   CampanhasQuizRoute: typeof CampanhasQuizRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
+  ApiPublicHealthRoute: typeof ApiPublicHealthRoute
   CampanhasCertificadoIdRoute: typeof CampanhasCertificadoIdRoute
   CampanhasJornadaIdRoute: typeof CampanhasJornadaIdRoute
   CampanhasJornadaBiblicaIndexRoute: typeof CampanhasJornadaBiblicaIndexRoute
@@ -1248,6 +1261,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaBookChapterRouteImport
       parentRoute: typeof BibliaBookRoute
     }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/campanhas/jornada-biblica/etapa/$stageId': {
       id: '/campanhas/jornada-biblica/etapa/$stageId'
       path: '/campanhas/jornada-biblica/etapa/$stageId'
@@ -1428,6 +1448,7 @@ const rootRouteChildren: RootRouteChildren = {
   CampanhasOracaoRoute: CampanhasOracaoRoute,
   CampanhasQuizRoute: CampanhasQuizRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
+  ApiPublicHealthRoute: ApiPublicHealthRoute,
   CampanhasCertificadoIdRoute: CampanhasCertificadoIdRoute,
   CampanhasJornadaIdRoute: CampanhasJornadaIdRoute,
   CampanhasJornadaBiblicaIndexRoute: CampanhasJornadaBiblicaIndexRoute,
