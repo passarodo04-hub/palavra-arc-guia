@@ -187,16 +187,8 @@ Gere um JSON com os campos:
         }),
       });
 
-      if (res.status === 429) {
-        return { ok: false, reason: "Limite de requisições atingido. Tente novamente em instantes." };
-      }
-      if (res.status === 402) {
-        return { ok: false, reason: "Créditos de IA esgotados. Adicione créditos no workspace." };
-      }
       if (!res.ok) {
-        const t = await res.text();
-        console.error("AI error", res.status, t);
-        return { ok: false, reason: "Falha ao gerar o estudo." };
+        return { ok: false, reason: await aiGatewayFailureReason(res, "Falha ao gerar o estudo.", "estudos") };
       }
 
       const json = await res.json();
