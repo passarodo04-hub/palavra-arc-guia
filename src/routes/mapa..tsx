@@ -6,7 +6,7 @@ import { ArtPortrait } from "@/components/atlas/ArtPortrait";
 import { useBibleReads } from "@/hooks/use-bible-reads";
 import { isPlaceDiscovered, placeById } from "@/lib/bible-places";
 
-export const Route = createFileRoute("/mapa/$id")({
+export const Route = createFileRoute("/mapa/")({
   loader: ({ params }) => {
     const place = placeById(params.id);
     if (!place) throw notFound();
