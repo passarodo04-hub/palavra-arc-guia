@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway.server";
+import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway-errors";
 import { z } from "zod";
 
 const InputSchema = z.object({

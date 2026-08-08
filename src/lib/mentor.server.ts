@@ -38,7 +38,7 @@ const BLOCK = [
   /\bsuic[ií]d/i,
 ];
 
-import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway.server";
+import { AI_NOT_CONFIGURED, aiGatewayFailureReason } from "./ai-gateway-errors";
 
 /** Returns a refusal message when the question must not be answered, else null. */
 export function mentorGuard(question: string): string | null {
