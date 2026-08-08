@@ -380,6 +380,19 @@ export function allJourneyProgress(state: CampaignsState): JourneyProgress[] {
   return JOURNEYS.map((j) => journeyProgress(j, state));
 }
 
+/** Progresso de UMA campanha existente — usado pelas trilhas do catálogo.
+ *  Não cria estado novo: apenas lê o store de campanhas já existente. */
+export function trackProgress(
+  campaignId: string,
+  state: CampaignsState,
+): { percent: number; detail: string; completed: boolean; active: boolean; started: boolean } {
+  const c = state[campaignId];
+  const p = campaignProgress(campaignId, c);
+  const planActive = campaignId === "leia-biblia" ? !!readBiblePlanRaw().active : false;
+  const active = !!c?.active || planActive;
+  return { ...p, active, started: active || p.percent > 0 || p.completed };
+}
+
 /** The journey the user most recently interacted with (or has progress in). */
 export function continueJourney(state: CampaignsState): JourneyProgress | undefined {
   const started = allJourneyProgress(state).filter((j) => j.started);
