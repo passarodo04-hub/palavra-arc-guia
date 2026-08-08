@@ -1,23 +1,13 @@
+# O Palavra+ é um app TanStack Start com SSR e server functions (Lovable Cloud).
+# Hosts estáticos não conseguem executar esse servidor nem guardar os secrets,
+# por isso Vercel/Netlify atuam como proxy para o deploy publicado do Lovable,
+# que roda o SSR, as server functions e a IA com as credenciais corretas.
 [build]
-  command = "vite build"
-  publish = "dist/client"
+  command = "mkdir -p dist/vercel && printf 'proxy' > dist/vercel/.keep"
+  publish = "dist/vercel"
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "https://palavra-arc-guia.lovable.app/:splat"
   status = 200
-
-[[headers]]
-  for = "/icons/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/data/*"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/manifest.webmanifest"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+  force = true

@@ -13,17 +13,32 @@ import { LogOut, Trash2, Sun, Moon, Monitor, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/conta")({ component: ContaPage });
 
-/** Converte erros técnicos em mensagens claras, sem expor chaves ou tokens. */
+/**
+ * Converte erros técnicos em mensagens claras, sem expor chaves ou tokens.
+ * Cada causa recebe uma mensagem distinta — nunca colapsamos tudo em
+ * "servidor indisponível", que escondia sessão expirada, endpoint ausente
+ * (deploy estático sem servidor) e erro de configuração.
+ */
 function friendlyError(e: unknown, fallback: string) {
   const raw = e instanceof Error ? e.message : String(e ?? "");
-  if (/Missing Supabase environment/i.test(raw) || /Connect Supabase/i.test(raw)) {
-    return "Não foi possível conectar ao servidor do Palavra+. Tente novamente em instantes.";
-  }
-  if (/Unauthorized|Invalid token|authorization header/i.test(raw)) {
+  if (/Unauthorized|Invalid token|authorization header|\b401\b/i.test(raw)) {
     return "Sua sessão expirou. Entre novamente para continuar.";
   }
-  if (/Failed to fetch|NetworkError|fetch failed/i.test(raw)) {
+  if (/Forbidden|\b403\b|row-level security|permission denied/i.test(raw)) {
+    return "Você não tem permissão para esta ação.";
+  }
+  if (/Missing Supabase environment|Connect Supabase|LOVABLE_API_KEY|not configured/i.test(raw)) {
+    return "O servidor do Palavra+ está com a configuração incompleta. Já registramos o erro — publique a versão mais recente ou tente novamente em instantes.";
+  }
+  // Host estático devolvendo HTML no lugar da resposta da server function.
+  if (/Unexpected token '<'|<!DOCTYPE|not valid JSON|\b404\b|Not Found/i.test(raw)) {
+    return "Esta versão publicada está sem o servidor do Palavra+ (a chamada não encontrou o endpoint). Publique novamente para atualizar a produção.";
+  }
+  if (/Failed to fetch|NetworkError|fetch failed|Load failed/i.test(raw)) {
     return "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+  }
+  if (/\b5\d\d\b|Internal Server Error/i.test(raw)) {
+    return "Ocorreu um erro interno no servidor do Palavra+. Tente novamente em instantes.";
   }
   return raw && raw.length < 160 ? raw : fallback;
 }

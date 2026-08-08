@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { MapPin, Compass, Lock } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
@@ -33,6 +33,39 @@ function MapaPage() {
   const [hover, setHover] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  // Arrastar o mapa: o container rola horizontalmente. No toque o próprio
+  // navegador faz o pan (touch-action: pan-x pan-y); no desktop replicamos o
+  // gesto com ponteiro. `dragged` evita que um arrasto vire clique no marcador.
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const dragState = useRef<{ startX: number; scrollLeft: number; active: boolean } | null>(null);
+  const draggedRef = useRef(false);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return; // deixa o scroll nativo cuidar
+    const el = scrollerRef.current;
+    if (!el) return;
+    dragState.current = { startX: e.clientX, scrollLeft: el.scrollLeft, active: true };
+    draggedRef.current = false;
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const st = dragState.current;
+    const el = scrollerRef.current;
+    if (!st?.active || !el) return;
+    const dx = e.clientX - st.startX;
+    if (Math.abs(dx) > 4) draggedRef.current = true;
+    el.scrollLeft = st.scrollLeft - dx;
+  };
+  const endDrag = () => {
+    if (dragState.current) dragState.current.active = false;
+  };
+  const openPlace = (id: string) => {
+    if (draggedRef.current) {
+      draggedRef.current = false;
+      return;
+    }
+    navigate({ to: "/mapa/$id", params: { id } });
+  };
+
   const discovered = countDiscoveredPlaces(readSet);
   const total = unlockablePlacesTotal();
 
@@ -59,10 +92,18 @@ function MapaPage() {
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
         <section className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-          <div className="w-full overflow-x-auto">
+          <div
+            ref={scrollerRef}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onPointerLeave={endDrag}
+            className="w-full overflow-x-auto overflow-y-hidden overscroll-x-contain [touch-action:pan-x_pan-y] [-webkit-overflow-scrolling:touch]"
+          >
             <svg
               viewBox="0 0 1000 640"
-              className="h-auto w-full min-w-[720px] touch-pan-y"
+              className="h-auto w-full min-w-[720px] select-none [touch-action:inherit]"
               role="img"
               aria-label="Mapa ilustrativo com os lugares bíblicos"
             >
@@ -88,7 +129,7 @@ function MapaPage() {
                     role="link"
                     tabIndex={0}
                     aria-label={`${p.name} — ${open ? "descoberto" : "ainda não descoberto"}`}
-                    onClick={() => navigate({ to: "/mapa/$id", params: { id: p.id } })}
+                    onClick={() => openPlace(p.id)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") navigate({ to: "/mapa/$id", params: { id: p.id } });
                     }}
