@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck, Target, MessageCircleHeart, CalendarDays, Users } from "lucide-react";
+import { BookOpen, Music, Sun, NotebookPen, Heart, Search, Sparkles, ArrowRight, Landmark, UserCircle2, BookOpenCheck, Target, MessageCircleHeart, CalendarDays, Users, Compass, Crown, Swords } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { getDailyDevocional } from "@/lib/devocional-data";
@@ -24,6 +24,10 @@ function Index() {
     { to: "/calendario", icon: CalendarDays, title: "Calendário", desc: "Datas cristãs e agenda" },
     { to: "/comunidade", icon: Users, title: "Comunidade", desc: "Grupos e oração" },
     { to: "/campanhas", icon: Target, title: "Jornadas", desc: "Sua caminhada espiritual" },
+    { to: "/mapa", icon: Compass, title: "Mapa Bíblico", desc: "Lugares da Bíblia" },
+    { to: "/reis", icon: Crown, title: "Reis", desc: "Israel e Judá" },
+    { to: "/juizes", icon: Swords, title: "Juízes", desc: "Libertadores de Israel" },
+    { to: "/peregrino", icon: Compass, title: "Modo Peregrino", desc: "Leitura sem distrações" },
     { to: "/denominacoes", icon: Landmark, title: "Denominações", desc: "Enciclopédia cristã" },
     { to: "/anotacoes", icon: NotebookPen, title: "Anotações", desc: "Suas notas e estudos" },
     { to: "/favoritos", icon: Heart, title: "Favoritos", desc: "Versos guardados" },

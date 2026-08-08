@@ -371,6 +371,17 @@ export const BACKPACK_ITEMS: Unlockable[] = [
     available: true,
     check: (s) => s.gospelsCompleted >= 1,
   },
+  {
+    id: "atlas-map",
+    kind: "item",
+    emoji: "🗺️",
+    name: "Mapa do Peregrino",
+    description: "Representa os lugares da Bíblia descobertos pela sua leitura.",
+    requirement: "Descobrir 10 lugares no Mapa Bíblico.",
+    category: "biblia",
+    available: true,
+    check: (s) => s.placesDiscovered >= 10,
+  },
 ];
 
 export const ALL_UNLOCKABLES = [...ACHIEVEMENTS, ...BACKPACK_ITEMS];

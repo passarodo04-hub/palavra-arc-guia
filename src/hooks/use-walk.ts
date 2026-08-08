@@ -5,6 +5,7 @@ import { useAllCampaigns } from "@/lib/campaigns";
 import { allJourneyProgress } from "@/lib/journeys";
 import { useBibleReads } from "@/hooks/use-bible-reads";
 import { getBook } from "@/lib/bible-data";
+import { countDiscoveredPlaces } from "@/lib/bible-places";
 import {
   ACHIEVEMENTS,
   BACKPACK_ITEMS,
@@ -91,7 +92,14 @@ export function useWalk() {
   );
 
   const stats = useMemo(
-    () => computeWalkStats({ campaigns, readSet, favoriteVerses: favVerses, journeysCompleted }),
+    () =>
+      computeWalkStats({
+        campaigns,
+        readSet,
+        favoriteVerses: favVerses,
+        journeysCompleted,
+        future: { placesDiscovered: countDiscoveredPlaces(readSet) },
+      }),
     [campaigns, readSet, favVerses, journeysCompleted],
   );
 
