@@ -62,7 +62,7 @@ function MapaPage() {
           <div className="w-full overflow-x-auto">
             <svg
               viewBox="0 0 1000 640"
-              className="h-auto w-full min-w-[560px] touch-pan-y"
+              className="h-auto w-full min-w-[720px] touch-pan-y"
               role="img"
               aria-label="Mapa ilustrativo com os lugares bíblicos"
             >
@@ -111,7 +111,7 @@ function MapaPage() {
                       x={x + 12}
                       y={y + 4}
                       className="fill-foreground"
-                      fontSize="15"
+                      fontSize="13"
                       fillOpacity={open ? 0.95 : 0.5}
                     >
                       {p.name}
@@ -122,7 +122,7 @@ function MapaPage() {
             </svg>
           </div>
           <p className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
-            Mapa esquemático ilustrativo, baseado nas coordenadas aproximadas de cada lugar.
+            Arraste para o lado para ver todo o mapa. Mapa esquemático ilustrativo, baseado nas coordenadas aproximadas de cada lugar.
           </p>
         </section>
 
