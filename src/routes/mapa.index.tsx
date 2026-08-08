@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { MapPin, Compass, Lock } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
@@ -31,6 +31,7 @@ function MapaPage() {
   const { readSet } = useBibleReads();
   const [q, setQ] = useState("");
   const [hover, setHover] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const discovered = countDiscoveredPlaces(readSet);
   const total = unlockablePlacesTotal();
@@ -82,34 +83,40 @@ function MapaPage() {
                 const { x, y } = projectPlace(p.coords);
                 const open = isPlaceDiscovered(p, readSet);
                 return (
-                  <Link key={p.id} to="/mapa/$id" params={{ id: p.id }}>
-                    <g
-                      onMouseEnter={() => setHover(p.id)}
-                      onMouseLeave={() => setHover(null)}
-                      className="cursor-pointer"
+                  <g
+                    key={p.id}
+                    role="link"
+                    tabIndex={0}
+                    aria-label={`${p.name} — ${open ? "descoberto" : "ainda não descoberto"}`}
+                    onClick={() => navigate({ to: "/mapa/$id", params: { id: p.id } })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") navigate({ to: "/mapa/$id", params: { id: p.id } });
+                    }}
+                    onMouseEnter={() => setHover(p.id)}
+                    onMouseLeave={() => setHover(null)}
+                    className="cursor-pointer"
+                  >
+                    <circle cx={x} cy={y} r="18" fill="transparent" />
+                    <circle
+                      cx={x}
+                      cy={y}
+                      r={hover === p.id ? 9 : 7}
+                      className={open ? "fill-gold" : "fill-muted-foreground"}
+                      fillOpacity={open ? 1 : 0.45}
+                      stroke="white"
+                      strokeOpacity="0.7"
+                      strokeWidth="1.5"
+                    />
+                    <text
+                      x={x + 12}
+                      y={y + 4}
+                      className="fill-foreground"
+                      fontSize="15"
+                      fillOpacity={open ? 0.95 : 0.5}
                     >
-                      <circle cx={x} cy={y} r="18" fill="transparent" />
-                      <circle
-                        cx={x}
-                        cy={y}
-                        r={hover === p.id ? 9 : 7}
-                        className={open ? "fill-gold" : "fill-muted-foreground"}
-                        fillOpacity={open ? 1 : 0.45}
-                        stroke="white"
-                        strokeOpacity="0.7"
-                        strokeWidth="1.5"
-                      />
-                      <text
-                        x={x + 12}
-                        y={y + 4}
-                        className="fill-foreground"
-                        fontSize="15"
-                        fillOpacity={open ? 0.95 : 0.5}
-                      >
-                        {p.name}
-                      </text>
-                    </g>
-                  </Link>
+                      {p.name}
+                    </text>
+                  </g>
                 );
               })}
             </svg>
