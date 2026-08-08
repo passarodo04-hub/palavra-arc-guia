@@ -3,10 +3,11 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 /* Áudio ambiente sintetizado na hora (Web Audio API): nada é baixado,
  * nada é pré-carregado e nada toca sem o usuário pedir. Padrão: mudo. */
 
-export type AmbientId = "mudo" | "chuva" | "rio" | "passaros" | "floresta" | "piano" | "adoracao";
+export type AmbientId = "mudo" | "chuva" | "rio" | "passaros" | "floresta" | "piano" | "adoracao" | "pads";
 
 export const AMBIENTS: { id: AmbientId; label: string; emoji: string }[] = [
   { id: "mudo", label: "Mudo", emoji: "🔇" },
+  { id: "pads", label: "Pads de adoração", emoji: "🕊️" },
   { id: "chuva", label: "Chuva", emoji: "🌧️" },
   { id: "rio", label: "Rio", emoji: "🌊" },
   { id: "passaros", label: "Pássaros", emoji: "🐦" },
@@ -91,6 +92,63 @@ function buildGraph(ctx: AudioContext, out: GainNode, id: AmbientId): Graph {
   };
 
   switch (id) {
+    case "pads": {
+      // Pad contemplativo: acorde sustentado, sem batida, sem melodia.
+      const master = ctx.createGain();
+      master.gain.value = 0.0001;
+      master.gain.exponentialRampToValueAtTime(0.22, ctx.currentTime + 3);
+      const lp = ctx.createBiquadFilter();
+      lp.type = "lowpass";
+      lp.frequency.value = 900;
+      lp.Q.value = 0.4;
+      master.connect(lp).connect(out);
+
+      const freqs = [130.8, 196, 261.6, 329.6, 392];
+      const oscs: OscillatorNode[] = [];
+      freqs.forEach((f, i) => {
+        [0, 1].forEach((d) => {
+          const o = ctx.createOscillator();
+          o.type = i % 2 === 0 ? "sine" : "triangle";
+          o.frequency.value = f * (d ? 1.004 : 0.997);
+          const g = ctx.createGain();
+          g.gain.value = 0.12 / freqs.length;
+          o.connect(g).connect(master);
+          o.start();
+          oscs.push(o);
+        });
+      });
+
+      // Respiração lenta do filtro e do volume (sensação de oração).
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.05;
+      const lfoGain = ctx.createGain();
+      lfoGain.gain.value = 260;
+      lfo.connect(lfoGain).connect(lp.frequency);
+      lfo.start();
+
+      disposers.push(() => {
+        try {
+          master.gain.cancelScheduledValues(ctx.currentTime);
+          master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.4);
+        } catch {}
+        window.setTimeout(() => {
+          oscs.forEach((o) => {
+            try {
+              o.stop();
+            } catch {}
+            o.disconnect();
+          });
+          try {
+            lfo.stop();
+          } catch {}
+          lfo.disconnect();
+          lfoGain.disconnect();
+          lp.disconnect();
+          master.disconnect();
+        }, 900);
+      });
+      break;
+    }
     case "chuva":
       startNoise("highpass", 900, 0.6, 0.28);
       startNoise("lowpass", 420, 0.5, 0.16);
