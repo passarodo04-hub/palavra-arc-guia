@@ -3,7 +3,7 @@ import { BookOpen, Swords } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { ArtPortrait } from "@/components/atlas/ArtPortrait";
-import { judgeById } from "@/lib/bible-judges";
+import { judgeById, type BibleJudge } from "@/lib/bible-judges";
 
 export const Route = createFileRoute("/juizes/$id")({
   loader: ({ params }) => {
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/juizes/$id")({
     if (!judge) throw notFound();
     return { judge };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData }: { loaderData?: { judge: BibleJudge } }) => {
     if (!loaderData) {
       return { meta: [{ title: "Juiz não encontrado | Palavra+" }, { name: "robots", content: "noindex" }] };
     }
@@ -41,7 +41,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function JudgeDetail() {
-  const { judge } = Route.useLoaderData();
+  const { judge } = Route.useLoaderData() as { judge: BibleJudge };
 
   return (
     <div className="min-h-screen bg-background pb-24">

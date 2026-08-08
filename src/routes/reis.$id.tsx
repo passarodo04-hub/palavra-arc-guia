@@ -3,7 +3,7 @@ import { BookOpen, Crown } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { ArtPortrait } from "@/components/atlas/ArtPortrait";
-import { kingById, REALM_META, VERDICT_META } from "@/lib/bible-kings";
+import { kingById, REALM_META, VERDICT_META, type BibleKing } from "@/lib/bible-kings";
 
 export const Route = createFileRoute("/reis/$id")({
   loader: ({ params }) => {
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/reis/$id")({
     if (!king) throw notFound();
     return { king };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData }: { loaderData?: { king: BibleKing } }) => {
     if (!loaderData) {
       return { meta: [{ title: "Rei não encontrado | Palavra+" }, { name: "robots", content: "noindex" }] };
     }
@@ -41,7 +41,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function KingDetail() {
-  const { king } = Route.useLoaderData();
+  const { king } = Route.useLoaderData() as { king: BibleKing };
   const realm = REALM_META[king.realm];
 
   return (

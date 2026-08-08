@@ -4,7 +4,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
 import { ArtPortrait } from "@/components/atlas/ArtPortrait";
 import { useBibleReads } from "@/hooks/use-bible-reads";
-import { isPlaceDiscovered, placeById } from "@/lib/bible-places";
+import { isPlaceDiscovered, placeById, type BiblePlace } from "@/lib/bible-places";
 
 export const Route = createFileRoute("/mapa/$id")({
   loader: ({ params }) => {
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/mapa/$id")({
     if (!place) throw notFound();
     return { place };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData }: { loaderData?: { place: BiblePlace } }) => {
     if (!loaderData) {
       return { meta: [{ title: "Lugar não encontrado | Palavra+" }, { name: "robots", content: "noindex" }] };
     }
@@ -42,7 +42,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function PlaceDetail() {
-  const { place } = Route.useLoaderData();
+  const { place } = Route.useLoaderData() as { place: BiblePlace };
   const { readSet } = useBibleReads();
   const discovered = isPlaceDiscovered(place, readSet);
 
