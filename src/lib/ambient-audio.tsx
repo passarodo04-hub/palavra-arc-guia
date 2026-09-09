@@ -3,6 +3,11 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 /* Áudio ambiente sintetizado na hora (Web Audio API): nada é baixado,
  * nada é pré-carregado e nada toca sem o usuário pedir. Padrão: mudo. */
 
+/** Interruptor temporário: oculta TODA a interface de áudio/música do app
+ *  sem remover o motor de som. Basta voltar para `true` para reativar. */
+export const AUDIO_UI_ENABLED = false;
+
+
 export type AmbientId = "mudo" | "chuva" | "rio" | "passaros" | "floresta" | "piano" | "adoracao" | "pads";
 
 export const AMBIENTS: { id: AmbientId; label: string; emoji: string }[] = [

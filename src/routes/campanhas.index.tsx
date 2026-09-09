@@ -37,7 +37,7 @@ import {
 } from "@/lib/campaigns";
 import { trackProgress } from "@/lib/journeys";
 import { ALL_TRACKS, JOURNEY_CATEGORIES, type Track } from "@/lib/journey-catalog";
-import { useAmbientAudio } from "@/lib/ambient-audio";
+import { AUDIO_UI_ENABLED, useAmbientAudio } from "@/lib/ambient-audio";
 import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/campanhas/")({
@@ -304,15 +304,18 @@ function Hero({ item }: { item: Item }) {
               {progress.started ? "Continuar" : "Começar jornada"} <ArrowRight className="size-4" />
             </Link>
           </Button>
-          <button
-            type="button"
-            onClick={onAmbient}
-            aria-pressed={playing}
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-white/25 bg-white/15 px-5 text-sm font-medium text-hero-foreground backdrop-blur transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-          >
-            {playing ? <Pause className="size-4" /> : <Music2 className="size-4" />}
-            {playing ? "Pausar ambiente" : "Ambiente sonoro"}
-          </button>
+          {AUDIO_UI_ENABLED && (
+            <button
+              type="button"
+              onClick={onAmbient}
+              aria-pressed={playing}
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/25 bg-white/15 px-5 text-sm font-medium text-hero-foreground backdrop-blur transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              {playing ? <Pause className="size-4" /> : <Music2 className="size-4" />}
+              {playing ? "Pausar ambiente" : "Ambiente sonoro"}
+            </button>
+          )}
+
         </div>
       </div>
     </section>
