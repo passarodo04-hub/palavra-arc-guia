@@ -1,4 +1,5 @@
 import { artSeed } from "@/lib/atlas-shared";
+import { portraitFor } from "@/lib/character-portraits";
 
 /**
  * Representação artística gerada em SVG — leve (sem download de imagens),
