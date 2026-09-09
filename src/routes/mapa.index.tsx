@@ -1,14 +1,14 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { MapPin, Compass, Lock } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
+import { BibleMapPanel } from "@/components/atlas/BibleMapPanel";
 import { useBibleReads } from "@/hooks/use-bible-reads";
 import {
   BIBLE_PLACES,
   countDiscoveredPlaces,
   isPlaceDiscovered,
-  projectPlace,
   unlockablePlacesTotal,
 } from "@/lib/bible-places";
 import { normalize } from "@/lib/atlas-shared";
@@ -30,41 +30,7 @@ export const Route = createFileRoute("/mapa/")({
 function MapaPage() {
   const { readSet } = useBibleReads();
   const [q, setQ] = useState("");
-  const [hover, setHover] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  // Arrastar o mapa: o container rola horizontalmente. No toque o próprio
-  // navegador faz o pan (touch-action: pan-x pan-y); no desktop replicamos o
-  // gesto com ponteiro. `dragged` evita que um arrasto vire clique no marcador.
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const dragState = useRef<{ startX: number; scrollLeft: number; active: boolean } | null>(null);
-  const draggedRef = useRef(false);
-
-  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === "touch") return; // deixa o scroll nativo cuidar
-    const el = scrollerRef.current;
-    if (!el) return;
-    dragState.current = { startX: e.clientX, scrollLeft: el.scrollLeft, active: true };
-    draggedRef.current = false;
-  };
-  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const st = dragState.current;
-    const el = scrollerRef.current;
-    if (!st?.active || !el) return;
-    const dx = e.clientX - st.startX;
-    if (Math.abs(dx) > 4) draggedRef.current = true;
-    el.scrollLeft = st.scrollLeft - dx;
-  };
-  const endDrag = () => {
-    if (dragState.current) dragState.current.active = false;
-  };
-  const openPlace = (id: string) => {
-    if (draggedRef.current) {
-      draggedRef.current = false;
-      return;
-    }
-    navigate({ to: "/mapa/$id", params: { id } });
-  };
 
   const discovered = countDiscoveredPlaces(readSet);
   const total = unlockablePlacesTotal();
@@ -92,80 +58,16 @@ function MapaPage() {
 
       <main className="mx-auto max-w-3xl px-4 pt-6">
         <section className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-          <div
-            ref={scrollerRef}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onPointerLeave={endDrag}
-            className="w-full overflow-x-auto overflow-y-hidden overscroll-x-contain [touch-action:pan-x_pan-y] [-webkit-overflow-scrolling:touch]"
-          >
-            <svg
-              viewBox="0 0 1000 640"
-              className="h-auto w-full min-w-[720px] select-none [touch-action:inherit]"
-              role="img"
-              aria-label="Mapa ilustrativo com os lugares bíblicos"
-            >
-              <defs>
-                <linearGradient id="mapa-bg" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="oklch(0.72 0.06 220)" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="oklch(0.55 0.07 60)" stopOpacity="0.25" />
-                </linearGradient>
-              </defs>
-              <rect width="1000" height="640" fill="url(#mapa-bg)" />
-              {Array.from({ length: 9 }).map((_, i) => (
-                <line key={`h${i}`} x1="0" y1={i * 80} x2="1000" y2={i * 80} stroke="currentColor" strokeOpacity="0.07" className="text-foreground" />
-              ))}
-              {Array.from({ length: 13 }).map((_, i) => (
-                <line key={`v${i}`} x1={i * 80} y1="0" x2={i * 80} y2="640" stroke="currentColor" strokeOpacity="0.07" className="text-foreground" />
-              ))}
-              {BIBLE_PLACES.map((p) => {
-                const { x, y } = projectPlace(p.coords);
-                const open = isPlaceDiscovered(p, readSet);
-                return (
-                  <g
-                    key={p.id}
-                    role="link"
-                    tabIndex={0}
-                    aria-label={`${p.name} — ${open ? "descoberto" : "ainda não descoberto"}`}
-                    onClick={() => openPlace(p.id)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") navigate({ to: "/mapa/$id", params: { id: p.id } });
-                    }}
-                    onMouseEnter={() => setHover(p.id)}
-                    onMouseLeave={() => setHover(null)}
-                    className="cursor-pointer"
-                  >
-                    <circle cx={x} cy={y} r="18" fill="transparent" />
-                    <circle
-                      cx={x}
-                      cy={y}
-                      r={hover === p.id ? 9 : 7}
-                      className={open ? "fill-gold" : "fill-muted-foreground"}
-                      fillOpacity={open ? 1 : 0.45}
-                      stroke="white"
-                      strokeOpacity="0.7"
-                      strokeWidth="1.5"
-                    />
-                    <text
-                      x={x + 12}
-                      y={y + 4}
-                      className="fill-foreground"
-                      fontSize="13"
-                      fillOpacity={open ? 0.95 : 0.5}
-                    >
-                      {p.name}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
+          <BibleMapPanel
+            readSet={readSet}
+            onOpen={(id) => navigate({ to: "/mapa/$id", params: { id } })}
+          />
           <p className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
-            Arraste para o lado para ver todo o mapa. Mapa esquemático ilustrativo, baseado nas coordenadas aproximadas de cada lugar.
+            Mapa geográfico real (OpenStreetMap). Use dois dedos ou a rolagem para dar zoom e arraste para mover.
+            Marcadores dourados são lugares já descobertos pela sua leitura.
           </p>
         </section>
+
 
         <section className="mt-8">
           <label className="sr-only" htmlFor="busca-lugares">Buscar lugar</label>
