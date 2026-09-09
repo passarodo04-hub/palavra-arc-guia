@@ -98,6 +98,9 @@ function CommunityDetail() {
     },
     onError: (e: Error) =>
       toast.error(e.message || "Não foi possível desfazer a comunidade. Tente novamente."),
+  });
+
+
 
 
   const removeMutation = useMutation({
