@@ -1,4 +1,5 @@
 import { artSeed } from "@/lib/atlas-shared";
+import { portraitFor } from "@/lib/character-portraits";
 
 /**
  * Representação artística gerada em SVG — leve (sem download de imagens),
@@ -27,6 +28,33 @@ export function ArtPortrait({
   className?: string;
   ratio?: string;
 }) {
+  const painting = portraitFor(id);
+  if (painting) {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-2xl border border-border bg-secondary ${className}`}
+        style={{ aspectRatio: ratio }}
+      >
+        <img
+          src={painting}
+          alt={`Representação artística de ${label}. Pintura ilustrativa, não é uma fotografia real.`}
+          loading="lazy"
+          width={768}
+          height={512}
+          className="size-full object-cover"
+        />
+        <div className="absolute right-2 top-2 rounded-full bg-black/35 px-2 py-1 text-base backdrop-blur">
+          <span aria-hidden="true">{emoji}</span>
+        </div>
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-3 py-2">
+          <span className="text-[10px] font-medium uppercase tracking-widest text-white/85">
+            Representação artística
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   const seed = artSeed(id);
   const hue = seed % 360;
   const hue2 = (hue + 40 + (seed % 60)) % 360;
