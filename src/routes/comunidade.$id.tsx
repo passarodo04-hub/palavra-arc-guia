@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   Users, Copy, Crown, Flame, Trophy, Plus, Trash2, Check, LogOut, X, HandHeart, BookOpen, Quote,
+  ShieldAlert,
 } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
@@ -12,9 +13,10 @@ import { useAuth } from "@/lib/auth-context";
 import { getMyProfile } from "@/lib/cloud.functions";
 import { todayIso, formatDayLong } from "@/lib/calendar-shared";
 import {
-  createActivity, createPost, deleteActivity, deletePost, getCommunity,
+  createActivity, createPost, deleteActivity, deleteCommunity, deletePost, getCommunity,
   leaveCommunity, removeMember, setActivityParticipation,
 } from "@/lib/community.functions";
+
 
 export const Route = createFileRoute("/comunidade/$id")({
   component: CommunityDetail,
@@ -85,6 +87,18 @@ function CommunityDetail() {
     },
     onError: () => toast.error("Não foi possível sair do grupo."),
   });
+
+  const doDeleteCommunity = useServerFn(deleteCommunity);
+  const deleteCommunityMutation = useMutation({
+    mutationFn: () => doDeleteCommunity({ data: { id } }),
+    onSuccess: () => {
+      toast.success("Comunidade desfeita. Membros, mural e atividades foram removidos.");
+      void qc.invalidateQueries({ queryKey: ["communities", user?.id] });
+      void navigate({ to: "/comunidade" });
+    },
+    onError: (e: Error) =>
+      toast.error(e.message || "Não foi possível desfazer a comunidade. Tente novamente."),
+
 
   const removeMutation = useMutation({
     mutationFn: (memberId: string) => doRemove({ data: { communityId: id, userId: memberId } }),
