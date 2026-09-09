@@ -57,6 +57,9 @@ function CommunityDetail() {
   const [tab, setTab] = useState<Tab>("membros");
   const [showActivity, setShowActivity] = useState(false);
   const [showPost, setShowPost] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+
 
   const fetchCommunity = useServerFn(getCommunity);
   const fetchProfile = useServerFn(getMyProfile);
@@ -269,6 +272,94 @@ function CommunityDetail() {
                     <LogOut className="size-4" aria-hidden /> Sair da comunidade
                   </button>
                 )}
+
+                {data.isOwner && (
+                  <section
+                    aria-label="Zona de risco"
+                    className="rounded-2xl border border-destructive/40 bg-destructive/5 p-4"
+                  >
+                    <h3 className="flex items-center gap-2 text-sm font-semibold text-destructive">
+                      <ShieldAlert className="size-4" aria-hidden /> Zona de risco
+                    </h3>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Desfazer a comunidade remove o grupo, os membros, o convite, o mural e as
+                      atividades. O XP, o progresso e a caminhada de cada pessoa continuam intactos.
+                      Essa ação não pode ser desfeita.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setConfirmText("");
+                        setShowDelete(true);
+                      }}
+                      className="mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-destructive px-4 text-sm font-semibold text-destructive-foreground hover:opacity-90"
+                    >
+                      <Trash2 className="size-4" aria-hidden /> Desfazer comunidade
+                    </button>
+                  </section>
+                )}
+
+                {showDelete && data.isOwner && (
+                  <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Confirmar exclusão da comunidade"
+                    className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center"
+                  >
+                    <div className="w-full max-w-md rounded-3xl border border-border bg-card p-5 shadow-elegant">
+                      <div className="flex items-start justify-between gap-3">
+                        <h2 className="font-serif text-xl text-card-foreground">
+                          Desfazer “{data.community.name}”?
+                        </h2>
+                        <button
+                          type="button"
+                          aria-label="Fechar"
+                          onClick={() => setShowDelete(false)}
+                          className="inline-flex size-10 items-center justify-center rounded-xl text-muted-foreground hover:bg-muted"
+                        >
+                          <X className="size-4" />
+                        </button>
+                      </div>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Todos os membros perderão o acesso e o mural, as atividades e o convite serão
+                        apagados. Para confirmar, digite <strong>DESFAZER</strong> abaixo.
+                      </p>
+                      <label className="sr-only" htmlFor="confirmar-desfazer">
+                        Digite DESFAZER para confirmar
+                      </label>
+                      <input
+                        id="confirmar-desfazer"
+                        value={confirmText}
+                        onChange={(e) => setConfirmText(e.target.value)}
+                        placeholder="DESFAZER"
+                        autoComplete="off"
+                        className="mt-4 w-full rounded-xl bg-secondary px-4 py-3 text-sm uppercase tracking-widest outline-none focus:ring-2 focus:ring-destructive"
+                      />
+                      <div className="mt-4 flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowDelete(false)}
+                          className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-border text-sm font-medium text-foreground"
+                        >
+                          Cancelar
+                        </button>
+                        <button
+                          type="button"
+                          disabled={
+                            confirmText.trim().toUpperCase() !== "DESFAZER" ||
+                            deleteCommunityMutation.isPending
+                          }
+                          onClick={() => deleteCommunityMutation.mutate()}
+                          className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-destructive text-sm font-semibold text-destructive-foreground disabled:opacity-50"
+                        >
+                          <Trash2 className="size-4" aria-hidden />
+                          {deleteCommunityMutation.isPending ? "Desfazendo…" : "Desfazer"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
               </section>
             )}
 
