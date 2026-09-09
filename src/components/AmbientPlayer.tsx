@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Music2, Pause, Play, X, Volume2 } from "lucide-react";
-import { AMBIENTS, useAmbientAudio, type AmbientId } from "@/lib/ambient-audio";
+import { AMBIENTS, AUDIO_UI_ENABLED, useAmbientAudio, type AmbientId } from "@/lib/ambient-audio";
 
 /** Player discreto de áudio ambiente. Começa desligado e só toca depois de
  *  uma interação explícita do usuário. Nunca bloqueia a leitura. */
 export function AmbientPlayer() {
   const { ambient, playing, volume, error, setAmbient, toggle, setVolume } = useAmbientAudio();
   const [open, setOpen] = useState(false);
+
+  // Oculto temporariamente (o motor de áudio continua intacto).
+  if (!AUDIO_UI_ENABLED) return null;
+
 
   return (
     <>
