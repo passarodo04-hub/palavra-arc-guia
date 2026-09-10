@@ -34,7 +34,7 @@ function BibliaPage() {
         title="Bíblia Sagrada"
         description={current.full}
         right={
-          <Popover>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <button
                 type="button"
