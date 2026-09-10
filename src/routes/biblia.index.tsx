@@ -35,16 +35,13 @@ function BibliaPage() {
         description={current.full}
         right={
           <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <button
-                type="button"
-                aria-label="Escolher tradução da Bíblia"
-                aria-haspopup="menu"
-                className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-semibold text-hero-foreground outline-none transition hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-hero-accent"
-              >
-                <span>{current.name}</span>
-                <ChevronDown className="size-4 opacity-80" />
-              </button>
+            <PopoverTrigger
+              aria-label="Escolher tradução da Bíblia"
+              aria-haspopup="menu"
+              className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-semibold text-hero-foreground outline-none transition hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-hero-accent"
+            >
+              <span>{current.name}</span>
+              <ChevronDown className="size-4 opacity-80" />
             </PopoverTrigger>
             <PopoverContent
               align="end"
