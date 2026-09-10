@@ -93,14 +93,23 @@ export function getBook(id: string): BibleBook | undefined {
 }
 
 // === Translations ===
-export type Translation = "arc" | "nvi";
+export type Translation = "arc" | "nvi" | "kja" | "nvt" | "naa" | "ara" | "ntlh";
 export const TRANSLATIONS: { id: Translation; name: string; full: string }[] = [
   { id: "arc", name: "ARC", full: "Almeida Revista e Corrigida" },
   { id: "nvi", name: "NVI", full: "Nova Versão Internacional" },
+  { id: "kja", name: "KJA", full: "King James Atualizada" },
+  { id: "nvt", name: "NVT", full: "Nova Versão Transformadora" },
+  { id: "naa", name: "NAA", full: "Nova Almeida Atualizada" },
+  { id: "ara", name: "ARA", full: "Almeida Revista e Atualizada" },
+  { id: "ntlh", name: "NTLH", full: "Nova Tradução na Linguagem de Hoje" },
 ];
 
+export function isTranslation(v: unknown): v is Translation {
+  return TRANSLATIONS.some((t) => t.id === v);
+}
+
 function urlFor(tr: Translation, id: string) {
-  return tr === "arc" ? `/data/bible/${id}.json` : `/data/bible/nvi/${id}.json`;
+  return tr === "arc" ? `/data/bible/${id}.json` : `/data/bible/${tr}/${id}.json`;
 }
 
 // === Lazy loading with in-memory cache (per translation) ===
