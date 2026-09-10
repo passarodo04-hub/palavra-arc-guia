@@ -151,22 +151,26 @@ export async function isTranslationAvailable(tr: Translation): Promise<boolean> 
   }
 }
 
-// === Full bible (for search) — fetched once, cached ===
-let _allBiblePromise: Promise<Record<string, string[][]>> | null = null;
-export async function loadFullBible(): Promise<Record<string, string[][]>> {
-  if (!_allBiblePromise) {
-    _allBiblePromise = (async () => {
+// === Full bible (for search) — fetched once per translation, cached ===
+const _allBiblePromises = new Map<Translation, Promise<Record<string, string[][]>>>();
+export async function loadFullBible(
+  tr: Translation = "arc",
+): Promise<Record<string, string[][]>> {
+  let p = _allBiblePromises.get(tr);
+  if (!p) {
+    p = (async () => {
       const out: Record<string, string[][]> = {};
       // Parallel fetch all 66 books (cached individually too)
       await Promise.all(
         bibleBooks.map(async (b) => {
-          out[b.id] = await loadBook(b.id);
-        })
+          out[b.id] = await loadBook(b.id, tr);
+        }),
       );
       return out;
     })();
+    _allBiblePromises.set(tr, p);
   }
-  return _allBiblePromise;
+  return p;
 }
 
 export interface VerseSearchResult {
