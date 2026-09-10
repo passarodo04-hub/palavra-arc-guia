@@ -115,3 +115,78 @@ function BibliaPage() {
     </div>
   );
 }
+
+function TranslationSelector({
+  translation,
+  current,
+  onSelect,
+}: {
+  translation: Translation;
+  current: (typeof TRANSLATIONS)[number];
+  onSelect: (t: Translation) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handle = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        aria-label="Escolher tradução da Bíblia"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-semibold text-hero-foreground outline-none transition hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-hero-accent"
+      >
+        <span>{current.name}</span>
+        <ChevronDown className={`size-4 opacity-80 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <div
+          role="listbox"
+          aria-label="Traduções disponíveis"
+          className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-border bg-card p-2 shadow-soft animate-fade-up"
+        >
+          {TRANSLATIONS.map((t) => {
+            const selected = translation === t.id;
+            return (
+              <button
+                key={t.id}
+                role="option"
+                aria-selected={selected}
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  onSelect(t.id);
+                }}
+                className={`flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left text-sm transition ${
+                  selected
+                    ? "bg-gold/15 text-gold font-semibold"
+                    : "text-card-foreground hover:bg-secondary"
+                }`}
+              >
+                <span className="flex flex-col">
+                  <span>{t.name}</span>
+                  <span className="text-xs text-muted-foreground">{t.full}</span>
+                </span>
+                {selected && <Check className="size-4 text-gold" aria-hidden="true" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
