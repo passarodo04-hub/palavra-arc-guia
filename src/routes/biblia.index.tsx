@@ -14,11 +14,13 @@ function BibliaPage() {
   const [query, setQuery] = useState("");
   const { translation, setTranslation } = useTranslation();
   const [pending, setPending] = useState<Translation | null>(null);
+  const [open, setOpen] = useState(false);
   const books = bibleBooks.filter(
     (b) => b.testament === tab && b.name.toLowerCase().includes(query.toLowerCase()),
   );
   const current = TRANSLATIONS.find((t) => t.id === translation)!;
   const requestSwitch = (t: Translation) => {
+    setOpen(false);
     if (t === translation) return;
     setPending(t);
   };
