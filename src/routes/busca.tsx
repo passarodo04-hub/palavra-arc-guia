@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
 import { useDeferredValue, useState } from "react";
 import { searchVerses, getBook } from "@/lib/bible-data";
+import { useTranslation } from "@/lib/translation-context";
 import { searchHymns } from "@/lib/harpa-data";
 import { searchAtlas, atlasHref } from "@/lib/atlas-search";
 import { Search, Loader2 } from "lucide-react";
