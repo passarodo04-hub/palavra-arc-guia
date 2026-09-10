@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { Translation } from "./bible-data";
+import { isTranslation, type Translation } from "./bible-data";
 
 type Ctx = { translation: Translation; setTranslation: (t: Translation) => void };
 const TranslationContext = createContext<Ctx>({ translation: "arc", setTranslation: () => {} });
