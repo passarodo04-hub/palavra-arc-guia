@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
 import { useDeferredValue, useState } from "react";
 import { searchVerses, getBook } from "@/lib/bible-data";
+import { useTranslation } from "@/lib/translation-context";
 import { searchHymns } from "@/lib/harpa-data";
 import { searchAtlas, atlasHref } from "@/lib/atlas-search";
 import { Search, Loader2 } from "lucide-react";
@@ -13,9 +14,10 @@ function SearchPage() {
   const [q, setQ] = useState("");
   const deferred = useDeferredValue(q);
   const enabled = deferred.trim().length > 1;
+  const { translation } = useTranslation();
   const { data: verses = [], isFetching: vLoading } = useQuery({
-    queryKey: ["search-verses", deferred],
-    queryFn: () => searchVerses(deferred, 30),
+    queryKey: ["search-verses", deferred, translation],
+    queryFn: () => searchVerses(deferred, 30, translation),
     enabled,
     staleTime: 5 * 60 * 1000,
   });

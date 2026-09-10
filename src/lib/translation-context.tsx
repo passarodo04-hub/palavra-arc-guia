@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { Translation } from "./bible-data";
+import { isTranslation, type Translation } from "./bible-data";
 
 type Ctx = { translation: Translation; setTranslation: (t: Translation) => void };
 const TranslationContext = createContext<Ctx>({ translation: "arc", setTranslation: () => {} });
@@ -11,7 +11,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const v = window.localStorage.getItem(KEY);
-      if (v === "arc" || v === "nvi") setT(v);
+      if (isTranslation(v)) setT(v);
     } catch {}
   }, []);
   const setTranslation = (t: Translation) => {

@@ -93,14 +93,23 @@ export function getBook(id: string): BibleBook | undefined {
 }
 
 // === Translations ===
-export type Translation = "arc" | "nvi";
+export type Translation = "arc" | "nvi" | "kja" | "nvt" | "naa" | "ara" | "ntlh";
 export const TRANSLATIONS: { id: Translation; name: string; full: string }[] = [
   { id: "arc", name: "ARC", full: "Almeida Revista e Corrigida" },
   { id: "nvi", name: "NVI", full: "Nova Versão Internacional" },
+  { id: "kja", name: "KJA", full: "King James Atualizada" },
+  { id: "nvt", name: "NVT", full: "Nova Versão Transformadora" },
+  { id: "naa", name: "NAA", full: "Nova Almeida Atualizada" },
+  { id: "ara", name: "ARA", full: "Almeida Revista e Atualizada" },
+  { id: "ntlh", name: "NTLH", full: "Nova Tradução na Linguagem de Hoje" },
 ];
 
+export function isTranslation(v: unknown): v is Translation {
+  return TRANSLATIONS.some((t) => t.id === v);
+}
+
 function urlFor(tr: Translation, id: string) {
-  return tr === "arc" ? `/data/bible/${id}.json` : `/data/bible/nvi/${id}.json`;
+  return tr === "arc" ? `/data/bible/${id}.json` : `/data/bible/${tr}/${id}.json`;
 }
 
 // === Lazy loading with in-memory cache (per translation) ===
@@ -142,22 +151,26 @@ export async function isTranslationAvailable(tr: Translation): Promise<boolean> 
   }
 }
 
-// === Full bible (for search) — fetched once, cached ===
-let _allBiblePromise: Promise<Record<string, string[][]>> | null = null;
-export async function loadFullBible(): Promise<Record<string, string[][]>> {
-  if (!_allBiblePromise) {
-    _allBiblePromise = (async () => {
+// === Full bible (for search) — fetched once per translation, cached ===
+const _allBiblePromises = new Map<Translation, Promise<Record<string, string[][]>>>();
+export async function loadFullBible(
+  tr: Translation = "arc",
+): Promise<Record<string, string[][]>> {
+  let p = _allBiblePromises.get(tr);
+  if (!p) {
+    p = (async () => {
       const out: Record<string, string[][]> = {};
       // Parallel fetch all 66 books (cached individually too)
       await Promise.all(
         bibleBooks.map(async (b) => {
-          out[b.id] = await loadBook(b.id);
-        })
+          out[b.id] = await loadBook(b.id, tr);
+        }),
       );
       return out;
     })();
+    _allBiblePromises.set(tr, p);
   }
-  return _allBiblePromise;
+  return p;
 }
 
 export interface VerseSearchResult {
@@ -167,10 +180,14 @@ export interface VerseSearchResult {
   text: string;
 }
 
-export async function searchVerses(query: string, limit = 50): Promise<VerseSearchResult[]> {
+export async function searchVerses(
+  query: string,
+  limit = 50,
+  tr: Translation = "arc",
+): Promise<VerseSearchResult[]> {
   const q = query.trim().toLowerCase();
   if (q.length < 2) return [];
-  const all = await loadFullBible();
+  const all = await loadFullBible(tr);
   const results: VerseSearchResult[] = [];
   for (const bookId of Object.keys(all)) {
     const chapters = all[bookId];
