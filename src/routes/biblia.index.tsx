@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { PageHero } from "@/components/PageHero";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { bibleBooks, TRANSLATIONS, type Translation } from "@/lib/bible-data";
 import { useTranslation } from "@/lib/translation-context";
 import { useState } from "react";
-import { Check, BookMarked } from "lucide-react";
+import { Check, BookMarked, ChevronDown } from "lucide-react";
 
 export const Route = createFileRoute("/biblia/")({ component: BibliaPage });
 
