@@ -40,50 +40,39 @@ function BibliaPage() {
         title="Bíblia Sagrada"
         description={current.full}
         right={
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger
+          <DropdownMenu open={open} onOpenChange={setOpen}>
+            <DropdownMenuTrigger
               aria-label="Escolher tradução da Bíblia"
-              aria-haspopup="menu"
               className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-semibold text-hero-foreground outline-none transition hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-hero-accent"
             >
               <span>{current.name}</span>
               <ChevronDown className="size-4 opacity-80" />
-            </PopoverTrigger>
-            <PopoverContent
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
               align="end"
               sideOffset={6}
               className="w-56 rounded-2xl border border-border bg-card p-2 shadow-soft"
             >
-              <div
-                role="menu"
-                aria-label="Traduções disponíveis"
+              <DropdownMenuRadioGroup
+                value={translation}
+                onValueChange={(v) => requestSwitch(v as Translation)}
                 className="flex flex-col gap-1"
               >
-                {TRANSLATIONS.map((t) => {
-                  const selected = translation === t.id;
-                  return (
-                    <button
-                      key={t.id}
-                      role="menuitemradio"
-                      aria-checked={selected}
-                      onClick={() => requestSwitch(t.id)}
-                      className={`flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left text-sm transition ${
-                        selected
-                          ? "bg-gold/15 text-gold font-semibold"
-                          : "text-card-foreground hover:bg-secondary"
-                      }`}
-                    >
-                      <span className="flex flex-col">
-                        <span>{t.name}</span>
-                        <span className="text-xs text-muted-foreground">{t.full}</span>
-                      </span>
-                      {selected && <Check className="size-4 text-gold" />}
-                    </button>
-                  );
-                })}
-              </div>
-            </PopoverContent>
-          </Popover>
+                {TRANSLATIONS.map((t) => (
+                  <DropdownMenuRadioItem
+                    key={t.id}
+                    value={t.id}
+                    className="flex cursor-pointer items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left text-sm outline-none transition focus:bg-secondary focus:text-card-foreground data-[state=checked]:bg-gold/15 data-[state=checked]:text-gold data-[state=checked]:font-semibold"
+                  >
+                    <span className="flex flex-col">
+                      <span>{t.name}</span>
+                      <span className="text-xs text-muted-foreground">{t.full}</span>
+                    </span>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         }
       />
       <div className="mx-auto max-w-3xl px-4 pt-6">
