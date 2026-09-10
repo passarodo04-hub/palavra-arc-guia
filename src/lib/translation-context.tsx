@@ -11,7 +11,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const v = window.localStorage.getItem(KEY);
-      if (v === "arc" || v === "nvi") setT(v);
+      if (isTranslation(v)) setT(v);
     } catch {}
   }, []);
   const setTranslation = (t: Translation) => {
