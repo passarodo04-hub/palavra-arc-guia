@@ -31,12 +31,18 @@ function BibliaPage() {
         title="Bíblia Sagrada"
         description={current.full}
         right={
-          <div className="flex items-center gap-1 rounded-full bg-white/10 p-1">
+          <div
+            role="group"
+            aria-label="Escolher tradução da Bíblia"
+            className="flex items-center gap-1 rounded-full bg-white/10 p-1 max-w-full overflow-x-auto no-scrollbar"
+          >
             {TRANSLATIONS.map((t) => (
               <button
                 key={t.id}
                 onClick={() => requestSwitch(t.id)}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-full transition ${
+                title={t.full}
+                aria-pressed={translation === t.id}
+                className={`shrink-0 px-3 py-1.5 text-xs font-semibold rounded-full transition ${
                   translation === t.id
                     ? "bg-gold text-gold-foreground"
                     : "text-primary-foreground/80 hover:text-primary-foreground"
