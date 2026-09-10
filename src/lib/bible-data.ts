@@ -180,10 +180,14 @@ export interface VerseSearchResult {
   text: string;
 }
 
-export async function searchVerses(query: string, limit = 50): Promise<VerseSearchResult[]> {
+export async function searchVerses(
+  query: string,
+  limit = 50,
+  tr: Translation = "arc",
+): Promise<VerseSearchResult[]> {
   const q = query.trim().toLowerCase();
   if (q.length < 2) return [];
-  const all = await loadFullBible();
+  const all = await loadFullBible(tr);
   const results: VerseSearchResult[] = [];
   for (const bookId of Object.keys(all)) {
     const chapters = all[bookId];
