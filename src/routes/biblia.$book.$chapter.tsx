@@ -124,11 +124,13 @@ function ReaderPage() {
               const isFav = favs.includes(key);
               const isHl = highlights.includes(key);
               const isTarget = targetVerse === v.verse;
+              const isNarrating = narratedVerse === v.verse;
               return (
                 <p
                   key={v.verse}
                   ref={(el) => { verseRefs.current[v.verse] = el; }}
-                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition px-2 -mx-2 ${isHl ? "bg-gold/10" : ""} ${isTarget ? "bg-gold/15 ring-2 ring-gold/40" : ""}`}
+                  aria-current={isNarrating ? "true" : undefined}
+                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition px-2 -mx-2 ${isHl ? "bg-gold/10" : ""} ${isTarget ? "bg-gold/15 ring-2 ring-gold/40" : ""} ${isNarrating ? "bg-primary/10 ring-2 ring-primary/40" : ""}`}
                   style={{ fontSize: `${fontSize}px` }}
                 >
                   <sup className="mr-1.5 text-xs font-sans font-bold text-gold">{v.verse}</sup>
