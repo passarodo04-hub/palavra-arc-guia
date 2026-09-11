@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight, Heart, List } from "lucide-react";
 import { useLocalStorage } from "@/lib/storage";
 import { useEffect, useRef, useState } from "react";
 import { useBibleReads } from "@/hooks/use-bible-reads";
+import { useNarration } from "@/hooks/use-narration";
+import { NarrationPlayer } from "@/components/bible/NarrationPlayer";
 
 type Search = { v?: number };
 
@@ -37,6 +39,12 @@ function ReaderPage() {
     retry: false,
   });
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
+  const narration = useNarration({ translation, book, chapter: chNum, verses: ch?.verses });
+  const narratedVerse = narration.state.currentVerse;
+  useEffect(() => {
+    if (narratedVerse == null) return;
+    verseRefs.current[narratedVerse]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [narratedVerse]);
   useEffect(() => {
     if (!targetVerse || !ch) return;
     const el = verseRefs.current[targetVerse];
