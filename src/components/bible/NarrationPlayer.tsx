@@ -163,7 +163,7 @@ export function NarrationPlayer({
                 step={0.05}
                 value={state.volume}
                 onChange={(e) => onVolume(Number(e.target.value))}
-                className="mt-2 w-full accent-[hsl(var(--gold,45_80%_50%))]"
+                className="mt-2 w-full accent-primary"
               />
             </div>
           )}
