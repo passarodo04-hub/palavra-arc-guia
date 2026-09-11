@@ -67,7 +67,7 @@ function ReaderPage() {
   const prev = chNum > 1 ? chNum - 1 : null;
   const next = chNum < totalCh ? chNum + 1 : null;
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background pb-52">
       <header className="sticky top-0 z-30 bg-card/90 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between">
         <Link to="/biblia/$book" params={{ book }} className="text-sm text-muted-foreground inline-flex items-center gap-1">
           <List className="size-4" /> Capítulos
@@ -175,6 +175,22 @@ function ReaderPage() {
           )}
         </nav>
       </article>
+      {narration.available && (
+        <div className="fixed inset-x-0 bottom-[72px] z-40 px-3 sm:bottom-4">
+          <div className="mx-auto max-w-2xl">
+            <NarrationPlayer
+              state={narration.state}
+              totalSeconds={narration.totalSeconds}
+              resumeVerse={narration.resumeVerse}
+              onToggle={narration.toggle}
+              onStop={narration.stop}
+              onSeekRelative={narration.seekRelative}
+              onRate={narration.setRate}
+              onVolume={narration.setVolume}
+            />
+          </div>
+        </div>
+      )}
       <BottomNav />
     </div>
   );
