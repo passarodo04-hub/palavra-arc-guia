@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight, Heart, List } from "lucide-react";
 import { useLocalStorage } from "@/lib/storage";
 import { useEffect, useRef, useState } from "react";
 import { useBibleReads } from "@/hooks/use-bible-reads";
+import { useNarration } from "@/hooks/use-narration";
+import { NarrationPlayer } from "@/components/bible/NarrationPlayer";
 
 type Search = { v?: number };
 
@@ -37,6 +39,12 @@ function ReaderPage() {
     retry: false,
   });
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
+  const narration = useNarration({ translation, book, chapter: chNum, verses: ch?.verses });
+  const narratedVerse = narration.state.currentVerse;
+  useEffect(() => {
+    if (narratedVerse == null) return;
+    verseRefs.current[narratedVerse]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [narratedVerse]);
   useEffect(() => {
     if (!targetVerse || !ch) return;
     const el = verseRefs.current[targetVerse];
@@ -59,7 +67,7 @@ function ReaderPage() {
   const prev = chNum > 1 ? chNum - 1 : null;
   const next = chNum < totalCh ? chNum + 1 : null;
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background pb-52">
       <header className="sticky top-0 z-30 bg-card/90 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between">
         <Link to="/biblia/$book" params={{ book }} className="text-sm text-muted-foreground inline-flex items-center gap-1">
           <List className="size-4" /> Capítulos
@@ -116,11 +124,13 @@ function ReaderPage() {
               const isFav = favs.includes(key);
               const isHl = highlights.includes(key);
               const isTarget = targetVerse === v.verse;
+              const isNarrating = narratedVerse === v.verse;
               return (
                 <p
                   key={v.verse}
                   ref={(el) => { verseRefs.current[v.verse] = el; }}
-                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition px-2 -mx-2 ${isHl ? "bg-gold/10" : ""} ${isTarget ? "bg-gold/15 ring-2 ring-gold/40" : ""}`}
+                  aria-current={isNarrating ? "true" : undefined}
+                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition px-2 -mx-2 ${isHl ? "bg-gold/10" : ""} ${isTarget ? "bg-gold/15 ring-2 ring-gold/40" : ""} ${isNarrating ? "bg-primary/10 ring-2 ring-primary/40" : ""}`}
                   style={{ fontSize: `${fontSize}px` }}
                 >
                   <sup className="mr-1.5 text-xs font-sans font-bold text-gold">{v.verse}</sup>
@@ -165,6 +175,22 @@ function ReaderPage() {
           )}
         </nav>
       </article>
+      {narration.available && (
+        <div className="fixed inset-x-0 bottom-[72px] z-40 px-3 sm:bottom-4">
+          <div className="mx-auto max-w-2xl">
+            <NarrationPlayer
+              state={narration.state}
+              totalSeconds={narration.totalSeconds}
+              resumeVerse={narration.resumeVerse}
+              onToggle={narration.toggle}
+              onStop={narration.stop}
+              onSeekRelative={narration.seekRelative}
+              onRate={narration.setRate}
+              onVolume={narration.setVolume}
+            />
+          </div>
+        </div>
+      )}
       <BottomNav />
     </div>
   );
