@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { bibleBooks, TRANSLATIONS, type Translation } from "@/lib/bible-data";
 import { useTranslation } from "@/lib/translation-context";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Check, BookMarked, ChevronDown } from "lucide-react";
 
 export const Route = createFileRoute("/biblia/")({ component: BibliaPage });
@@ -13,13 +14,11 @@ function BibliaPage() {
   const [query, setQuery] = useState("");
   const { translation, setTranslation } = useTranslation();
   const [pending, setPending] = useState<Translation | null>(null);
-  const [open, setOpen] = useState(false);
   const books = bibleBooks.filter(
     (b) => b.testament === tab && b.name.toLowerCase().includes(query.toLowerCase()),
   );
   const current = TRANSLATIONS.find((t) => t.id === translation)!;
   const requestSwitch = (t: Translation) => {
-    setOpen(false);
     if (t === translation) return;
     setPending(t);
   };
@@ -126,22 +125,62 @@ function TranslationSelector({
   onSelect: (t: Translation) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ top: 0, left: 0, width: 256, maxHeight: 420 });
 
   useEffect(() => {
     if (!open) return;
-    const handle = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+    const updatePosition = () => {
+      const trigger = triggerRef.current;
+      if (!trigger) return;
+      const rect = trigger.getBoundingClientRect();
+      const viewportPadding = 12;
+      const gap = 8;
+      const menuHeight = Math.min(menuRef.current?.scrollHeight ?? 420, window.innerHeight - viewportPadding * 2);
+      const spaceBelow = window.innerHeight - rect.bottom - viewportPadding;
+      const spaceAbove = rect.top - viewportPadding;
+      const openUp = spaceBelow < menuHeight && spaceAbove > spaceBelow;
+      const width = Math.min(288, window.innerWidth - viewportPadding * 2);
+      const left = Math.min(
+        Math.max(viewportPadding, rect.right - width),
+        window.innerWidth - width - viewportPadding,
+      );
+      const maxHeight = Math.max(160, openUp ? spaceAbove - gap : spaceBelow - gap);
+      const top = openUp
+        ? Math.max(viewportPadding, rect.top - Math.min(menuHeight, maxHeight) - gap)
+        : rect.bottom + gap;
+      setPosition({ top, left, width, maxHeight });
+    };
+    const handlePointer = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (!triggerRef.current?.contains(target) && !menuRef.current?.contains(target)) {
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handle);
-    return () => document.removeEventListener("mousedown", handle);
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+      document.removeEventListener("mousedown", handlePointer);
+      document.removeEventListener("keydown", handleKey);
+    };
   }, [open]);
 
   return (
-    <div ref={ref} className="relative">
+    <div className="relative">
       <button
+        ref={triggerRef}
         type="button"
         aria-label="Escolher tradução da Bíblia"
         aria-expanded={open}
@@ -153,11 +192,13 @@ function TranslationSelector({
         <ChevronDown className={`size-4 opacity-80 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
-      {open && (
+      {open && typeof document !== "undefined" && createPortal(
         <div
+          ref={menuRef}
           role="listbox"
           aria-label="Traduções disponíveis"
-          className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-border bg-card p-2 shadow-soft animate-fade-up"
+          className="fixed z-[100] overflow-y-auto overscroll-contain rounded-2xl border border-border bg-card p-2 text-card-foreground shadow-soft animate-fade-up"
+          style={position}
         >
           {TRANSLATIONS.map((t) => {
             const selected = translation === t.id;
@@ -177,15 +218,16 @@ function TranslationSelector({
                     : "text-card-foreground hover:bg-secondary"
                 }`}
               >
-                <span className="flex flex-col">
+                <span className="flex min-w-0 flex-col">
                   <span>{t.name}</span>
-                  <span className="text-xs text-muted-foreground">{t.full}</span>
+                  <span className="text-xs leading-snug text-muted-foreground">{t.full}</span>
                 </span>
                 {selected && <Check className="size-4 text-gold" aria-hidden="true" />}
               </button>
             );
           })}
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );
