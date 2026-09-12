@@ -23,7 +23,7 @@ export class WebSpeechNarrationEngine implements NarrationEngine {
   private track: NarrationTrack | null = null;
   private index = 0;
   private listeners = new Set<NarrationListener>();
-  private manualStop = false;
+  private utteranceGeneration = 0;
   private state: NarrationState = {
     status: "idle",
     currentVerse: null,
@@ -61,9 +61,8 @@ export class WebSpeechNarrationEngine implements NarrationEngine {
 
   private cancel() {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-    this.manualStop = true;
+    this.utteranceGeneration += 1;
     window.speechSynthesis.cancel();
-    this.manualStop = false;
   }
 
   private speakCurrent() {
@@ -73,12 +72,13 @@ export class WebSpeechNarrationEngine implements NarrationEngine {
       this.emit({ status: "ended", currentVerse: null, positionSeconds: 0 });
       return;
     }
+    const generation = this.utteranceGeneration;
     const utt = new SpeechSynthesisUtterance(seg.text);
     utt.lang = "pt-BR";
     utt.rate = this.state.rate;
     utt.volume = this.state.volume;
     utt.onend = () => {
-      if (this.manualStop) return;
+      if (generation !== this.utteranceGeneration) return;
       this.index += 1;
       if (!this.track || this.index >= this.track.segments.length) {
         this.emit({ status: "ended", currentVerse: null, positionSeconds: 0 });
@@ -91,7 +91,7 @@ export class WebSpeechNarrationEngine implements NarrationEngine {
       this.speakCurrent();
     };
     utt.onerror = () => {
-      if (this.manualStop) return;
+      if (generation !== this.utteranceGeneration) return;
       this.emit({ status: "ended", currentVerse: null });
     };
     this.emit({

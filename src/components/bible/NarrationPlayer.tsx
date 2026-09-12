@@ -51,41 +51,43 @@ export function NarrationPlayer({
 
   return (
     <div className="rounded-2xl border border-border bg-card/90 backdrop-blur px-3 py-2.5 shadow-soft">
-      <div className="flex items-center gap-2">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex">
         <button
           type="button"
           onClick={onToggle}
           aria-label={playing ? "Pausar narração" : "Ouvir capítulo"}
-          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
+          className={`inline-flex min-w-0 items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-semibold transition sm:px-4 ${
             playing
               ? "bg-gold text-gold-foreground"
               : "bg-primary text-primary-foreground hover:bg-primary/90"
           }`}
         >
           {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
-          <span className="whitespace-nowrap">
+          <span className="truncate">
             {playing ? "Pausar" : active ? "Continuar" : "Ouvir capítulo"}
           </span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => onSeekRelative(-10)}
-          aria-label="Voltar 10 segundos"
-          className="size-9 shrink-0 rounded-full bg-secondary text-foreground inline-flex items-center justify-center hover:bg-secondary/80"
-        >
-          <RotateCcw className="size-4" />
-        </button>
-        <button
-          type="button"
-          onClick={() => onSeekRelative(10)}
-          aria-label="Avançar 10 segundos"
-          className="size-9 shrink-0 rounded-full bg-secondary text-foreground inline-flex items-center justify-center hover:bg-secondary/80"
-        >
-          <RotateCw className="size-4" />
-        </button>
+        <div className="col-span-2 flex items-center justify-center gap-2 sm:order-none sm:contents">
+          <button
+            type="button"
+            onClick={() => onSeekRelative(-10)}
+            aria-label="Voltar 10 segundos"
+            className="size-9 shrink-0 rounded-full bg-secondary text-foreground inline-flex items-center justify-center hover:bg-secondary/80"
+          >
+            <RotateCcw className="size-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => onSeekRelative(10)}
+            aria-label="Avançar 10 segundos"
+            className="size-9 shrink-0 rounded-full bg-secondary text-foreground inline-flex items-center justify-center hover:bg-secondary/80"
+          >
+            <RotateCw className="size-4" />
+          </button>
+        </div>
 
-        <div className="relative ml-auto flex items-center gap-1">
+        <div className="relative ml-auto flex shrink-0 items-center gap-1">
           <button
             type="button"
             onClick={() => {
