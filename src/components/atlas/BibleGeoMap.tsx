@@ -1,7 +1,9 @@
 import { useEffect, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
+import { maplibreGL } from "@maplibre/maplibre-gl-leaflet";
 import "leaflet/dist/leaflet.css";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { BIBLE_PLACES, isPlaceDiscovered } from "@/lib/bible-places";
 
 /**
@@ -30,6 +32,24 @@ function FitBounds({ bounds }: { bounds: [number, number][] }) {
   return null;
 }
 
+function PortugueseBaseMap() {
+  const map = useMap();
+
+  useEffect(() => {
+    const layer = maplibreGL({ style: "/map-styles/biblical-pt.json" }).addTo(map);
+    const attribution =
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · <a href="https://openfreemap.org/">OpenFreeMap</a>';
+    map.attributionControl.addAttribution(attribution);
+
+    return () => {
+      map.removeLayer(layer);
+      map.attributionControl.removeAttribution(attribution);
+    };
+  }, [map]);
+
+  return null;
+}
+
 export default function BibleGeoMap({
   readSet,
   onOpen,
@@ -50,11 +70,7 @@ export default function BibleGeoMap({
       style={{ height: "min(70vh, 460px)", width: "100%" }}
       className="z-0"
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxZoom={18}
-      />
+      <PortugueseBaseMap />
       <FitBounds bounds={bounds} />
       {BIBLE_PLACES.map((p) => {
         const open = isPlaceDiscovered(p, readSet);
