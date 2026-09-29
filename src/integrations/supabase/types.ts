@@ -38,6 +38,42 @@ export type Database = {
         }
         Relationships: []
       }
+      bible_highlights: {
+        Row: {
+          book: string
+          chapter: number
+          color: string
+          created_at: string
+          id: string
+          translation: string
+          updated_at: string
+          user_id: string
+          verse: number | null
+        }
+        Insert: {
+          book: string
+          chapter: number
+          color: string
+          created_at?: string
+          id?: string
+          translation: string
+          updated_at?: string
+          user_id: string
+          verse?: number | null
+        }
+        Update: {
+          book?: string
+          chapter?: number
+          color?: string
+          created_at?: string
+          id?: string
+          translation?: string
+          updated_at?: string
+          user_id?: string
+          verse?: number | null
+        }
+        Relationships: []
+      }
       calendar_event_completions: {
         Row: {
           completed_at: string
