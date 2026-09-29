@@ -1,0 +1,1 @@
+Use the bundled MapLibre worker URL in BibleGeoMap before mounting the OpenFreeMap Leaflet layer, because Vite's default optimized worker URL does not resolve in the preview.
