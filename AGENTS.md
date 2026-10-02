@@ -1,1 +1,3 @@
 Use the bundled MapLibre worker URL in BibleGeoMap before mounting the OpenFreeMap Leaflet layer, because Vite's default optimized worker URL does not resolve in the preview.
+
+Store Bible highlights by translation/book/chapter/optional verse: guests use local storage and signed-in readers use the existing owner-only cloud table, so marks survive navigation and account re-entry without mixing translations.
