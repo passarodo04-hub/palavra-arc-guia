@@ -68,7 +68,7 @@ export function useBibleHighlights() {
     const migrate = async () => {
       if (missing.length) {
         const { error } = await supabase.from("bible_highlights")
-          .insert(missing.map((h) => ({ ...h, user_id: user.id })));
+          .upsert(missing.map((h) => ({ ...h, user_id: user.id })), { onConflict: "user_id,translation,book,chapter,verse", ignoreDuplicates: true });
         if (error) { migrating.current = false; setError("Não foi possível sincronizar as marcações deste aparelho."); return; }
       }
       writeGuest([]);
