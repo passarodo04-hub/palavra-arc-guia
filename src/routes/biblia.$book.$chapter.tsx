@@ -3,9 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { BottomNav } from "@/components/BottomNav";
 import { getBook, loadChapter } from "@/lib/bible-data";
 import { useTranslation } from "@/lib/translation-context";
-import { ChevronLeft, ChevronRight, Heart, List } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Highlighter, List } from "lucide-react";
 import { useLocalStorage } from "@/lib/storage";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { HighlightPicker } from "@/components/bible/HighlightPicker";
+import { highlightKey, useBibleHighlights, type HighlightLocation } from "@/lib/bible-highlights";
 import { useBibleReads } from "@/hooks/use-bible-reads";
 import { useNarration } from "@/hooks/use-narration";
 import { NarrationPlayer } from "@/components/bible/NarrationPlayer";
@@ -14,6 +17,13 @@ type Search = { v?: number };
 
 export const Route = createFileRoute("/biblia/$book/$chapter")({
   component: ReaderPage,
+  head: ({ params }) => ({ meta: [
+    { title: `${getBook(params.book)?.name ?? "Bíblia"} ${params.chapter} | Palavra+` },
+    { name: "description", content: "Leia e marque versículos da Bíblia no Palavra+." },
+    { property: "og:title", content: `${getBook(params.book)?.name ?? "Bíblia"} ${params.chapter} | Palavra+` },
+    { property: "og:description", content: "Leia e marque versículos da Bíblia no Palavra+." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
+  ] }),
   validateSearch: (s: Record<string, unknown>): Search => ({
     v: s.v != null ? Number(s.v) || undefined : undefined,
   }),
@@ -25,10 +35,16 @@ function ReaderPage() {
   const chNum = parseInt(chapter, 10);
   const bookInfo = getBook(book);
   const [favs, setFavs] = useLocalStorage<string[]>("fav-verses", []);
-  const [highlights, setHighlights] = useLocalStorage<string[]>("highlight-verses", []);
   const [fontSize, setFontSize] = useLocalStorage<number>("font-size", 18);
   const [verseInput, setVerseInput] = useState("");
+  const [selectedVerse, setSelectedVerse] = useState<number | null>(null);
+  const [chapterPicker, setChapterPicker] = useState(false);
   const { translation } = useTranslation();
+  const { items: highlights, setHighlight, busy: highlightBusy, error: highlightError } = useBibleHighlights();
+  const currentLocation = (verse: number | null): HighlightLocation => ({ translation, book, chapter: chNum, verse });
+  const chapterMark = highlights.find((h) => highlightKey(h) === highlightKey(currentLocation(null)));
+  const selectedMark = selectedVerse == null ? undefined : highlights.find((h) => highlightKey(h) === highlightKey(currentLocation(selectedVerse)));
+  useEffect(() => { setSelectedVerse(null); setChapterPicker(false); }, [book, chNum, translation]);
   const { isRead, toggle } = useBibleReads();
   const chapterRead = isRead(book, chNum);
   const { data: ch, isLoading, error } = useQuery({
@@ -58,10 +74,6 @@ function ReaderPage() {
   const toggleFav = (v: number) => {
     const key = `${book}-${chNum}-${v}`;
     setFavs(favs.includes(key) ? favs.filter((f) => f !== key) : [...favs, key]);
-  };
-  const toggleHl = (v: number) => {
-    const key = `${book}-${chNum}-${v}`;
-    setHighlights(highlights.includes(key) ? highlights.filter((f) => f !== key) : [...highlights, key]);
   };
   const totalCh = bookInfo?.chapters ?? 1;
   const prev = chNum > 1 ? chNum - 1 : null;
@@ -106,6 +118,13 @@ function ReaderPage() {
             <button type="submit" className="rounded-full bg-gold px-4 py-2 text-xs font-semibold text-gold-foreground">Ir</button>
           </form>
         )}
+        {ch && <div className="mb-6">
+          <Button type="button" variant="outline" size="sm" onClick={() => setChapterPicker(!chapterPicker)} aria-expanded={chapterPicker}>
+            <Highlighter /> {chapterMark ? "Alterar marcação do capítulo" : `Marcar capítulo — ${bookInfo?.name} ${chNum}`}
+          </Button>
+          {chapterPicker && <div className="mt-2"><HighlightPicker color={chapterMark?.color} disabled={highlightBusy} onChange={async (color) => { await setHighlight(currentLocation(null), color); setChapterPicker(false); }} /></div>}
+          {highlightError && <p role="alert" className="mt-2 text-sm text-destructive">{highlightError}</p>}
+        </div>}
         {isLoading ? (
           <div className="space-y-3 animate-pulse">
             {Array.from({ length: 8 }).map((_, i) => (
@@ -122,7 +141,8 @@ function ReaderPage() {
             {ch.verses.map((v) => {
               const key = `${book}-${chNum}-${v.verse}`;
               const isFav = favs.includes(key);
-              const isHl = highlights.includes(key);
+              const mark = highlights.find((h) => highlightKey(h) === highlightKey(currentLocation(v.verse)));
+              const color = mark?.color ?? chapterMark?.color;
               const isTarget = targetVerse === v.verse;
               const isNarrating = narratedVerse === v.verse;
               return (
@@ -130,14 +150,21 @@ function ReaderPage() {
                   key={v.verse}
                   ref={(el) => { verseRefs.current[v.verse] = el; }}
                   aria-current={isNarrating ? "true" : undefined}
-                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition px-2 -mx-2 ${isHl ? "bg-gold/10" : ""} ${isTarget ? "bg-gold/15 ring-2 ring-gold/40" : ""} ${isNarrating ? "bg-primary/10 ring-2 ring-primary/40" : ""}`}
+                  className={`font-serif leading-relaxed text-card-foreground group rounded-md transition px-2 -mx-2 ${color ? `highlight-verse-${color}` : ""} ${isTarget ? "ring-2 ring-gold/40" : ""} ${isNarrating ? "ring-2 ring-primary/40" : ""}`}
                   style={{ fontSize: `${fontSize}px` }}
                 >
                   <sup className="mr-1.5 text-xs font-sans font-bold text-gold">{v.verse}</sup>
-                  <span onDoubleClick={() => toggleHl(v.verse)}>{v.text}</span>
+                  <span onClick={() => setSelectedVerse(selectedVerse === v.verse ? null : v.verse)} className="cursor-pointer" title="Selecionar versículo para marcar">{v.text}</span>
                   <button onClick={() => toggleFav(v.verse)} className="ml-2 opacity-60 hover:opacity-100 transition" aria-label="Favoritar">
                     <Heart className={`inline size-3.5 ${isFav ? "fill-gold text-gold" : "text-muted-foreground"}`} />
                   </button>
+                  <Button type="button" variant="ghost" size="icon" onClick={() => setSelectedVerse(selectedVerse === v.verse ? null : v.verse)}
+                    title="Marcar texto" aria-label={`Marcar texto, versículo ${v.verse}`} aria-expanded={selectedVerse === v.verse}
+                    className="ml-1 size-9 align-middle"><Highlighter className={mark ? "text-primary" : "text-muted-foreground"} /></Button>
+                  {selectedVerse === v.verse && <span className="mt-2 block text-sm" onClick={(e) => e.stopPropagation()}>
+                    <span className="mb-1 block font-sans font-medium">Marcar texto · versículo {v.verse}</span>
+                    <HighlightPicker color={selectedMark?.color} disabled={highlightBusy} onChange={async (next) => { await setHighlight(currentLocation(v.verse), next); setSelectedVerse(null); }} onClose={() => setSelectedVerse(null)} />
+                  </span>}
                 </p>
               );
             })}
