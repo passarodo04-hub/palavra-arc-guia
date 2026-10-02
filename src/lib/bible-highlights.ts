@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
@@ -39,6 +39,7 @@ export function useBibleHighlights() {
   const [guest, setGuest] = useState<BibleHighlight[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const migrating = useRef(false);
   useEffect(() => {
     const onChange = () => setGuest(readGuest());
     onChange();
@@ -60,20 +61,21 @@ export function useBibleHighlights() {
   // Move guest-only marks to the signed-in account once; upsert by location,
   // preserving existing account colors and keeping local data on failure.
   useEffect(() => {
-    if (!user || !cloud.data || !guest.length) return;
-    let cancelled = false;
+    if (!user || !cloud.data || !guest.length || migrating.current) return;
+    migrating.current = true;
     const existing = new Set(cloud.data.map(highlightKey));
     const missing = guest.filter((h) => !existing.has(highlightKey(h)));
     const migrate = async () => {
       if (missing.length) {
         const { error } = await supabase.from("bible_highlights")
           .insert(missing.map((h) => ({ ...h, user_id: user.id })));
-        if (error || cancelled) return;
+        if (error) { migrating.current = false; setError("Não foi possível sincronizar as marcações deste aparelho."); return; }
       }
-      if (!cancelled) { writeGuest([]); await qc.invalidateQueries({ queryKey }); }
+      writeGuest([]);
+      await qc.invalidateQueries({ queryKey });
+      migrating.current = false;
     };
     void migrate();
-    return () => { cancelled = true; };
   }, [user, cloud.data, guest, qc]);
 
   const items = user ? (cloud.data ?? []) : guest;
@@ -89,9 +91,11 @@ export function useBibleHighlights() {
     }
     setBusy(true);
     try {
+      const deletion = supabase.from("bible_highlights").delete().eq("user_id", user.id)
+        .eq("translation", location.translation).eq("book", location.book).eq("chapter", location.chapter);
       const request = color
         ? supabase.from("bible_highlights").upsert({ ...location, color, user_id: user.id }, { onConflict: "user_id,translation,book,chapter,verse" })
-        : supabase.from("bible_highlights").delete().eq("user_id", user.id).eq("translation", location.translation).eq("book", location.book).eq("chapter", location.chapter)[location.verse === null ? "is" : "eq"]("verse", location.verse);
+        : location.verse === null ? deletion.is("verse", null) : deletion.eq("verse", location.verse);
       const { error } = await request;
       if (error) throw error;
       await qc.invalidateQueries({ queryKey });
