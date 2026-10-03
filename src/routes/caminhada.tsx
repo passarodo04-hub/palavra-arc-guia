@@ -31,7 +31,7 @@ export const Route = createFileRoute("/caminhada")({
   }),
   errorComponent: ({ error }) => (
     <div role="alert" className="min-h-screen bg-background p-8 text-center text-muted-foreground">
-      {error.message}
+      {error instanceof Error ? error.message : String(error)}
     </div>
   ),
   component: CaminhadaPage,

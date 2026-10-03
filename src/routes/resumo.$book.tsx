@@ -17,7 +17,7 @@ export const Route = createFileRoute("/resumo/$book")({
   ),
   errorComponent: ({ error }) => (
     <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground">
-      {error.message}
+      {error instanceof Error ? error.message : String(error)}
     </div>
   ),
   head: ({ loaderData }) => ({

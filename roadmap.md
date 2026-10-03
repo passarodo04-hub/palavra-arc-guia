@@ -1,3 +1,3 @@
-- [ ] Integrar seleção de marca-texto e cores ao leitor existente, incluindo capítulos.
-- [ ] Mostrar, abrir, editar e remover marcações em Favoritos.
-- [ ] Validar persistência, telas pequenas e grandes, temas e verificação automática.
+- [x] Integrar seleção de marca-texto e cores ao leitor existente, incluindo capítulos.
+- [x] Mostrar, abrir, editar e remover marcações em Favoritos.
+- [x] Validar persistência, telas pequenas e grandes, temas e verificação automática.
