@@ -9,190 +9,75 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AnotacoesRouteImport } from './routes/anotacoes'
-import { Route as BibliaRouteImport } from './routes/biblia'
-import { Route as BuscaRouteImport } from './routes/busca'
-import { Route as CalendarioRouteImport } from './routes/calendario'
-import { Route as CaminhadaRouteImport } from './routes/caminhada'
-import { Route as ComunidadeRouteImport } from './routes/comunidade'
-import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
-import { Route as ContaRouteImport } from './routes/conta'
-import { Route as DenominacoesRouteImport } from './routes/denominacoes'
-import { Route as DevocionalRouteImport } from './routes/devocional'
-import { Route as DevocionalSalvosRouteImport } from './routes/devocional-salvos'
-import { Route as EstudosRouteImport } from './routes/estudos'
-import { Route as FavoritosRouteImport } from './routes/favoritos'
-import { Route as HarpaRouteImport } from './routes/harpa'
-import { Route as JuizesRouteImport } from './routes/juizes'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as MapaRouteImport } from './routes/mapa'
-import { Route as MentorRouteImport } from './routes/mentor'
-import { Route as PeregrinoRouteImport } from './routes/peregrino'
-import { Route as PrivacidadeRouteImport } from './routes/privacidade'
-import { Route as ReisRouteImport } from './routes/reis'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as ResumoRouteImport } from './routes/resumo'
-import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TermosRouteImport } from './routes/termos'
-import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
-import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
-import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
-import { Route as CampanhasCasaisRouteImport } from './routes/campanhas.casais'
-import { Route as CampanhasConhecimentoRouteImport } from './routes/campanhas.conhecimento'
-import { Route as CampanhasCrescimentoRouteImport } from './routes/campanhas.crescimento'
-import { Route as CampanhasCriancasRouteImport } from './routes/campanhas.criancas'
-import { Route as CampanhasDevocionalDiarioRouteImport } from './routes/campanhas.devocional-diario'
-import { Route as CampanhasFamiliaRouteImport } from './routes/campanhas.familia'
-import { Route as CampanhasGratidaoRouteImport } from './routes/campanhas.gratidao'
-import { Route as CampanhasHarpaDesafioRouteImport } from './routes/campanhas.harpa-desafio'
-import { Route as CampanhasJejumRouteImport } from './routes/campanhas.jejum'
-import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
-import { Route as CampanhasOracaoRouteImport } from './routes/campanhas.oracao'
-import { Route as CampanhasQuizRouteImport } from './routes/campanhas.quiz'
-import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
-import { Route as ComunidadeIdRouteImport } from './routes/comunidade.$id'
-import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
-import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
-import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
-import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
-import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
-import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
-import { Route as JuizesIndexRouteImport } from './routes/juizes.index'
-import { Route as JuizesIdRouteImport } from './routes/juizes.$id'
-import { Route as MapaIndexRouteImport } from './routes/mapa.index'
-import { Route as MapaIdRouteImport } from './routes/mapa.$id'
-import { Route as ReisIndexRouteImport } from './routes/reis.index'
-import { Route as ReisIdRouteImport } from './routes/reis.$id'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResumoRouteImport } from './routes/resumo'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReisRouteImport } from './routes/reis'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as PeregrinoRouteImport } from './routes/peregrino'
+import { Route as MentorRouteImport } from './routes/mentor'
+import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as JuizesRouteImport } from './routes/juizes'
+import { Route as HarpaRouteImport } from './routes/harpa'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EstudosRouteImport } from './routes/estudos'
+import { Route as DevocionalSalvosRouteImport } from './routes/devocional-salvos'
+import { Route as DevocionalRouteImport } from './routes/devocional'
+import { Route as DenominacoesRouteImport } from './routes/denominacoes'
+import { Route as ContaRouteImport } from './routes/conta'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as ComunidadeRouteImport } from './routes/comunidade'
+import { Route as CaminhadaRouteImport } from './routes/caminhada'
+import { Route as CalendarioRouteImport } from './routes/calendario'
+import { Route as BuscaRouteImport } from './routes/busca'
+import { Route as BibliaRouteImport } from './routes/biblia'
+import { Route as AnotacoesRouteImport } from './routes/anotacoes'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResumoIndexRouteImport } from './routes/resumo.index'
+import { Route as ReisIndexRouteImport } from './routes/reis.index'
+import { Route as MapaIndexRouteImport } from './routes/mapa.index'
+import { Route as JuizesIndexRouteImport } from './routes/juizes.index'
+import { Route as HarpaIndexRouteImport } from './routes/harpa.index'
+import { Route as EstudosIndexRouteImport } from './routes/estudos.index'
+import { Route as DenominacoesIndexRouteImport } from './routes/denominacoes.index'
+import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
+import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
+import { Route as BibliaIndexRouteImport } from './routes/biblia.index'
 import { Route as ResumoBookRouteImport } from './routes/resumo.$book'
-import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
-import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
-import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
-import { Route as CampanhasCategoriaCatIdRouteImport } from './routes/campanhas.categoria.$catId'
-import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
+import { Route as ReisIdRouteImport } from './routes/reis.$id'
+import { Route as MapaIdRouteImport } from './routes/mapa.$id'
+import { Route as JuizesIdRouteImport } from './routes/juizes.$id'
+import { Route as HarpaIdRouteImport } from './routes/harpa.$id'
+import { Route as EstudosIdRouteImport } from './routes/estudos.$id'
+import { Route as DenominacoesIdRouteImport } from './routes/denominacoes.$id'
+import { Route as ComunidadeIdRouteImport } from './routes/comunidade.$id'
+import { Route as CampanhasQuizRouteImport } from './routes/campanhas.quiz'
+import { Route as CampanhasOracaoRouteImport } from './routes/campanhas.oracao'
+import { Route as CampanhasLeiaBibliaRouteImport } from './routes/campanhas.leia-biblia'
+import { Route as CampanhasJejumRouteImport } from './routes/campanhas.jejum'
+import { Route as CampanhasHarpaDesafioRouteImport } from './routes/campanhas.harpa-desafio'
+import { Route as CampanhasGratidaoRouteImport } from './routes/campanhas.gratidao'
+import { Route as CampanhasFamiliaRouteImport } from './routes/campanhas.familia'
+import { Route as CampanhasDevocionalDiarioRouteImport } from './routes/campanhas.devocional-diario'
+import { Route as CampanhasCriancasRouteImport } from './routes/campanhas.criancas'
+import { Route as CampanhasCrescimentoRouteImport } from './routes/campanhas.crescimento'
+import { Route as CampanhasConhecimentoRouteImport } from './routes/campanhas.conhecimento'
+import { Route as CampanhasCasaisRouteImport } from './routes/campanhas.casais'
+import { Route as BibliaBookRouteImport } from './routes/biblia.$book'
 import { Route as CampanhasJornadaBiblicaIndexRouteImport } from './routes/campanhas.jornada-biblica.index'
+import { Route as BibliaBookIndexRouteImport } from './routes/biblia.$book.index'
 import { Route as CampanhasJornadaIdRouteImport } from './routes/campanhas.jornada.$id'
+import { Route as CampanhasCertificadoIdRouteImport } from './routes/campanhas.certificado.$id'
+import { Route as CampanhasCategoriaCatIdRouteImport } from './routes/campanhas.categoria.$catId'
+import { Route as BibliaBookChapterRouteImport } from './routes/biblia.$book.$chapter'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as CampanhasJornadaBiblicaEtapaStageIdRouteImport } from './routes/campanhas.jornada-biblica.etapa.$stageId'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AnotacoesRoute = AnotacoesRouteImport.update({
-  id: '/anotacoes',
-  path: '/anotacoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BibliaRoute = BibliaRouteImport.update({
-  id: '/biblia',
-  path: '/biblia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuscaRoute = BuscaRouteImport.update({
-  id: '/busca',
-  path: '/busca',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CalendarioRoute = CalendarioRouteImport.update({
-  id: '/calendario',
-  path: '/calendario',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CaminhadaRoute = CaminhadaRouteImport.update({
-  id: '/caminhada',
-  path: '/caminhada',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComunidadeRoute = ComunidadeRouteImport.update({
-  id: '/comunidade',
-  path: '/comunidade',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContaRoute = ContaRouteImport.update({
-  id: '/conta',
-  path: '/conta',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DenominacoesRoute = DenominacoesRouteImport.update({
-  id: '/denominacoes',
-  path: '/denominacoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevocionalRoute = DevocionalRouteImport.update({
-  id: '/devocional',
-  path: '/devocional',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevocionalSalvosRoute = DevocionalSalvosRouteImport.update({
-  id: '/devocional-salvos',
-  path: '/devocional-salvos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstudosRoute = EstudosRouteImport.update({
-  id: '/estudos',
-  path: '/estudos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FavoritosRoute = FavoritosRouteImport.update({
-  id: '/favoritos',
-  path: '/favoritos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HarpaRoute = HarpaRouteImport.update({
-  id: '/harpa',
-  path: '/harpa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JuizesRoute = JuizesRouteImport.update({
-  id: '/juizes',
-  path: '/juizes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MapaRoute = MapaRouteImport.update({
-  id: '/mapa',
-  path: '/mapa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MentorRoute = MentorRouteImport.update({
-  id: '/mentor',
-  path: '/mentor',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PeregrinoRoute = PeregrinoRouteImport.update({
-  id: '/peregrino',
-  path: '/peregrino',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacidadeRoute = PrivacidadeRouteImport.update({
-  id: '/privacidade',
-  path: '/privacidade',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReisRoute = ReisRouteImport.update({
-  id: '/reis',
-  path: '/reis',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResumoRoute = ResumoRouteImport.update({
-  id: '/resumo',
-  path: '/resumo',
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -200,9 +85,169 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TermosRoute = TermosRouteImport.update({
-  id: '/termos',
-  path: '/termos',
+const ResumoRoute = ResumoRouteImport.update({
+  id: '/resumo',
+  path: '/resumo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReisRoute = ReisRouteImport.update({
+  id: '/reis',
+  path: '/reis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeregrinoRoute = PeregrinoRouteImport.update({
+  id: '/peregrino',
+  path: '/peregrino',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorRoute = MentorRouteImport.update({
+  id: '/mentor',
+  path: '/mentor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapaRoute = MapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JuizesRoute = JuizesRouteImport.update({
+  id: '/juizes',
+  path: '/juizes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HarpaRoute = HarpaRouteImport.update({
+  id: '/harpa',
+  path: '/harpa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstudosRoute = EstudosRouteImport.update({
+  id: '/estudos',
+  path: '/estudos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevocionalSalvosRoute = DevocionalSalvosRouteImport.update({
+  id: '/devocional-salvos',
+  path: '/devocional-salvos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevocionalRoute = DevocionalRouteImport.update({
+  id: '/devocional',
+  path: '/devocional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DenominacoesRoute = DenominacoesRouteImport.update({
+  id: '/denominacoes',
+  path: '/denominacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContaRoute = ContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeRoute = ComunidadeRouteImport.update({
+  id: '/comunidade',
+  path: '/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaminhadaRoute = CaminhadaRouteImport.update({
+  id: '/caminhada',
+  path: '/caminhada',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarioRoute = CalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscaRoute = BuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliaRoute = BibliaRouteImport.update({
+  id: '/biblia',
+  path: '/biblia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnotacoesRoute = AnotacoesRouteImport.update({
+  id: '/anotacoes',
+  path: '/anotacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumoIndexRoute = ResumoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResumoRoute,
+} as any)
+const ReisIndexRoute = ReisIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ReisRoute,
+} as any)
+const MapaIndexRoute = MapaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MapaRoute,
+} as any)
+const JuizesIndexRoute = JuizesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => JuizesRoute,
+} as any)
+const HarpaIndexRoute = HarpaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HarpaRoute,
+} as any)
+const EstudosIndexRoute = EstudosIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EstudosRoute,
+} as any)
+const DenominacoesIndexRoute = DenominacoesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DenominacoesRoute,
+} as any)
+const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ComunidadeRoute,
+} as any)
+const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
+  id: '/campanhas/',
+  path: '/campanhas/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BibliaIndexRoute = BibliaIndexRouteImport.update({
@@ -210,34 +255,79 @@ const BibliaIndexRoute = BibliaIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BibliaRoute,
 } as any)
-const BibliaBookRoute = BibliaBookRouteImport.update({
+const ResumoBookRoute = ResumoBookRouteImport.update({
   id: '/$book',
   path: '/$book',
-  getParentRoute: () => BibliaRoute,
+  getParentRoute: () => ResumoRoute,
 } as any)
-const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
-  id: '/campanhas/',
-  path: '/campanhas/',
+const ReisIdRoute = ReisIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ReisRoute,
+} as any)
+const MapaIdRoute = MapaIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MapaRoute,
+} as any)
+const JuizesIdRoute = JuizesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => JuizesRoute,
+} as any)
+const HarpaIdRoute = HarpaIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => HarpaRoute,
+} as any)
+const EstudosIdRoute = EstudosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => EstudosRoute,
+} as any)
+const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DenominacoesRoute,
+} as any)
+const ComunidadeIdRoute = ComunidadeIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ComunidadeRoute,
+} as any)
+const CampanhasQuizRoute = CampanhasQuizRouteImport.update({
+  id: '/campanhas/quiz',
+  path: '/campanhas/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasCasaisRoute = CampanhasCasaisRouteImport.update({
-  id: '/campanhas/casais',
-  path: '/campanhas/casais',
+const CampanhasOracaoRoute = CampanhasOracaoRouteImport.update({
+  id: '/campanhas/oracao',
+  path: '/campanhas/oracao',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasConhecimentoRoute = CampanhasConhecimentoRouteImport.update({
-  id: '/campanhas/conhecimento',
-  path: '/campanhas/conhecimento',
+const CampanhasLeiaBibliaRoute = CampanhasLeiaBibliaRouteImport.update({
+  id: '/campanhas/leia-biblia',
+  path: '/campanhas/leia-biblia',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasCrescimentoRoute = CampanhasCrescimentoRouteImport.update({
-  id: '/campanhas/crescimento',
-  path: '/campanhas/crescimento',
+const CampanhasJejumRoute = CampanhasJejumRouteImport.update({
+  id: '/campanhas/jejum',
+  path: '/campanhas/jejum',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasCriancasRoute = CampanhasCriancasRouteImport.update({
-  id: '/campanhas/criancas',
-  path: '/campanhas/criancas',
+const CampanhasHarpaDesafioRoute = CampanhasHarpaDesafioRouteImport.update({
+  id: '/campanhas/harpa-desafio',
+  path: '/campanhas/harpa-desafio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasGratidaoRoute = CampanhasGratidaoRouteImport.update({
+  id: '/campanhas/gratidao',
+  path: '/campanhas/gratidao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasFamiliaRoute = CampanhasFamiliaRouteImport.update({
+  id: '/campanhas/familia',
+  path: '/campanhas/familia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CampanhasDevocionalDiarioRoute =
@@ -246,145 +336,30 @@ const CampanhasDevocionalDiarioRoute =
     path: '/campanhas/devocional-diario',
     getParentRoute: () => rootRouteImport,
   } as any)
-const CampanhasFamiliaRoute = CampanhasFamiliaRouteImport.update({
-  id: '/campanhas/familia',
-  path: '/campanhas/familia',
+const CampanhasCriancasRoute = CampanhasCriancasRouteImport.update({
+  id: '/campanhas/criancas',
+  path: '/campanhas/criancas',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasGratidaoRoute = CampanhasGratidaoRouteImport.update({
-  id: '/campanhas/gratidao',
-  path: '/campanhas/gratidao',
+const CampanhasCrescimentoRoute = CampanhasCrescimentoRouteImport.update({
+  id: '/campanhas/crescimento',
+  path: '/campanhas/crescimento',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasHarpaDesafioRoute = CampanhasHarpaDesafioRouteImport.update({
-  id: '/campanhas/harpa-desafio',
-  path: '/campanhas/harpa-desafio',
+const CampanhasConhecimentoRoute = CampanhasConhecimentoRouteImport.update({
+  id: '/campanhas/conhecimento',
+  path: '/campanhas/conhecimento',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasJejumRoute = CampanhasJejumRouteImport.update({
-  id: '/campanhas/jejum',
-  path: '/campanhas/jejum',
+const CampanhasCasaisRoute = CampanhasCasaisRouteImport.update({
+  id: '/campanhas/casais',
+  path: '/campanhas/casais',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampanhasLeiaBibliaRoute = CampanhasLeiaBibliaRouteImport.update({
-  id: '/campanhas/leia-biblia',
-  path: '/campanhas/leia-biblia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CampanhasOracaoRoute = CampanhasOracaoRouteImport.update({
-  id: '/campanhas/oracao',
-  path: '/campanhas/oracao',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CampanhasQuizRoute = CampanhasQuizRouteImport.update({
-  id: '/campanhas/quiz',
-  path: '/campanhas/quiz',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ComunidadeRoute,
-} as any)
-const ComunidadeIdRoute = ComunidadeIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ComunidadeRoute,
-} as any)
-const DenominacoesIndexRoute = DenominacoesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DenominacoesRoute,
-} as any)
-const DenominacoesIdRoute = DenominacoesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => DenominacoesRoute,
-} as any)
-const EstudosIndexRoute = EstudosIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EstudosRoute,
-} as any)
-const EstudosIdRoute = EstudosIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => EstudosRoute,
-} as any)
-const HarpaIndexRoute = HarpaIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => HarpaRoute,
-} as any)
-const HarpaIdRoute = HarpaIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => HarpaRoute,
-} as any)
-const JuizesIndexRoute = JuizesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => JuizesRoute,
-} as any)
-const JuizesIdRoute = JuizesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => JuizesRoute,
-} as any)
-const MapaIndexRoute = MapaIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => MapaRoute,
-} as any)
-const MapaIdRoute = MapaIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => MapaRoute,
-} as any)
-const ReisIndexRoute = ReisIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ReisRoute,
-} as any)
-const ReisIdRoute = ReisIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ReisRoute,
-} as any)
-const ResumoIndexRoute = ResumoIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ResumoRoute,
-} as any)
-const ResumoBookRoute = ResumoBookRouteImport.update({
+const BibliaBookRoute = BibliaBookRouteImport.update({
   id: '/$book',
   path: '/$book',
-  getParentRoute: () => ResumoRoute,
-} as any)
-const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
-  id: '/api/public/health',
-  path: '/api/public/health',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BibliaBookIndexRoute = BibliaBookIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BibliaBookRoute,
-} as any)
-const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
-  id: '/$chapter',
-  path: '/$chapter',
-  getParentRoute: () => BibliaBookRoute,
-} as any)
-const CampanhasCategoriaCatIdRoute = CampanhasCategoriaCatIdRouteImport.update({
-  id: '/campanhas/categoria/$catId',
-  path: '/campanhas/categoria/$catId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CampanhasCertificadoIdRoute = CampanhasCertificadoIdRouteImport.update({
-  id: '/campanhas/certificado/$id',
-  path: '/campanhas/certificado/$id',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => BibliaRoute,
 } as any)
 const CampanhasJornadaBiblicaIndexRoute =
   CampanhasJornadaBiblicaIndexRouteImport.update({
@@ -392,9 +367,34 @@ const CampanhasJornadaBiblicaIndexRoute =
     path: '/campanhas/jornada-biblica/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const BibliaBookIndexRoute = BibliaBookIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BibliaBookRoute,
+} as any)
 const CampanhasJornadaIdRoute = CampanhasJornadaIdRouteImport.update({
   id: '/campanhas/jornada/$id',
   path: '/campanhas/jornada/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasCertificadoIdRoute = CampanhasCertificadoIdRouteImport.update({
+  id: '/campanhas/certificado/$id',
+  path: '/campanhas/certificado/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasCategoriaCatIdRoute = CampanhasCategoriaCatIdRouteImport.update({
+  id: '/campanhas/categoria/$catId',
+  path: '/campanhas/categoria/$catId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliaBookChapterRoute = BibliaBookChapterRouteImport.update({
+  id: '/$chapter',
+  path: '/$chapter',
+  getParentRoute: () => BibliaBookRoute,
+} as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CampanhasJornadaBiblicaEtapaStageIdRoute =
@@ -840,172 +840,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/anotacoes': {
-      id: '/anotacoes'
-      path: '/anotacoes'
-      fullPath: '/anotacoes'
-      preLoaderRoute: typeof AnotacoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/biblia': {
-      id: '/biblia'
-      path: '/biblia'
-      fullPath: '/biblia'
-      preLoaderRoute: typeof BibliaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/busca': {
-      id: '/busca'
-      path: '/busca'
-      fullPath: '/busca'
-      preLoaderRoute: typeof BuscaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/calendario': {
-      id: '/calendario'
-      path: '/calendario'
-      fullPath: '/calendario'
-      preLoaderRoute: typeof CalendarioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/caminhada': {
-      id: '/caminhada'
-      path: '/caminhada'
-      fullPath: '/caminhada'
-      preLoaderRoute: typeof CaminhadaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/comunidade': {
-      id: '/comunidade'
-      path: '/comunidade'
-      fullPath: '/comunidade'
-      preLoaderRoute: typeof ComunidadeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/configuracoes': {
-      id: '/configuracoes'
-      path: '/configuracoes'
-      fullPath: '/configuracoes'
-      preLoaderRoute: typeof ConfiguracoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conta': {
-      id: '/conta'
-      path: '/conta'
-      fullPath: '/conta'
-      preLoaderRoute: typeof ContaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/denominacoes': {
-      id: '/denominacoes'
-      path: '/denominacoes'
-      fullPath: '/denominacoes'
-      preLoaderRoute: typeof DenominacoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/devocional': {
-      id: '/devocional'
-      path: '/devocional'
-      fullPath: '/devocional'
-      preLoaderRoute: typeof DevocionalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/devocional-salvos': {
-      id: '/devocional-salvos'
-      path: '/devocional-salvos'
-      fullPath: '/devocional-salvos'
-      preLoaderRoute: typeof DevocionalSalvosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estudos': {
-      id: '/estudos'
-      path: '/estudos'
-      fullPath: '/estudos'
-      preLoaderRoute: typeof EstudosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/favoritos': {
-      id: '/favoritos'
-      path: '/favoritos'
-      fullPath: '/favoritos'
-      preLoaderRoute: typeof FavoritosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/harpa': {
-      id: '/harpa'
-      path: '/harpa'
-      fullPath: '/harpa'
-      preLoaderRoute: typeof HarpaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/juizes': {
-      id: '/juizes'
-      path: '/juizes'
-      fullPath: '/juizes'
-      preLoaderRoute: typeof JuizesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mapa': {
-      id: '/mapa'
-      path: '/mapa'
-      fullPath: '/mapa'
-      preLoaderRoute: typeof MapaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mentor': {
-      id: '/mentor'
-      path: '/mentor'
-      fullPath: '/mentor'
-      preLoaderRoute: typeof MentorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/peregrino': {
-      id: '/peregrino'
-      path: '/peregrino'
-      fullPath: '/peregrino'
-      preLoaderRoute: typeof PeregrinoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacidade': {
-      id: '/privacidade'
-      path: '/privacidade'
-      fullPath: '/privacidade'
-      preLoaderRoute: typeof PrivacidadeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reis': {
-      id: '/reis'
-      path: '/reis'
-      fullPath: '/reis'
-      preLoaderRoute: typeof ReisRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/resumo': {
-      id: '/resumo'
-      path: '/resumo'
-      fullPath: '/resumo'
-      preLoaderRoute: typeof ResumoRouteImport
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -1015,11 +854,235 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/termos': {
-      id: '/termos'
-      path: '/termos'
-      fullPath: '/termos'
-      preLoaderRoute: typeof TermosRouteImport
+    '/resumo': {
+      id: '/resumo'
+      path: '/resumo'
+      fullPath: '/resumo'
+      preLoaderRoute: typeof ResumoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reis': {
+      id: '/reis'
+      path: '/reis'
+      fullPath: '/reis'
+      preLoaderRoute: typeof ReisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/peregrino': {
+      id: '/peregrino'
+      path: '/peregrino'
+      fullPath: '/peregrino'
+      preLoaderRoute: typeof PeregrinoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentor': {
+      id: '/mentor'
+      path: '/mentor'
+      fullPath: '/mentor'
+      preLoaderRoute: typeof MentorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mapa': {
+      id: '/mapa'
+      path: '/mapa'
+      fullPath: '/mapa'
+      preLoaderRoute: typeof MapaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/juizes': {
+      id: '/juizes'
+      path: '/juizes'
+      fullPath: '/juizes'
+      preLoaderRoute: typeof JuizesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/harpa': {
+      id: '/harpa'
+      path: '/harpa'
+      fullPath: '/harpa'
+      preLoaderRoute: typeof HarpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estudos': {
+      id: '/estudos'
+      path: '/estudos'
+      fullPath: '/estudos'
+      preLoaderRoute: typeof EstudosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devocional-salvos': {
+      id: '/devocional-salvos'
+      path: '/devocional-salvos'
+      fullPath: '/devocional-salvos'
+      preLoaderRoute: typeof DevocionalSalvosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devocional': {
+      id: '/devocional'
+      path: '/devocional'
+      fullPath: '/devocional'
+      preLoaderRoute: typeof DevocionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/denominacoes': {
+      id: '/denominacoes'
+      path: '/denominacoes'
+      fullPath: '/denominacoes'
+      preLoaderRoute: typeof DenominacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conta': {
+      id: '/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof ContaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade': {
+      id: '/comunidade'
+      path: '/comunidade'
+      fullPath: '/comunidade'
+      preLoaderRoute: typeof ComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/caminhada': {
+      id: '/caminhada'
+      path: '/caminhada'
+      fullPath: '/caminhada'
+      preLoaderRoute: typeof CaminhadaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendario': {
+      id: '/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof CalendarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/busca': {
+      id: '/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof BuscaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biblia': {
+      id: '/biblia'
+      path: '/biblia'
+      fullPath: '/biblia'
+      preLoaderRoute: typeof BibliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anotacoes': {
+      id: '/anotacoes'
+      path: '/anotacoes'
+      fullPath: '/anotacoes'
+      preLoaderRoute: typeof AnotacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resumo/': {
+      id: '/resumo/'
+      path: '/'
+      fullPath: '/resumo/'
+      preLoaderRoute: typeof ResumoIndexRouteImport
+      parentRoute: typeof ResumoRoute
+    }
+    '/reis/': {
+      id: '/reis/'
+      path: '/'
+      fullPath: '/reis/'
+      preLoaderRoute: typeof ReisIndexRouteImport
+      parentRoute: typeof ReisRoute
+    }
+    '/mapa/': {
+      id: '/mapa/'
+      path: '/'
+      fullPath: '/mapa/'
+      preLoaderRoute: typeof MapaIndexRouteImport
+      parentRoute: typeof MapaRoute
+    }
+    '/juizes/': {
+      id: '/juizes/'
+      path: '/'
+      fullPath: '/juizes/'
+      preLoaderRoute: typeof JuizesIndexRouteImport
+      parentRoute: typeof JuizesRoute
+    }
+    '/harpa/': {
+      id: '/harpa/'
+      path: '/'
+      fullPath: '/harpa/'
+      preLoaderRoute: typeof HarpaIndexRouteImport
+      parentRoute: typeof HarpaRoute
+    }
+    '/estudos/': {
+      id: '/estudos/'
+      path: '/'
+      fullPath: '/estudos/'
+      preLoaderRoute: typeof EstudosIndexRouteImport
+      parentRoute: typeof EstudosRoute
+    }
+    '/denominacoes/': {
+      id: '/denominacoes/'
+      path: '/'
+      fullPath: '/denominacoes/'
+      preLoaderRoute: typeof DenominacoesIndexRouteImport
+      parentRoute: typeof DenominacoesRoute
+    }
+    '/comunidade/': {
+      id: '/comunidade/'
+      path: '/'
+      fullPath: '/comunidade/'
+      preLoaderRoute: typeof ComunidadeIndexRouteImport
+      parentRoute: typeof ComunidadeRoute
+    }
+    '/campanhas/': {
+      id: '/campanhas/'
+      path: '/campanhas'
+      fullPath: '/campanhas/'
+      preLoaderRoute: typeof CampanhasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biblia/': {
@@ -1029,88 +1092,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaIndexRouteImport
       parentRoute: typeof BibliaRoute
     }
-    '/biblia/$book': {
-      id: '/biblia/$book'
+    '/resumo/$book': {
+      id: '/resumo/$book'
       path: '/$book'
-      fullPath: '/biblia/$book'
-      preLoaderRoute: typeof BibliaBookRouteImport
-      parentRoute: typeof BibliaRoute
+      fullPath: '/resumo/$book'
+      preLoaderRoute: typeof ResumoBookRouteImport
+      parentRoute: typeof ResumoRoute
     }
-    '/campanhas/': {
-      id: '/campanhas/'
-      path: '/campanhas'
-      fullPath: '/campanhas/'
-      preLoaderRoute: typeof CampanhasIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/reis/$id': {
+      id: '/reis/$id'
+      path: '/$id'
+      fullPath: '/reis/$id'
+      preLoaderRoute: typeof ReisIdRouteImport
+      parentRoute: typeof ReisRoute
     }
-    '/campanhas/casais': {
-      id: '/campanhas/casais'
-      path: '/campanhas/casais'
-      fullPath: '/campanhas/casais'
-      preLoaderRoute: typeof CampanhasCasaisRouteImport
-      parentRoute: typeof rootRouteImport
+    '/mapa/$id': {
+      id: '/mapa/$id'
+      path: '/$id'
+      fullPath: '/mapa/$id'
+      preLoaderRoute: typeof MapaIdRouteImport
+      parentRoute: typeof MapaRoute
     }
-    '/campanhas/conhecimento': {
-      id: '/campanhas/conhecimento'
-      path: '/campanhas/conhecimento'
-      fullPath: '/campanhas/conhecimento'
-      preLoaderRoute: typeof CampanhasConhecimentoRouteImport
-      parentRoute: typeof rootRouteImport
+    '/juizes/$id': {
+      id: '/juizes/$id'
+      path: '/$id'
+      fullPath: '/juizes/$id'
+      preLoaderRoute: typeof JuizesIdRouteImport
+      parentRoute: typeof JuizesRoute
     }
-    '/campanhas/crescimento': {
-      id: '/campanhas/crescimento'
-      path: '/campanhas/crescimento'
-      fullPath: '/campanhas/crescimento'
-      preLoaderRoute: typeof CampanhasCrescimentoRouteImport
-      parentRoute: typeof rootRouteImport
+    '/harpa/$id': {
+      id: '/harpa/$id'
+      path: '/$id'
+      fullPath: '/harpa/$id'
+      preLoaderRoute: typeof HarpaIdRouteImport
+      parentRoute: typeof HarpaRoute
     }
-    '/campanhas/criancas': {
-      id: '/campanhas/criancas'
-      path: '/campanhas/criancas'
-      fullPath: '/campanhas/criancas'
-      preLoaderRoute: typeof CampanhasCriancasRouteImport
-      parentRoute: typeof rootRouteImport
+    '/estudos/$id': {
+      id: '/estudos/$id'
+      path: '/$id'
+      fullPath: '/estudos/$id'
+      preLoaderRoute: typeof EstudosIdRouteImport
+      parentRoute: typeof EstudosRoute
     }
-    '/campanhas/devocional-diario': {
-      id: '/campanhas/devocional-diario'
-      path: '/campanhas/devocional-diario'
-      fullPath: '/campanhas/devocional-diario'
-      preLoaderRoute: typeof CampanhasDevocionalDiarioRouteImport
-      parentRoute: typeof rootRouteImport
+    '/denominacoes/$id': {
+      id: '/denominacoes/$id'
+      path: '/$id'
+      fullPath: '/denominacoes/$id'
+      preLoaderRoute: typeof DenominacoesIdRouteImport
+      parentRoute: typeof DenominacoesRoute
     }
-    '/campanhas/familia': {
-      id: '/campanhas/familia'
-      path: '/campanhas/familia'
-      fullPath: '/campanhas/familia'
-      preLoaderRoute: typeof CampanhasFamiliaRouteImport
-      parentRoute: typeof rootRouteImport
+    '/comunidade/$id': {
+      id: '/comunidade/$id'
+      path: '/$id'
+      fullPath: '/comunidade/$id'
+      preLoaderRoute: typeof ComunidadeIdRouteImport
+      parentRoute: typeof ComunidadeRoute
     }
-    '/campanhas/gratidao': {
-      id: '/campanhas/gratidao'
-      path: '/campanhas/gratidao'
-      fullPath: '/campanhas/gratidao'
-      preLoaderRoute: typeof CampanhasGratidaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/campanhas/harpa-desafio': {
-      id: '/campanhas/harpa-desafio'
-      path: '/campanhas/harpa-desafio'
-      fullPath: '/campanhas/harpa-desafio'
-      preLoaderRoute: typeof CampanhasHarpaDesafioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/campanhas/jejum': {
-      id: '/campanhas/jejum'
-      path: '/campanhas/jejum'
-      fullPath: '/campanhas/jejum'
-      preLoaderRoute: typeof CampanhasJejumRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/campanhas/leia-biblia': {
-      id: '/campanhas/leia-biblia'
-      path: '/campanhas/leia-biblia'
-      fullPath: '/campanhas/leia-biblia'
-      preLoaderRoute: typeof CampanhasLeiaBibliaRouteImport
+    '/campanhas/quiz': {
+      id: '/campanhas/quiz'
+      path: '/campanhas/quiz'
+      fullPath: '/campanhas/quiz'
+      preLoaderRoute: typeof CampanhasQuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campanhas/oracao': {
@@ -1120,130 +1162,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampanhasOracaoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campanhas/quiz': {
-      id: '/campanhas/quiz'
-      path: '/campanhas/quiz'
-      fullPath: '/campanhas/quiz'
-      preLoaderRoute: typeof CampanhasQuizRouteImport
+    '/campanhas/leia-biblia': {
+      id: '/campanhas/leia-biblia'
+      path: '/campanhas/leia-biblia'
+      fullPath: '/campanhas/leia-biblia'
+      preLoaderRoute: typeof CampanhasLeiaBibliaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/comunidade/': {
-      id: '/comunidade/'
-      path: '/'
-      fullPath: '/comunidade/'
-      preLoaderRoute: typeof ComunidadeIndexRouteImport
-      parentRoute: typeof ComunidadeRoute
+    '/campanhas/jejum': {
+      id: '/campanhas/jejum'
+      path: '/campanhas/jejum'
+      fullPath: '/campanhas/jejum'
+      preLoaderRoute: typeof CampanhasJejumRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/comunidade/$id': {
-      id: '/comunidade/$id'
-      path: '/$id'
-      fullPath: '/comunidade/$id'
-      preLoaderRoute: typeof ComunidadeIdRouteImport
-      parentRoute: typeof ComunidadeRoute
+    '/campanhas/harpa-desafio': {
+      id: '/campanhas/harpa-desafio'
+      path: '/campanhas/harpa-desafio'
+      fullPath: '/campanhas/harpa-desafio'
+      preLoaderRoute: typeof CampanhasHarpaDesafioRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/denominacoes/': {
-      id: '/denominacoes/'
-      path: '/'
-      fullPath: '/denominacoes/'
-      preLoaderRoute: typeof DenominacoesIndexRouteImport
-      parentRoute: typeof DenominacoesRoute
+    '/campanhas/gratidao': {
+      id: '/campanhas/gratidao'
+      path: '/campanhas/gratidao'
+      fullPath: '/campanhas/gratidao'
+      preLoaderRoute: typeof CampanhasGratidaoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/denominacoes/$id': {
-      id: '/denominacoes/$id'
-      path: '/$id'
-      fullPath: '/denominacoes/$id'
-      preLoaderRoute: typeof DenominacoesIdRouteImport
-      parentRoute: typeof DenominacoesRoute
+    '/campanhas/familia': {
+      id: '/campanhas/familia'
+      path: '/campanhas/familia'
+      fullPath: '/campanhas/familia'
+      preLoaderRoute: typeof CampanhasFamiliaRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/estudos/': {
-      id: '/estudos/'
-      path: '/'
-      fullPath: '/estudos/'
-      preLoaderRoute: typeof EstudosIndexRouteImport
-      parentRoute: typeof EstudosRoute
+    '/campanhas/devocional-diario': {
+      id: '/campanhas/devocional-diario'
+      path: '/campanhas/devocional-diario'
+      fullPath: '/campanhas/devocional-diario'
+      preLoaderRoute: typeof CampanhasDevocionalDiarioRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/estudos/$id': {
-      id: '/estudos/$id'
-      path: '/$id'
-      fullPath: '/estudos/$id'
-      preLoaderRoute: typeof EstudosIdRouteImport
-      parentRoute: typeof EstudosRoute
+    '/campanhas/criancas': {
+      id: '/campanhas/criancas'
+      path: '/campanhas/criancas'
+      fullPath: '/campanhas/criancas'
+      preLoaderRoute: typeof CampanhasCriancasRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/harpa/': {
-      id: '/harpa/'
-      path: '/'
-      fullPath: '/harpa/'
-      preLoaderRoute: typeof HarpaIndexRouteImport
-      parentRoute: typeof HarpaRoute
+    '/campanhas/crescimento': {
+      id: '/campanhas/crescimento'
+      path: '/campanhas/crescimento'
+      fullPath: '/campanhas/crescimento'
+      preLoaderRoute: typeof CampanhasCrescimentoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/harpa/$id': {
-      id: '/harpa/$id'
-      path: '/$id'
-      fullPath: '/harpa/$id'
-      preLoaderRoute: typeof HarpaIdRouteImport
-      parentRoute: typeof HarpaRoute
+    '/campanhas/conhecimento': {
+      id: '/campanhas/conhecimento'
+      path: '/campanhas/conhecimento'
+      fullPath: '/campanhas/conhecimento'
+      preLoaderRoute: typeof CampanhasConhecimentoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/juizes/': {
-      id: '/juizes/'
-      path: '/'
-      fullPath: '/juizes/'
-      preLoaderRoute: typeof JuizesIndexRouteImport
-      parentRoute: typeof JuizesRoute
+    '/campanhas/casais': {
+      id: '/campanhas/casais'
+      path: '/campanhas/casais'
+      fullPath: '/campanhas/casais'
+      preLoaderRoute: typeof CampanhasCasaisRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/juizes/$id': {
-      id: '/juizes/$id'
-      path: '/$id'
-      fullPath: '/juizes/$id'
-      preLoaderRoute: typeof JuizesIdRouteImport
-      parentRoute: typeof JuizesRoute
-    }
-    '/mapa/': {
-      id: '/mapa/'
-      path: '/'
-      fullPath: '/mapa/'
-      preLoaderRoute: typeof MapaIndexRouteImport
-      parentRoute: typeof MapaRoute
-    }
-    '/mapa/$id': {
-      id: '/mapa/$id'
-      path: '/$id'
-      fullPath: '/mapa/$id'
-      preLoaderRoute: typeof MapaIdRouteImport
-      parentRoute: typeof MapaRoute
-    }
-    '/reis/': {
-      id: '/reis/'
-      path: '/'
-      fullPath: '/reis/'
-      preLoaderRoute: typeof ReisIndexRouteImport
-      parentRoute: typeof ReisRoute
-    }
-    '/reis/$id': {
-      id: '/reis/$id'
-      path: '/$id'
-      fullPath: '/reis/$id'
-      preLoaderRoute: typeof ReisIdRouteImport
-      parentRoute: typeof ReisRoute
-    }
-    '/resumo/': {
-      id: '/resumo/'
-      path: '/'
-      fullPath: '/resumo/'
-      preLoaderRoute: typeof ResumoIndexRouteImport
-      parentRoute: typeof ResumoRoute
-    }
-    '/resumo/$book': {
-      id: '/resumo/$book'
+    '/biblia/$book': {
+      id: '/biblia/$book'
       path: '/$book'
-      fullPath: '/resumo/$book'
-      preLoaderRoute: typeof ResumoBookRouteImport
-      parentRoute: typeof ResumoRoute
+      fullPath: '/biblia/$book'
+      preLoaderRoute: typeof BibliaBookRouteImport
+      parentRoute: typeof BibliaRoute
     }
-    '/api/public/health': {
-      id: '/api/public/health'
-      path: '/api/public/health'
-      fullPath: '/api/public/health'
-      preLoaderRoute: typeof ApiPublicHealthRouteImport
+    '/campanhas/jornada-biblica/': {
+      id: '/campanhas/jornada-biblica/'
+      path: '/campanhas/jornada-biblica'
+      fullPath: '/campanhas/jornada-biblica/'
+      preLoaderRoute: typeof CampanhasJornadaBiblicaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biblia/$book/': {
@@ -1253,18 +1253,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliaBookIndexRouteImport
       parentRoute: typeof BibliaBookRoute
     }
-    '/biblia/$book/$chapter': {
-      id: '/biblia/$book/$chapter'
-      path: '/$chapter'
-      fullPath: '/biblia/$book/$chapter'
-      preLoaderRoute: typeof BibliaBookChapterRouteImport
-      parentRoute: typeof BibliaBookRoute
-    }
-    '/campanhas/categoria/$catId': {
-      id: '/campanhas/categoria/$catId'
-      path: '/campanhas/categoria/$catId'
-      fullPath: '/campanhas/categoria/$catId'
-      preLoaderRoute: typeof CampanhasCategoriaCatIdRouteImport
+    '/campanhas/jornada/$id': {
+      id: '/campanhas/jornada/$id'
+      path: '/campanhas/jornada/$id'
+      fullPath: '/campanhas/jornada/$id'
+      preLoaderRoute: typeof CampanhasJornadaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campanhas/certificado/$id': {
@@ -1274,18 +1267,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampanhasCertificadoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campanhas/jornada-biblica/': {
-      id: '/campanhas/jornada-biblica/'
-      path: '/campanhas/jornada-biblica'
-      fullPath: '/campanhas/jornada-biblica/'
-      preLoaderRoute: typeof CampanhasJornadaBiblicaIndexRouteImport
+    '/campanhas/categoria/$catId': {
+      id: '/campanhas/categoria/$catId'
+      path: '/campanhas/categoria/$catId'
+      fullPath: '/campanhas/categoria/$catId'
+      preLoaderRoute: typeof CampanhasCategoriaCatIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campanhas/jornada/$id': {
-      id: '/campanhas/jornada/$id'
-      path: '/campanhas/jornada/$id'
-      fullPath: '/campanhas/jornada/$id'
-      preLoaderRoute: typeof CampanhasJornadaIdRouteImport
+    '/biblia/$book/$chapter': {
+      id: '/biblia/$book/$chapter'
+      path: '/$chapter'
+      fullPath: '/biblia/$book/$chapter'
+      preLoaderRoute: typeof BibliaBookChapterRouteImport
+      parentRoute: typeof BibliaBookRoute
+    }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campanhas/jornada-biblica/etapa/$stageId': {
