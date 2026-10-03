@@ -8,6 +8,14 @@ import { useAuth } from "@/lib/auth-context";
 import { AdSlot } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/")({
+  head: () => ({ meta: [
+    { title: "Palavra+ — Bíblia, Harpa e Devocional" },
+    { name: "description", content: "Leia a Bíblia, acompanhe devocionais, hinos e estudos no Palavra+." },
+    { property: "og:title", content: "Palavra+ — Bíblia, Harpa e Devocional" },
+    { property: "og:description", content: "Leia a Bíblia, acompanhe devocionais, hinos e estudos no Palavra+." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: Index,
 });
 
