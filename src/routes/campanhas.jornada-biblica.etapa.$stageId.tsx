@@ -36,7 +36,7 @@ export const Route = createFileRoute("/campanhas/jornada-biblica/etapa/$stageId"
   ),
   errorComponent: ({ error }) => (
     <div role="alert" className="min-h-screen bg-background p-8 text-center text-muted-foreground">
-      {error.message}
+      {error instanceof Error ? error.message : String(error)}
     </div>
   ),
   component: StageDetail,
